@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20141107191423) do
     t.integer  "dmg"
     t.string   "misc"
     t.integer  "vault_hunter_id"
+    t.integer  "skill_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,7 +41,7 @@ ActiveRecord::Schema.define(version: 20141107191423) do
   end
 
   create_table "prerequsites", force: true do |t|
-    t.integer  "skill_id"
+    t.integer  "skill_template_id"
     t.string   "prereq_type"
     t.string   "prereq_name"
     t.integer  "value"
