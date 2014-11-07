@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20141107162631) do
     t.integer  "pool"
     t.integer  "dmg"
     t.string   "misc"
+    t.integer  "vault_hunter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -26,6 +27,7 @@ ActiveRecord::Schema.define(version: 20141107162631) do
     t.string   "name"
     t.integer  "value"
     t.string   "short"
+    t.integer  "vault_hunter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -35,6 +37,7 @@ ActiveRecord::Schema.define(version: 20141107162631) do
     t.integer  "pool"
     t.integer  "points"
     t.string   "attribute"
+    t.integer  "vault_hunter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -46,6 +49,7 @@ ActiveRecord::Schema.define(version: 20141107162631) do
     t.integer  "duration"
     t.text     "description"
     t.integer  "prerequsite_id"
+    t.integer  "vault_hunter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -70,22 +74,18 @@ ActiveRecord::Schema.define(version: 20141107162631) do
 
   create_table "vault_hunters", force: true do |t|
     t.string   "name"
-    t.string   "player"
+    t.string   "user_id"
     t.integer  "age"
     t.string   "race"
     t.integer  "heigh"
     t.integer  "weight"
-    t.integer  "attributes_id"
     t.integer  "toughness"
     t.integer  "wounds"
     t.integer  "shield"
     t.integer  "current_shield"
-    t.integer  "attacks_id"
     t.text     "loot"
     t.integer  "money"
     t.integer  "level"
-    t.integer  "proficiencies_id"
-    t.integer  "skills_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
