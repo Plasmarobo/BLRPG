@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141107183522) do
+ActiveRecord::Schema.define(version: 20141107191423) do
 
   create_table "attacks", force: true do |t|
     t.string   "name"
@@ -39,11 +39,20 @@ ActiveRecord::Schema.define(version: 20141107183522) do
     t.datetime "updated_at"
   end
 
+  create_table "prerequsites", force: true do |t|
+    t.integer  "skill_id"
+    t.string   "prereq_type"
+    t.string   "prereq_name"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "proficiencies", force: true do |t|
     t.string   "name"
     t.integer  "pool"
     t.integer  "points"
-    t.string   "attribute"
+    t.string   "attribute_name"
     t.integer  "vault_hunter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -51,16 +60,14 @@ ActiveRecord::Schema.define(version: 20141107183522) do
 
   create_table "proficiency_templates", force: true do |t|
     t.string   "name"
-    t.integer  "pool"
-    t.string   "attribute"
-    t.integer  "points"
+    t.string   "attribute_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "skill_templates", force: true do |t|
     t.string   "name"
-    t.string   "type"
+    t.string   "skill_type"
     t.integer  "cooldown"
     t.integer  "duration"
     t.string   "description"
@@ -70,12 +77,7 @@ ActiveRecord::Schema.define(version: 20141107183522) do
   end
 
   create_table "skills", force: true do |t|
-    t.string   "name"
-    t.string   "type"
-    t.integer  "cooldown"
-    t.integer  "duration"
-    t.text     "description"
-    t.integer  "prerequsite_id"
+    t.integer  "skill_template_id"
     t.integer  "vault_hunter_id"
     t.datetime "created_at"
     t.datetime "updated_at"

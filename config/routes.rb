@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'templates/list'
+
+  get 'templates/new'
+
+  get 'templates/edit'
+
+  get 'templates/delete'
+
   get 'player/characters'
 
   get 'player/sheet'
