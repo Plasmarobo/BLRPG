@@ -3,121 +3,124 @@
     set_vault_hunter(@vh.id);
   .row
     .row.single
-      .field
+      .field.col-md-3
         Name
         %input{name: "vh_name", class: "txt", value: @vh.name}
-      .field
+      .field.col-md-3
         Player
         %input{name: "vh_player", class: "txt", value: @vh.player}
-      .field
+      .field.col-md-1
         Age
         %input{name: "vh_age", class: "num", value: @vh.age}
     .row.single
-      .field
+      .field.col-md-3
         Race
         %input{name: "vh_race", class: "txt", value: @vh.race}
-      .field
+      .field.col-md-1
         Height
         %input{name: "vh_height", class: "num", value: @vh.height }
-      .field
+      .field.col-md-1
         Weight
         %input{name: "vh_weight", class: "num", value: @vh.weight}
   .row
     .region_title Attributes
     .hardbox
       -@vh.attributes.each do |attribute|
-        .cell{style: "width:" + 100/@attributes.size + "%"}
+        .cell.col-md-3
           .row
-            = attribute.name.capitalize
+            .col-md-12
+              = attribute.name.capitalize
           .row
-            %input{name: "vh_" + attribute.name, class: "bignum", value: attribute.value}
+            .col-md-12
+              %input{name: "vh_" + attribute.name, class: "bignum", value: attribute.value}
           .row
-            = "[" + attribute.short + "]"
+            .col-md-12
+              = "[" + attribute.short + "]"
   .row
-    .col2
+    .col-md-6
       .row
-        .col2
-          .cell
-            .row
+        .col-md-6
+          .row
+            .col-md-12
               Toughness
-            .row
+            .col-md-12
               %input{name: "vh_toughness", class: "bignum", value: @vh.toughness}
-          .cell
-            .row
+          .row
+            .col-md-12
               Current Wounds
-            .row
+            .col-md-12
               %input{name: "vh_wounds", class: "bignum", value: @vh.wounds}
-        .col2
-          .cell
-            .row
+        .col-md-6
+          .row
+            .col-md-12
               Shield
-            .row
+            .col-md-12
               %input{name: "vh_shield", class: "bignum", value: @vh.shield}
-          .cell
-            .row
+          .row
+            .col-md-12
               Current Shield
-            .row
+            .col-md-12
               %input{name: "vh_current_shield", class: "bignum", value: @vh.current_shield}
       .row
         .region_title Attack Actions
         -@vh.attacks.each_with_index do |index, attack|
           .row
-            .double
-              .row.hint Weapon
-              .row
+            .row
+              .col-md-5.hint Weapon
+              .col-md-2.hint Attack Pool
+              .col-md-2.hint Damage
+            .row
+              .col-md-5
                 %input{name: "vh_attack_name_" + index.to_s, class: "txt", value: attack.name}
-            .double
-              .row.hint Aim/Smash
-              .row
+              .col-md-2
                 %input{name: "vh_attack_pool_" + index.to_s, class: "num", value: attack.pool}
-            .double
-              .row.hint Dmg
-              .row
+              .col-md-2
                 %input{name: "vh_attack_dmg_" + index.to_s, class: "num", value: attack.dmg}
-          .row
-            .double
-              .row.hint Misc
-              .row
+            .row
+              .col-md-12.hint Misc
+            .row
+              .col-md-12
                 %input{name: "vh_attack_misc_" + index.to_s, class: "txt", value: attack.misc}
-        .single{onclick: 'add_attack()'}
+        .col-md-12{onclick: 'add_attack()'}
           %img{src: "image/add.png"}
           Add Attack
       .row
         .region_title Loot and Equipment
-        %input{name: "vh_loot", class: "txt_box", value: @vh.loot}
+        .col-md-12
+          %input{name: "vh_loot", class: "txt_box", value: @vh.loot}
         .region_title Money
-        %input{name: "vh_money", class "longnum", value: @vh.money}
-    .col2
+        .col-md-12
+          %input{name: "vh_money", class "longnum", value: @vh.money}
+    .col-md-6
       .row
         .region_title Proficiencies
-        .row
-          .prof_name.hint
-            Name
-          .prof_pool.hint
-            Pool
-          .prof_points.hint
+        .col-md-6.prof_name.hint
+          Name
+        .col-md-2.prof_pool.hint
+          Pool
+        .col-md-2.prof_points.hint
             Points
-          .prof_attribute.hint
+        .col-md-2.prof_attribute.hint
             Attribute
         -@vh.proficiencies.each do |proficiency|
           .row
-            .prof_name
+            .col-md-6.prof_name
               = proficiency.name
-            .prof_pool
+            .col-md-2.prof_pool
               = proficiency.pool
-            .prof_points
+            .col-md-2.prof_points
               = proficiency.points
-            .prof_attribute
+            .col-md-2.prof_attribute
               = @vh.attribute[proficiency.attribute].to_s + " [" + proficiency.attribute + "]"
-        .single{onclick: 'add_prof()'}
+        .col-md-12{onclick: 'add_prof()'}
           %img{src: "image/add.png"}
           Add Proficiency
       .row
         .region_title Action Skills
-          .row.hint
+          .col-md-12.hint
             Name
           -@vh.actions.each do |action|
-            .row
+            .col-md-12
               = action.name
 
 
