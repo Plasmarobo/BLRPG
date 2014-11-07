@@ -1,0 +1,123 @@
+.page
+  :javascript
+    set_vault_hunter(@vh.id);
+  .row
+    .row.single
+      .field
+        Name
+        %input{name: "vh_name", class: "txt", value: @vh.name}
+      .field
+        Player
+        %input{name: "vh_player", class: "txt", value: @vh.player}
+      .field
+        Age
+        %input{name: "vh_age", class: "num", value: @vh.age}
+    .row.single
+      .field
+        Race
+        %input{name: "vh_race", class: "txt", value: @vh.race}
+      .field
+        Height
+        %input{name: "vh_height", class: "num", value: @vh.height }
+      .field
+        Weight
+        %input{name: "vh_weight", class: "num", value: @vh.weight}
+  .row
+    .region_title Attributes
+    .hardbox
+      -@vh.attributes.each do |attribute|
+        .cell{style: "width:" + 100/@attributes.size + "%"}
+          .row
+            = attribute.name.capitalize
+          .row
+            %input{name: "vh_" + attribute.name, class: "bignum", value: attribute.value}
+          .row
+            = "[" + attribute.short + "]"
+  .row
+    .col2
+      .row
+        .col2
+          .cell
+            .row
+              Toughness
+            .row
+              %input{name: "vh_toughness", class: "bignum", value: @vh.toughness}
+          .cell
+            .row
+              Current Wounds
+            .row
+              %input{name: "vh_wounds", class: "bignum", value: @vh.wounds}
+        .col2
+          .cell
+            .row
+              Shield
+            .row
+              %input{name: "vh_shield", class: "bignum", value: @vh.shield}
+          .cell
+            .row
+              Current Shield
+            .row
+              %input{name: "vh_current_shield", class: "bignum", value: @vh.current_shield}
+      .row
+        .region_title Attack Actions
+        -@vh.attacks.each_with_index do |index, attack|
+          .row
+            .double
+              .row.hint Weapon
+              .row
+                %input{name: "vh_attack_name_" + index.to_s, class: "txt", value: attack.name}
+            .double
+              .row.hint Aim/Smash
+              .row
+                %input{name: "vh_attack_pool_" + index.to_s, class: "num", value: attack.pool}
+            .double
+              .row.hint Dmg
+              .row
+                %input{name: "vh_attack_dmg_" + index.to_s, class: "num", value: attack.dmg}
+          .row
+            .double
+              .row.hint Misc
+              .row
+                %input{name: "vh_attack_misc_" + index.to_s, class: "txt", value: attack.misc}
+        .single{onclick: 'add_attack()'}
+          %img{src: "image/add.png"}
+          Add Attack
+      .row
+        .region_title Loot and Equipment
+        %input{name: "vh_loot", class: "txt_box", value: @vh.loot}
+        .region_title Money
+        %input{name: "vh_money", class "longnum", value: @vh.money}
+    .col2
+      .row
+        .region_title Proficiencies
+        .row
+          .prof_name.hint
+            Name
+          .prof_pool.hint
+            Pool
+          .prof_points.hint
+            Points
+          .prof_attribute.hint
+            Attribute
+        -@vh.proficiencies.each do |proficiency|
+          .row
+            .prof_name
+              = proficiency.name
+            .prof_pool
+              = proficiency.pool
+            .prof_points
+              = proficiency.points
+            .prof_attribute
+              = @vh.attribute[proficiency.attribute].to_s + " [" + proficiency.attribute + "]"
+        .single{onclick: 'add_prof()'}
+          %img{src: "image/add.png"}
+          Add Proficiency
+      .row
+        .region_title Action Skills
+          .row.hint
+            Name
+          -@vh.actions.each do |action|
+            .row
+              = action.name
+
+

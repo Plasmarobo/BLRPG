@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  pool: 1
+  points: 1
+  attribute: MyString
+
+two:
+  name: MyString
+  pool: 1
+  points: 1
+  attribute: MyString
