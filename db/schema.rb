@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20141107191423) do
     t.string   "user_id"
     t.integer  "age"
     t.string   "race"
-    t.integer  "heigh"
+    t.integer  "height"
     t.integer  "weight"
     t.integer  "toughness"
     t.integer  "wounds"
