@@ -1,4 +1,39 @@
 Rails.application.routes.draw do
+  get 'hunters/new'
+  post 'hunters/new'
+
+  get 'hunters/view'
+
+  get 'hunters/edit'
+
+  get 'hunters/delete'
+  post 'hunters/delete'
+
+  get 'hunters/update'
+  post 'hunters/update'
+
+  get 'hunters/list'
+
+  resources :hunters
+
+  get 'templates/list'
+
+  get 'templates/new'
+
+  get 'templates/edit'
+
+  get 'templates/delete'
+
+  get 'player/characters'
+
+  get 'player/sheet'
+
+  get 'home/dashboard'
+
+  get 'home/about'
+
+  get 'home/pals'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -53,4 +88,7 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  
+  root 'home#dashboard'
+  devise_for :users
 end
