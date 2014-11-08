@@ -1,13 +1,20 @@
 Rails.application.routes.draw do
   get 'hunters/new'
+  post 'hunters/new'
 
   get 'hunters/view'
 
   get 'hunters/edit'
 
   get 'hunters/delete'
+  post 'hunters/delete'
+
+  get 'hunters/update'
+  post 'hunters/update'
 
   get 'hunters/list'
+
+  resources :hunters
 
   get 'templates/list'
 
@@ -82,6 +89,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   
-  root to: 'home#dashboard'
+  root 'home#dashboard'
   devise_for :users
 end

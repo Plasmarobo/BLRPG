@@ -1,21 +1,23 @@
 class HuntersController < ApplicationController
-  before_filter :select_vault_hunter, except: [:new, :list]
-  
+  before_filter :set_vault_hunter, only: [:show, :edit, :update, :delete]
+  helper HuntersHelper
   def new
     @vault_hunter = VaultHunter.new  
-    render 'player/sheet'
+    @vault_hunter.user = current_user
+    render :edit
   end
 
-  def view
-    render 'player/sheet'
+  def show
+    render :sheet
   end
 
   def edit
-    render 'player/sheet'
+    render :edit
   end
   
   def update
-    
+    flash[:notice] = "Updates saved!"
+    redirect_to action: :edit
   end
 
   def delete
@@ -30,10 +32,10 @@ class HuntersController < ApplicationController
   
   private
     def vault_hunter_params
-      params.require('vault_hunter').permit(:name, :level, :user_id, :age, :race, :height, :weight, :toughness, :wounds, :shield, :current_shield, :loot, :money, :level)
+      params.require(:vault_hunter).permit(:name, :level, :user_id, :age, :race, :height, :weight, :toughness, :wounds, :shield, :current_shield, :loot, :money, :level)
     end
     
-    def select_vault_hunter
-      @vault_hunter = VaultHunter.find_by_id(params.id)
+    def set_vault_hunter
+      @vault_hunter = VaultHunter.find(params[:id])
     end
 end

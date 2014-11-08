@@ -1,2 +1,4 @@
-%h1 Hunters#edit
-%p Find me in app/views/hunters/edit.html.haml
+
+= form_tag hunter_path(@vault_hunter), method: :PUT do
+  = render template: 'hunters/sheet'
+  %button.btn.btn-default{:type => "submit"} Save

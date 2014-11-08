@@ -1,3 +1,116 @@
 // Place all the styles related to the hunters controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.page
+{
+  max-width:60em;
+  margin-left:1em;
+}
+.row
+{
+  
+}
+.spacer
+{
+  height:1em;
+}
+.field
+{
+  
+}
+.txt
+{
+  width:auto;
+  min-width:10em;
+  border:none;
+  border-bottom: solid;
+  border-width: thin;
+}
+.num
+{
+  max-width:3em;
+  border:none;
+  border-bottom: solid;
+  border-width: thin;
+  font-size:12pt;
+}
+.region_title
+{
+  font-weight:strong;
+  font-size: 12pt;
+}
+.hardbox
+{
+  border: solid;
+  border-width: 2px;
+  height:auto;
+  width:auto;
+}
+.cell
+{
+  text-align: center;
+}
+.bignum
+{
+  font-size:22pt;
+  border:none;
+  border-bottom: solid;
+  border-width: thin;
+  max-width:3em;
+  text-align: center;
+  font-weight: bold;
+  font-family: Verdana;
+}
+.col2
+{
+  
+}
+.double
+{
+  
+}
+.hint
+{
+  font-size:9pt;
+  color:#AAAAAA;
+}
+.prof_name
+{
+  
+}
+.prof_pool
+{
+  
+}
+.prof_points
+{
+  
+}
+.prof_attribute
+{
+  
+}
+.txt_box
+{
+  width:100%;
+  min-height:10em;
+}
+
+.longnum
+{
+  border:none;
+  border-bottom: solid;
+  border-width: thin;
+  min-width: 10em;
+  text-align: right;
+}
+.attack_pad
+{
+  margin:0.5em;
+}
+.proficiencies
+{
+  min-height:10em;
+  border-bottom:solid;
+  border-width: 2px;
+}

@@ -15,19 +15,20 @@
       .field.col-md-1
         Age
         %input{name: "vh_age", class: "num", value: @vault_hunter.age}
-    .row.single
-      .field.col-md-3
-        Race
-        %input{name: "vh_race", class: "txt", value: @vault_hunter.race}
       .field.col-md-1
         Height
         %input{name: "vh_height", class: "num", value: @vault_hunter.height }
       .field.col-md-1
         Weight
         %input{name: "vh_weight", class: "num", value: @vault_hunter.weight}
+    .row.single
+      .field.col-md-3
+        Race
+        %input{name: "vh_race", class: "txt", value: @vault_hunter.race}
+  .row.spacer
   .row
     .region_title Attributes
-    .hardbox
+    .row.hardbox
       -@vault_hunter.attribute_instances.each do |attribute|
         .cell.col-md-3
           .row
@@ -39,6 +40,7 @@
           .row
             .col-md-12
               = "[" + attribute.short + "]"
+  .row.spacer
   .row
     .col-md-6
       .row
@@ -67,7 +69,7 @@
       .row
         .region_title Attack Actions
         -@vault_hunter.attacks.each_with_index do |attack, index|
-          .row
+          .row.attack_pad
             .row
               .col-md-5.hint Weapon
               .col-md-2.hint Attack Pool
@@ -85,45 +87,56 @@
               .col-md-12
                 %input{name: "vh_attack_misc_" + index.to_s, class: "txt", value: attack.misc}
         .col-md-12{onclick: 'add_attack()'}
-          %img{src: "image/add.png"}
+          %img{src: "/images/plus.png"}
           Add Attack
+      .row.spacer
       .row
         .region_title Loot and Equipment
         .col-md-12
-          %input{name: "vh_loot", class: "txt_box", value: @vault_hunter.loot}
+          %textarea{name: "vh_loot", class: "txt_box"}
+            = @vault_hunter.loot
         .region_title Money
         .col-md-12
+          $
           %input{name: "vh_money", class: "longnum", value: @vault_hunter.money}
     .col-md-6
-      .row
+      .row.proficiencies
         .region_title Proficiencies
-        .col-md-6.prof_name.hint
+        .col-md-5.prof_name.hint
           Name
         .col-md-2.prof_pool.hint
           Pool
         .col-md-2.prof_points.hint
           Points
-        .col-md-2.prof_attribute.hint
+        .col-md-3.prof_attribute.hint
           Attribute
         -@vault_hunter.proficiencies.each do |proficiency|
           .row
-            .col-md-6.prof_name
+            .col-md-5.prof_name
               = proficiency.name
             .col-md-2.prof_pool
               = proficiency.pool
             .col-md-2.prof_points
               = proficiency.points
-            .col-md-2.prof_attribute
-              = @vault_hunter.find_attribute_by_name(proficiency.attribute_name).value.to_s + " [" + proficiency.attribute_name + "]"
-        .col-md-12{onclick: 'add_prof()'}
-          %img{src: "image/add.png"}
+            .col-md-3.prof_attribute
+              = proficiency_attribute(@vault_hunter, proficiency)
+        .col-md-12{onclick: 'add_proficiency()'}
+          %img{src: "/images/plus.png"}
           Add Proficiency
+      .row.spacer
       .row
         .region_title Action Skills
-        .col-md-12.hint
+        .col-md-3.hint
           Name
+        .col-md-9.hint
+          Description
         -@vault_hunter.skills.each do |action|
-          .col-md-12
+          .col-md-3
             = action.name
-
+          .col-md-9
+            = action.description
+        .col-md-12{onclick: 'add_action()'}
+          %img{src: "/images/plus.png"}
+          Add Proficiency
+  .row.spacer
 

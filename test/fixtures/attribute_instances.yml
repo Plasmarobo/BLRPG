@@ -4,8 +4,10 @@ one:
   name: MyString
   value: 1
   short: MyString
+  vault_hunter_id: 1
 
 two:
   name: MyString
   value: 1
   short: MyString
+  vault_hunter_id: 1
