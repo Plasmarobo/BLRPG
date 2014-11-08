@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'hunters/new'
+
+  get 'hunters/view'
+
+  get 'hunters/edit'
+
+  get 'hunters/delete'
+
+  get 'hunters/list'
+
   get 'templates/list'
 
   get 'templates/new'

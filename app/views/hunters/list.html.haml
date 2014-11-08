@@ -1,0 +1,16 @@
+%h1 Vault Hunters!
+%table
+  %tbody
+    %tr
+      %th
+        Name
+      %th 
+        Owner
+      %th
+        Level
+    - @vault_hunters.each do |hunter|
+      %tr
+          %td= hunter.name
+          %td= hunter.player.username
+          %td= hunter.level
+
