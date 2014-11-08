@@ -1,0 +1,17 @@
+.container
+  .row
+    .col-md-3.hint
+      Name
+    .col-md-3.hint
+      Type
+    .col-md-6.hint
+      Description
+  .skill_templates{id: "skill_templates"}
+    -@skills.each do |skill|
+      .row
+        .col-md-4
+          = skill.name
+        .col-md-3
+          = skill.skill_type
+        .col-md-5
+          = skill.description

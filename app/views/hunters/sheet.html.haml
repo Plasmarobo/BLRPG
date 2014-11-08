@@ -68,27 +68,29 @@
               %input{name: "vh_current_shield", class: "bignum", value: @vault_hunter.current_shield}
       .row
         .region_title Attack Actions
-        -@vault_hunter.attacks.each_with_index do |attack, index|
-          .row.attack_pad
-            .row
-              .col-md-5.hint Weapon
-              .col-md-2.hint Attack Pool
-              .col-md-2.hint Damage
-            .row
-              .col-md-5
-                %input{name: "vh_attack_name_" + index.to_s, class: "txt", value: attack.name}
-              .col-md-2
-                %input{name: "vh_attack_pool_" + index.to_s, class: "num", value: attack.pool}
-              .col-md-2
-                %input{name: "vh_attack_dmg_" + index.to_s, class: "num", value: attack.dmg}
-            .row
-              .col-md-12.hint Misc
-            .row
-              .col-md-12
-                %input{name: "vh_attack_misc_" + index.to_s, class: "txt", value: attack.misc}
-        .col-md-12{onclick: 'add_attack()'}
-          %img{src: "/images/plus.png"}
-          Add Attack
+        .attacks{id: :attacks}
+          -@vault_hunter.attacks.each_with_index do |attack, index|
+            .row.attack_pad{id: "attack_" + attack.id.to_s}
+              .row
+                .col-md-5.hint Weapon
+                .col-md-2.hint Attack Pool
+                .col-md-2.hint Damage
+              .row
+                .col-md-5
+                  %input{name: "vh_attack_name_" + index.to_s, class: "txt", value: attack.name}
+                .col-md-2
+                  %input{name: "vh_attack_pool_" + index.to_s, class: "num", value: attack.pool}
+                .col-md-2
+                  %input{name: "vh_attack_dmg_" + index.to_s, class: "num", value: attack.dmg}
+              .row
+                .col-md-12.hint Misc
+              .row
+                .col-md-12
+                  %input{name: "vh_attack_misc_" + index.to_s, class: "txt", value: attack.misc}
+        .col-md-12
+          %a{href: '#modal-window', 'data-toggle' => 'modal', 'data-target' => '#modal-window', onclick: 'set_modal_list("/attacks/new?vh="' + @vault_hunter.id + ')'}
+            %img{src: "/images/plus.png"}
+            Add Attack
       .row.spacer
       .row
         .region_title Loot and Equipment
@@ -100,7 +102,7 @@
           $
           %input{name: "vh_money", class: "longnum", value: @vault_hunter.money}
     .col-md-6
-      .row.proficiencies
+      .row
         .region_title Proficiencies
         .col-md-5.prof_name.hint
           Name
@@ -110,19 +112,21 @@
           Points
         .col-md-3.prof_attribute.hint
           Attribute
-        -@vault_hunter.proficiencies.each do |proficiency|
-          .row
-            .col-md-5.prof_name
-              = proficiency.name
-            .col-md-2.prof_pool
-              = proficiency.pool
-            .col-md-2.prof_points
-              = proficiency.points
-            .col-md-3.prof_attribute
-              = proficiency_attribute(@vault_hunter, proficiency)
-        .col-md-12{onclick: 'add_proficiency()'}
-          %img{src: "/images/plus.png"}
-          Add Proficiency
+        .proficiencies{id: :proficiencies}
+          -@vault_hunter.proficiencies.each do |proficiency|
+            .row{id: "proficiency_" + proficiency.id.to_s}
+              .col-md-5.prof_name
+                = proficiency.name
+              .col-md-2.prof_pool
+                = proficiency.pool
+              .col-md-2.prof_points
+                = proficiency.points
+              .col-md-3.prof_attribute
+                = proficiency_attribute(@vault_hunter, proficiency)
+        .col-md-12
+          %a{href: "#modal-window", 'data-toggle' => "modal", 'data-target' => '#modal-window', onclick: 'set_modal_list("/proficiency_templates/list")'}
+            %img{src: "/images/plus.png"}
+            Add Proficiency
       .row.spacer
       .row
         .region_title Action Skills
@@ -130,13 +134,15 @@
           Name
         .col-md-9.hint
           Description
-        -@vault_hunter.skills.each do |action|
-          .col-md-3
-            = action.name
-          .col-md-9
-            = action.description
-        .col-md-12{onclick: 'add_action()'}
-          %img{src: "/images/plus.png"}
-          Add Proficiency
+        .actions{id: :actions}
+          -@vault_hunter.skills.each do |action|
+            .row{id: "action_" + action.id.to_s}
+              .col-md-3
+                = action.name
+              .col-md-9
+                = action.description
+        .col-md-12
+          %a{href: "#modal-window", 'data-toggle' => "modal", 'data-target' => '#modal-window', onclick: 'set_modal_list("/skill_templates/list")'}
+            %img{src: "/images/plus.png"}
+            Add Action-Skill
   .row.spacer
-

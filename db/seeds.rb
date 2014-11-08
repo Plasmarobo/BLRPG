@@ -23,7 +23,21 @@ Prerequsite.create(skill_template_id:ps.id, prereq_type:'attribute', prereq_name
 
 
 
-vh = VaultHunter.create(name: 'Angel', user_id: user.id, age: 23, race: 'Human', height:5, weight:120, toughness:5, wounds:2, shield: 2, current_shield: 1, loot:'None to speak of', money: 0, level:1)
+vh = VaultHunter.create(name: 'Angel', 
+                        user_id: user.id, 
+                        age: 23, 
+                        race: 'Human', 
+                        height:"5'2\"", 
+                        weight:"120lbs", 
+                        toughness:5, 
+                        wounds:2, 
+                        shield: 2, 
+                        current_shield: 1, 
+                        loot:'None to speak of', 
+                        money: 100, 
+                        level:1,
+                        current_skill_points: 0,
+                        current_proficiency_points: 0)
 blk.instance(vh, 1)
 fin.instance(vh, 2)
 sir.instance(vh, 5)

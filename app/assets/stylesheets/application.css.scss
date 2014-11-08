@@ -3,7 +3,13 @@
 @import "bootstrap";
 @import "hunters";
 @import "home";
-@import "templates";
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
 
 .error
 {
@@ -31,4 +37,15 @@
   background:#FBE3E4;
   color:#8a1f11;
   border-color:#FBC2C4;
+}
+
+.mwin
+{
+  margin-top:10em;
+  position:relative;
+  min-width:10em;
+  min-height:20em;
+  margins:auto;
+  @include border-radius( 1em);
+  background-color:#FFFFFF;
 }

@@ -49,3 +49,5 @@ gem 'haml-rails'
 gem 'bootstrap-sass'
 
 gem 'autoprefixer-rails'
+
+gem 'bootstrap-modal-rails'

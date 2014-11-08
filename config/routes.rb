@@ -1,4 +1,54 @@
 Rails.application.routes.draw do
+  get 'proficiencies/new'
+
+  get 'proficiencies/create'
+
+  get 'proficiencies/index'
+
+  get 'proficiencies/show'
+
+  get 'proficiencies/destroy'
+
+  get 'proficiencies/edit'
+
+  get 'proficiencies/update'
+
+  get 'skills/new'
+
+  get 'skills/create'
+
+  get 'skills/index'
+
+  get 'skills/show'
+
+  get 'skills/destroy'
+
+  get 'skills/edit'
+
+  get 'skills/update'
+
+  get 'attacks/index'
+
+  get 'attacks/new' => 'attacks#new', as: :new_attack
+
+  get 'attacks/new'
+
+  get 'attacks/create'
+
+  get 'attacks/show'
+
+  get 'attacks/edit'
+
+  get 'attacks/update'
+
+  get 'attacks/destroy'
+
+  get 'proficiency_templates/list' => 'proficiency_templates#list', as: :proficiency_select
+  resources :proficiency_templates
+
+  get 'skill_templates/list' => 'skill_templates#list', as: :skill_select
+  resources :skill_templates
+
   get 'hunters/new'
   post 'hunters/new'
 
@@ -14,19 +64,11 @@ Rails.application.routes.draw do
 
   get 'hunters/list'
 
+  get 'hunters/:id/skills' => 'hunters#skills'
+
+  get 'hunters/:id/potentials' => 'hunter#potentialskills'
+
   resources :hunters
-
-  get 'templates/list'
-
-  get 'templates/new'
-
-  get 'templates/edit'
-
-  get 'templates/delete'
-
-  get 'player/characters'
-
-  get 'player/sheet'
 
   get 'home/dashboard'
 

@@ -1,0 +1,17 @@
+.container
+  .row
+    .col-md-4.hint
+      Name
+    .col-md-3.hint
+      Attribute
+    .col-md-5.hint
+      Description
+  .proficiency_templates{id: "proficiency_templates"}
+    -@proficiencies.each do |prof|
+      .row
+        .col-md-4
+          = prof.name
+        .col-md-3
+          = prof.attribute_name
+        .col-md-5
+          = prof.description
