@@ -20,11 +20,12 @@
 }
 .txt
 {
-  width:auto;
-  min-width:10em;
+  min-width:4em;
+  max-width:14em;
   border:none;
   border-bottom: solid;
   border-width: thin;
+  font-size:12pt;
 }
 .num
 {

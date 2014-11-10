@@ -10,11 +10,14 @@
 @set_user_id = (id) ->
   CurrentUserId = id;
 
-add_attack = () ->
+@add_attack = (skill_id) ->
+  alert(skill_id)
 
-add_proficiency = () ->
+@add_proficiency = (template_id) ->
+  alert(template_id)
 
-add_action = () ->
+@add_action = (template_id) ->
+  alert(template_id)
 
 @package_sheet_changes = () ->
   namespace_inputs = $("[id^=vh_");
@@ -52,9 +55,9 @@ add_action = () ->
   }
   return result;
 
-@set_modal_list = (url) ->
+@set_modal_list = (id, url) ->
   div = $('<div>', {class: 'container mwin'});
-  $("#modal-window").html("");
+  $("#" + id).html("");
   $.ajax url,
     type: 'GET'
     beforeSend: (xhr) ->
@@ -62,7 +65,16 @@ add_action = () ->
     dataType: 'html'
     success: (data) ->
       div.append(data)
-      $("#modal-window").append(div);
+      $("#" +id).append(div);
     error: (jqXHR, status) ->
       div.append(data)
-      $("#modal-window").append(div);
+      $("#" + id).append(div);
+
+@clean_modals = () ->
+  $('.modal').remove()
+
+@build_modal = (id) ->
+  clean_modals()
+  div = $('<div class=\"modal fade\" id=\"' + id + '\", role=\"dialog\", aria-labelledby=\"ModalLabel\" aria-hidden=\"true\" >')
+  $('body').append(div)
+
