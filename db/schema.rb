@@ -40,15 +40,6 @@ ActiveRecord::Schema.define(version: 20141108161731) do
     t.datetime "updated_at"
   end
 
-  create_table "attributes", force: true do |t|
-    t.string   "name"
-    t.integer  "value"
-    t.string   "short"
-    t.integer  "vault_hunter_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "prerequsites", force: true do |t|
     t.integer  "skill_template_id"
     t.string   "prereq_type"

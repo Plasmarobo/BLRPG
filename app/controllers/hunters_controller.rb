@@ -4,7 +4,6 @@ class HuntersController < ApplicationController
   def new
     @vault_hunter = VaultHunter.new  
     @vault_hunter.user = current_user
-    render :edit
   end
   
   def create
@@ -12,7 +11,7 @@ class HuntersController < ApplicationController
     @vault_hunter.user = current_user
     if @vault_hunter.save
       flash[:notice] = "New hunter #{@vault_hunter.name} created"
-      redirect_to action: :sheet, id: @vault_hunter.id
+      redirect_to action: :show, id: @vault_hunter.id
     else  
       flash[:alert] = "Something went wrong"
       redirect_to action: :new
@@ -28,8 +27,13 @@ class HuntersController < ApplicationController
   end
   
   def update
-    flash[:notice] = "Updates saved!"
-    redirect_to action: :edit
+    update_set = vault_hunter_params
+    @vault_hunter.update(update_set)
+    if @vault_hunter.save
+      render inline: "ok", layout: false
+    else
+      render inline: "failed", layout: false
+    end
   end
 
   def delete
@@ -58,7 +62,22 @@ class HuntersController < ApplicationController
 
   private
     def vault_hunter_params
-      params.require(:vault_hunter).permit(:name, :level, :user_id, :age, :race, :height, :weight, :toughness, :wounds, :shield, :current_shield, :loot, :money, :level)
+      params.require(:vault_hunter).permit(:name, 
+                                          :level, 
+                                          :user_id, 
+                                          :age, 
+                                          :race, 
+                                          :height, 
+                                          :weight, 
+                                          :toughness, 
+                                          :wounds, 
+                                          :shield, 
+                                          :current_shield, 
+                                          :loot, 
+                                          :money, 
+                                          :level,
+                                          :current_skill_points,
+                                          :current_proficiency_points)
     end
     
     def set_vault_hunter

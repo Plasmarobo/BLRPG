@@ -7,6 +7,13 @@ class SkillsController < ApplicationController
   def create
   end
 
+  def batch
+    params[:skills].each do |key, value|
+      Skill.find(key).update(value)
+    end
+    render inline: "ok", layout: false
+  end
+
   def index
   end
 

@@ -1,8 +1,9 @@
-= form_tag('hunters/create'. method: :post)
-  .form-group
-    "Enter Name for Character:"
-    %br
-    = %input{name: 'vault_hunter[name]', autofocus: true, class: 'form-control', placeholder: "Lilith"}
-  .actions
-    = submit_tag "Create", class: "btn btn-default"
+%h1 New Vault Hunter
+=form_tag("/hunters/create", method: :post) do
+  .form_group
+    = label_tag("vault_hunter[name]", "Name")
+    = text_field_tag("vault_hunter[name]", "", :class => "form-control short")
+  .form_group
+    = submit_tag("Save")
+
     

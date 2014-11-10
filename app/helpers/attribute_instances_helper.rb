@@ -1,0 +1,2 @@
+module AttributeInstancesHelper
+end

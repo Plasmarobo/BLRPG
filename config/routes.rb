@@ -1,7 +1,17 @@
 Rails.application.routes.draw do
+  get 'attribute_instances/create'
+  get 'attribute_instances/update'
+
+  get 'attribute_instances/update'
+  post 'attribute_instances/update'
+
+  post 'attribute_instances/batch'
+
   get 'proficiencies/new'
 
   get 'proficiencies/create'
+
+  post 'proficiencies/batch'
 
   get 'proficiencies/index'
 
@@ -16,6 +26,8 @@ Rails.application.routes.draw do
   get 'skills/new'
 
   get 'skills/create'
+
+  post 'skills/batch'
 
   get 'skills/index'
 
@@ -35,6 +47,8 @@ Rails.application.routes.draw do
 
   get 'attacks/create'
 
+  post 'attacks/batch'
+
   get 'attacks/show'
 
   get 'attacks/edit'
@@ -52,6 +66,9 @@ Rails.application.routes.draw do
   get 'hunters/new'
   post 'hunters/new'
 
+  get 'hunters/create'
+  post 'hunters/create'
+
   get 'hunters/view'
 
   get 'hunters/edit'
@@ -61,6 +78,8 @@ Rails.application.routes.draw do
 
   get 'hunters/update'
   post 'hunters/update'
+  post 'hunters/:id/update' => 'hunters#update'
+  get 'hunters/:id/update' => 'hunters#update'
 
   get 'hunters/list'
 

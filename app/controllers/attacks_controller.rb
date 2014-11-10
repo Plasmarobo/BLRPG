@@ -9,6 +9,14 @@ class AttacksController < ApplicationController
   end
 
   def create
+    
+  end
+
+  def batch
+    params[:attacks].each do |key, value|
+      Attack.find(key).update(value)
+    end
+    render inline: "ok", layout: false
   end
 
   def show
