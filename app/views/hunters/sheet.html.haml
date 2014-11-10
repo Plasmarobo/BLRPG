@@ -1,30 +1,32 @@
 .container.page
+  %input{type: "hidden", id: "vh_current_skill_points"}
+  %input{type: "hidden", id: "vh_current_proficiency_points"}
   :javascript
-    set_vault_hunter(@vault_hunter.id);
+    = "set_vault_hunter(#{@vault_hunter.id != nil ? @vault_hunter.id.to_s : 'null'});"
   .row
     .row.single
       .field.col-sm-3
         Name
-        %input{name: "vh_name", class: "txt", value: @vault_hunter.name}
+        %input{id: "vh_name", class: "txt", value: @vault_hunter.name}
       .field.col-sm-1
         Level
-        %input{name: "vh_level", class: "num", value: @vault_hunter.level}
+        %input{id: "vh_level", class: "num", value: @vault_hunter.level}
       .field.col-sm-3
         Player
-        %input{name: "vh_player", class: "txt", value: @vault_hunter.user.username}
+        %input{id: "vh_player", class: "txt", value: @vault_hunter.user.username}
       .field.col-sm-1
         Age
-        %input{name: "vh_age", class: "num", value: @vault_hunter.age}
+        %input{id: "vh_age", class: "num", value: @vault_hunter.age}
       .field.col-sm-1
         Height
-        %input{name: "vh_height", class: "txt", value: @vault_hunter.height }
+        %input{id: "vh_height", class: "txt", value: @vault_hunter.height }
       .field.col-sm-1
         Weight
-        %input{name: "vh_weight", class: "txt", value: @vault_hunter.weight}
+        %input{id: "vh_weight", class: "txt", value: @vault_hunter.weight}
     .row.single
       .field.col-sm-3
         Race
-        %input{name: "vh_race", class: "txt", value: @vault_hunter.race}
+        %input{id: "vh_race", class: "txt", value: @vault_hunter.race}
   .row.spacer
   .row
     .region_title Attributes
@@ -36,7 +38,7 @@
               = attribute.name.capitalize
           .row
             .col-sm-12
-              %input{name: "vh_" + attribute.name, class: "bignum", value: attribute.value}
+              %input{id: "vh_" + attribute.name, class: "bignum", value: attribute.value}
           .row
             .col-sm-12
               = "[" + attribute.short + "]"
@@ -49,27 +51,27 @@
             .col-sm-12
               Toughness
             .col-sm-12
-              %input{name: "vh_toughness", class: "bignum", value: @vault_hunter.toughness}
+              %input{id: "vh_toughness", class: "bignum", value: @vault_hunter.toughness}
           .row
             .col-sm-12
               Current Wounds
             .col-sm-12
-              %input{name: "vh_wounds", class: "bignum", value: @vault_hunter.wounds}
+              %input{id: "vh_wounds", class: "bignum", value: @vault_hunter.wounds}
         .col-sm-6
           .row
             .col-sm-12
               Shield
             .col-sm-12
-              %input{name: "vh_shield", class: "bignum", value: @vault_hunter.shield}
+              %input{id: "vh_shield", class: "bignum", value: @vault_hunter.shield}
           .row
             .col-sm-12
               Current Shield
             .col-sm-12
-              %input{name: "vh_current_shield", class: "bignum", value: @vault_hunter.current_shield}
+              %input{id: "vh_current_shield", class: "bignum", value: @vault_hunter.current_shield}
       .row
         .region_title Attack Actions
         .attacks{id: :attacks}
-          -@vault_hunter.attacks.each_with_index do |attack, index|
+          -@vault_hunter.attacks.each_with do |attack|
             .row.attack_pad{id: "attack_" + attack.id.to_s}
               .row
                 .col-sm-5.hint Weapon
@@ -77,16 +79,16 @@
                 .col-sm-2.hint Damage
               .row
                 .col-sm-5
-                  %input{name: "vh_attack_name_" + index.to_s, class: "txt", value: attack.name}
+                  %input{id: "vh_attack_name_" + attack.id.to_s, class: "txt", value: attack.name}
                 .col-sm-2
-                  %input{name: "vh_attack_pool_" + index.to_s, class: "num", value: attack.pool}
+                  %input{id: "vh_attack_pool_" + attack.id.to_s, class: "num", value: attack.pool}
                 .col-sm-2
-                  %input{name: "vh_attack_dmg_" + index.to_s, class: "num", value: attack.dmg}
+                  %input{id: "vh_attack_dmg_" + attck.id.to_s, class: "num", value: attack.dmg}
               .row
                 .col-sm-12.hint Misc
               .row
                 .col-sm-12
-                  %input{name: "vh_attack_misc_" + index.to_s, class: "txt", value: attack.misc}
+                  %input{id: "vh_attack_misc_" + index.to_s, class: "txt", value: attack.misc}
         .col-sm-12
           %a{href: '#attack-window', 'data-toggle' => 'modal', 'data-target' => '#attack-window', onclick: 'build_modal("attack-window");set_modal_list("attack-window", "/attacks/new?vh="' + @vault_hunter.id.to_s + ');'}
             %img{src: "/images/plus.png"}
@@ -95,17 +97,18 @@
       .row
         .region_title Loot and Equipment
         .col-sm-12
-          %textarea{name: "vh_loot", class: "txt_box"}
+          %textarea{id: "vh_loot", class: "txt_box"}
             = @vault_hunter.loot
         .region_title Money
         .col-sm-12
           $
-          %input{name: "vh_money", class: "longnum", value: @vault_hunter.money}
+          %input{id: "vh_money", class: "longnum", value: @vault_hunter.money}
     .col-sm-6
       .row
         .region_title 
           Proficiencies (
-          = @vault_hunter.current_proficiency_points
+          .bucket{id: "current_proficiency_points"}
+            = @vault_hunter.current_proficiency_points
           )
         .col-sm-5.prof_name.hint
           Name
@@ -121,9 +124,9 @@
               .col-sm-5.prof_name
                 = proficiency.name
               .col-sm-2.prof_pool
-                = proficiency.pool
+                %input{id: "vh_proficiency_pool_" + proficiency.id.to_s, value: proficiency.pool}
               .col-sm-2.prof_points
-                = proficiency.points
+                %input{id: "vh_proficiency_points_" + proficiency.id.to_s, value: proficiency.points}
               .col-sm-3.prof_attribute
                 = proficiency_attribute(@vault_hunter, proficiency)
         .col-sm-12
@@ -151,4 +154,8 @@
           %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'build_modal("action-window");set_modal_list("action-window","/skill_templates/list");'}
             %img{src: "/images/plus.png"}
             Add Action-Skill
+  .row.spacer
+  .row
+    .col-sm-12
+      %input.btn{type: "submit", onclick:'save_vault_hunter(' + @vault_hunter.id + ');'} Save Changes
   .row.spacer

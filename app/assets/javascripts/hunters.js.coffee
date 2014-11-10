@@ -21,37 +21,37 @@
 
 @package_sheet_changes = () ->
   namespace_inputs = $("[id^=vh_");
-  namespace = {}
+  prof_refex = /proficiency_([a-z]+)_([0-9]+)/
+  attack_regex = /attack_([a-z]+)_([0-9]+)/
+  hunter = {}
+  attacks = {}
+  proficiencies = {}
+  skills = {}
 
   $.each namespace_inputs, (field) ->
     ns_name = field.id.substr(3)
-    namespace[ns_name] = field.value
-
-  VaultHunterObject =
-  {
-    name: namespace.name,
-    user_id: CurrentUserId,
-    age: namespace.age,
-    race: namespace.race,
-    height: namespace.height,
-    weight: namespace.weight,
-    toughness: namespace.toughness,
-    wounds: namespace.wounds,
-    shield: namespce.shield,
-    current_shield: namespace.current_shield,
-    loot: namespace.loot,
-    money: namespace.money,
-    level: namespace.level
-  }
-  AttackObjects = []
-  SkillObjects = []
-  ProficiencyObjects = []
+    if ns_name.substr(0,11) == "proficiency"
+      properties = ns_name.match(prof_regex)
+      id = properties[1]
+      key = properties[0]
+      if not (id in proficiencies)
+        proficiencies[id] = {name: "error_name", pool: 0, dmg: 0}
+      proficiencies[id][key] = field.value
+    else if ns_name.substr(0, 6) == "attack"
+      properties = ns_name.match(attack_regex)
+      id = properties[1]
+      key = properties[0]
+      if not (id in attacks)
+        attacks[id] = {name: "error_name", pool: 0, dmg: 0}
+      attacks[id][key] = field.value
+    else
+      hunter[ns_name] = field.value
+    
   result = 
   {
-    vault_hunter:  VaultHunterObject,
-    proficiencies: ProficiencyObjects,
-    skills:        SkillObjects,
-    attacks:       AttackObjects
+    vault_hunter:  hunter,
+    proficiencies: proficiencies,
+    attacks:       attacks,
   }
   return result;
 
@@ -78,3 +78,9 @@
   div = $('<div class=\"modal fade\" id=\"' + id + '\", role=\"dialog\", aria-labelledby=\"ModalLabel\" aria-hidden=\"true\" >')
   $('body').append(div)
 
+@upload_vault_hunter = (package) ->
+  if VaultHunterId == null
+    url = '/hunters/create'
+  else
+    url = '/hunters/' + VaultHunterId + '/update'
+  

@@ -6,13 +6,25 @@ class HuntersController < ApplicationController
     @vault_hunter.user = current_user
     render :edit
   end
+  
+  def create
+    @vault_hunter = VaultHunter.new(vault_hunter_params)
+    @vault_hunter.user = current_user
+    if @vault_hunter.save
+      flash[:notice] = "New hunter #{@vault_hunter.name} created"
+      redirect_to action: :sheet, id: @vault_hunter.id
+    else  
+      flash[:alert] = "Something went wrong"
+      redirect_to action: :new
+    end
+  end
 
   def show
     render :sheet
   end
 
   def edit
-    render :edit
+    render :sheet
   end
   
   def update
