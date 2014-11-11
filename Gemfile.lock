@@ -139,7 +139,7 @@ GEM
       rack (>= 1.0)
 
 PLATFORMS
-  ruby (~> 2.1.4)
+  ruby
 
 DEPENDENCIES
   autoprefixer-rails
