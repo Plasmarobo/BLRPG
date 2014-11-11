@@ -1,12 +1,8 @@
 
 default: &default
   adapter: postgresql
-  host: localhost
   encoding: unicode
   pool: 5
-  username: blrpg
-  password: password
-  
 
 development:
   <<: *default
