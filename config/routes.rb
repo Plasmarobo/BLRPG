@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'proficiencies/new'
 
   get 'proficiencies/create'
+  post 'proficiencies/create'
 
   post 'proficiencies/batch'
 
@@ -26,6 +27,7 @@ Rails.application.routes.draw do
   get 'skills/new'
 
   get 'skills/create'
+  post 'skills/create'
 
   post 'skills/batch'
 
@@ -44,6 +46,7 @@ Rails.application.routes.draw do
   get 'attacks/new' => 'attacks#new', as: :new_attack
 
   get 'attacks/new'
+  post 'attacks/new'
 
   get 'attacks/create'
 

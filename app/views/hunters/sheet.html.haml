@@ -2,7 +2,8 @@
   %input{type: "hidden", id: "vh_current_skill_points", value: @vault_hunter.current_skill_points}
   %input{type: "hidden", id: "vh_current_proficiency_points", value: @vault_hunter.current_proficiency_points}
   %input{type: "hidden", id: "vh_id", value: @vault_hunter.id}
-  %input{type: "hidden", id: "current_user", value: current_user.id}
+  -if user_signed_in?
+    %input{type: "hidden", id: "current_user", value: current_user.id}
   .row
     .row.single
       .field.col-sm-3

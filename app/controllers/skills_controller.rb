@@ -5,11 +5,19 @@ class SkillsController < ApplicationController
   end
 
   def create
+    if params[:parent] != nil and params[:vh] != nil
+      parent = SkillTemplate.find(params[:parent])
+      hunter = VaultHunter.find(params[:vh])
+      @action = parent.instance(hunter)
+    end
+    render :show, layout: false
   end
 
   def batch
-    params[:skills].each do |key, value|
-      Skill.find(key).update(value)
+    if params[:skills] != nil
+      params[:skills].each do |key, value|
+        Skill.find(key).update(value)
+      end
     end
     render inline: "ok", layout: false
   end

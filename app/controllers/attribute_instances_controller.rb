@@ -8,8 +8,10 @@ class AttributeInstancesController < ApplicationController
   end
 
   def batch
-    params[:attribute_instances].each do |key, value|
-      AttributeInstance.find(key).update(value)
+    if params[:attribute_instances] != nil
+      params[:attribute_instances].each do |key, value|
+        AttributeInstance.find(key).update(value)
+      end
     end
     render inline: "ok", layout: false
   end

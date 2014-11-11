@@ -3,13 +3,19 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @add_attack = (skill_id) ->
-  alert(skill_id)
+  target = $('#attacks')
+  para = {vh: parseInt($('#vh_id').val()), parent: skill_id}
+  @transact_into('/attacks/new',para, target)
 
 @add_proficiency = (template_id) ->
-  alert(template_id)
+  target = $('#proficiencies')
+  para = {vh: parseInt($('#vh_id').val()), parent: template_id, points: 0}
+  @transact_into('/proficiency/create', para, target)
 
 @add_action = (template_id) ->
-  alert(template_id)
+  target = $('#actions')
+  para = {vh: parseInt($('#vh_id').val()), parent: template_id}
+  @transact_into('/skills/create', para, target)
 
 @package_sheet_changes = () ->
   namespace_inputs = $("[id^='vh_']");
@@ -71,17 +77,46 @@
 @set_modal_list = (id, url) ->
   div = $('<div>', {class: 'container mwin'});
   $("#" + id).html("");
+  @query_into(url, id, div)
+
+@transact_into = (url, params, target, base = null) ->
+  $.ajax url,
+    type: 'POST'
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+    data: params
+    dataType: 'html'
+    success: (data) ->
+      if base != null
+        base.append(data)
+      else
+        base = data
+      $("#" + target).append(base);
+    error: (jqXHR, status) ->
+      if base != null
+        base.append(data)
+      else
+        base = data
+      $("#" + target).append(base);
+
+@query_into = (url, target, base = null) ->
   $.ajax url,
     type: 'GET'
     beforeSend: (xhr) ->
       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
     dataType: 'html'
     success: (data) ->
-      div.append(data)
-      $("#" +id).append(div);
+      if base != null
+        base.append(data)
+      else
+        base = data
+      $("#" + target).append(base);
     error: (jqXHR, status) ->
-      div.append(status)
-      $("#" + id).append(div);
+      if base != null
+        base.append(data)
+      else
+        base = data
+      $("#" + target).append(base);
 
 @clean_modals = () ->
   $('.modal').remove()
@@ -115,8 +150,6 @@
                             () ->
                               $("#count").html("5")
                               $("#save_dialog").append("<h1>Success!</h1>")
-
-
   
 @save_vault_hunter = (id) ->
   @build_modal("save_dialog")

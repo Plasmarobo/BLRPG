@@ -5,7 +5,7 @@ class AttacksController < ApplicationController
   def new
     @vault_hunter = VaultHunter.find(params[:vh])
     @attack = Attack.new
-    render layout: nil
+    render :show, layout: false
   end
 
   def create
@@ -13,8 +13,10 @@ class AttacksController < ApplicationController
   end
 
   def batch
-    params[:attacks].each do |key, value|
-      Attack.find(key).update(value)
+    if params[:attacks] != nil
+      params[:attacks].each do |key, value|
+        Attack.find(key).update(value)
+      end
     end
     render inline: "ok", layout: false
   end
