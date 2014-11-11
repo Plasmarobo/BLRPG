@@ -32,7 +32,7 @@
   .row
     .region_title Attributes
     .row.hardbox
-      -@vault_hunter.attribute_instances.each do |attribute|
+      -@vault_hunter.attribute_instances.order('id').each do |attribute|
         .cell.col-sm-3
           .row
             .col-sm-12

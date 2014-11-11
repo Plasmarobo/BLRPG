@@ -10,7 +10,7 @@ class AttributeInstancesController < ApplicationController
   def batch
     if params[:attribute_instances] != nil
       params[:attribute_instances].each do |key, value|
-        AttributeInstance.find(key).update(value)
+        AttributeInstance.find(key).update({value: value})
       end
     end
     render inline: "ok", layout: false
