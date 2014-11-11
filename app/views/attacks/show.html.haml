@@ -1,4 +1,4 @@
-.row.attack_pad{id: "attack_" + @attack.id.to_s}
+.row.attack_pad{id: "attack_" + @attack.id.to_s, oncontextmenu: "delete_attack(" + attack.id.to_s + ");return false;"}
   .row
     .col-sm-5.hint Weapon
     .col-sm-2.hint Pool

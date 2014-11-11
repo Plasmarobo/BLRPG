@@ -73,7 +73,7 @@
         .region_title Attack Actions
         .attacks{id: :attacks}
           -@vault_hunter.attacks.each do |attack|
-            .row.attack_pad{id: "attack_" + attack.id.to_s, oncontextmenu: "delete_attack(" + attack.id.to_s + ");"}
+            .row.attack_pad{id: "attack_" + attack.id.to_s, oncontextmenu: "delete_attack(" + attack.id.to_s + ");return false;"}
               .row
                 .col-sm-5.hint Weapon
                 .col-sm-2.hint Pool
@@ -121,7 +121,7 @@
           Attribute
         .proficiencies{id: :proficiencies}
           -@vault_hunter.proficiencies.each do |proficiency|
-            .row{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");"}
+            .row{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;"}
               .col-sm-5.prof_name
                 = proficiency.name
               .col-sm-2.prof_pool
@@ -147,7 +147,7 @@
           Description
         .actions{id: :actions}
           -@vault_hunter.skills.each do |action|
-            .row{id: "action_" + action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");"}
+            .row{id: "action_" + action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");return false;"}
               .col-sm-3
                 = action.name
               .col-sm-9

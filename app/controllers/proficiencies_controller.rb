@@ -30,6 +30,13 @@ class ProficienciesController < ApplicationController
   end
 
   def destroy
+    if params[:confirm] == "yes"
+      Proficiency.destroy(params[:id])
+      render inline: "destroyed", layout: false
+    else
+      render inline: "no confirm", layout: false
+    end
+   
   end
 
   def edit

@@ -9,6 +9,13 @@
   @clean_modals(false)
 
 @delete_attack = (attack_id) ->
+  del_callback = () ->
+    @json_post 'attacks/destroy/' + attack_id, 
+      {confirm: "yes"}
+      () ->
+        @clean_modals
+        $("#attack_" + attack_id).remove()
+  @confirm_dialog("You are about to delete this attack forever, continue?", del_callback)
 
 @add_proficiency = (template_id) ->
   target = 'proficiencies'
@@ -17,6 +24,13 @@
   @clean_modals(false)
   
 @delete_proficiency = (proficiency_id) ->
+   del_callback = () ->
+    @json_post 'proficiencies/destroy/' + proficiency_id, 
+      {confirm: "yes"}
+      () -> 
+        @clean_modals
+        $("#proficiency_" + proficiency_id).remove()
+  @confirm_dialog("You are about to delete this proficiency forever, continue?", del_callback)
 
 @add_action = (template_id) ->
   target = 'actions'
@@ -25,6 +39,13 @@
   @clean_modals(false)
   
 @delete_action = (action_id) ->
+   del_callback = () ->
+    @json_post 'actions/destroy/' + action_id, 
+      {confirm: "yes"}
+      () -> 
+        @clean_modals
+        $("#action_" + action_id).remove()
+  @confirm_dialog("You are about to delete this action forever, continue?", del_callback)
 
 @package_sheet_changes = () ->
   namespace_inputs = $("[id^='vh_']");

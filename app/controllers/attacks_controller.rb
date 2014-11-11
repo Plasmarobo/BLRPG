@@ -44,5 +44,11 @@ class AttacksController < ApplicationController
   end
 
   def destroy
+    if params[:confirm] == "yes"
+      Attack.destroy(params[:id])
+      render inline: "destroyed", layout: false
+    else
+      render inline: "no confirm", layout: false
+    end
   end
 end

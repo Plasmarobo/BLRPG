@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'proficiencies/show'
 
   get 'proficiencies/destroy'
+  post 'proficiencies/destroy'
 
   get 'proficiencies/edit'
 
@@ -36,6 +37,7 @@ Rails.application.routes.draw do
   get 'skills/show'
 
   get 'skills/destroy'
+  post 'skills/destroy'
 
   get 'skills/edit'
 
@@ -60,6 +62,7 @@ Rails.application.routes.draw do
   get 'attacks/update'
 
   get 'attacks/destroy'
+  post 'attacks/destroy'
 
   get 'proficiency_templates/list' => 'proficiency_templates#list', as: :proficiency_select
   resources :proficiency_templates
