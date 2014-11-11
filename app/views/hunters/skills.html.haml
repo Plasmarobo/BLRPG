@@ -1,0 +1,12 @@
+%h1 Choose Attack Skill
+-@skills.each do |skill|
+  .row{onclick: "add_attack(" + skill.id.to_s + ");"}
+    .col-sm-3
+      = skill.name
+    .col-sm-9
+      = skill.description
+.row{onclick: "add_attack(null);"}
+  .col-sm-3
+    Custom Skill
+  .col-sm-9
+    None yet

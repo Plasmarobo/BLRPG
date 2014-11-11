@@ -10,10 +10,10 @@ fin = AttributeTemplate.create(name: 'finesse', short: 'FIN')
 sir = AttributeTemplate.create(name: 'sirenity', short: 'SIN')
 tec = AttributeTemplate.create(name: 'technomancy', short: 'TEC')
 
-hack = ProficiencyTemplate.create(name: 'Hacking', attribute_name: 'technomancy')
-ProficiencyTemplate.create(name: 'Gunsmithing', attribute_name: 'technomancy')
-ProficiencyTemplate.create(name: 'Medica', attribute_name: 'sirenity')
-ProficiencyTemplate.create(name: 'Investigation', attribute_name: 'sirenity')
+hack = ProficiencyTemplate.create(name: 'Hacking', attribute_name: 'technomancy', description: 'Make computers do things')
+ProficiencyTemplate.create(name: 'Gunsmithing', attribute_name: 'technomancy', description: 'Make pretty guns')
+ProficiencyTemplate.create(name: 'Medica', attribute_name: 'sirenity', description: 'Fix bullet holes in people')
+ProficiencyTemplate.create(name: 'Investigation', attribute_name: 'sirenity', description: 'Looking for clues, tracks, and hidden things')
 
 SkillTemplate.create(name: 'Aim', skill_type:'Basic', cooldown:0, duration:0, description: 'Basic ranged attack, roll Accuracy + [FIN]')
 SkillTemplate.create(name: 'Smash', skill_type:'Basic', cooldown:0, duration:0, description: 'Basic melee attack, roll Accuracy + [BLK]')
@@ -23,7 +23,21 @@ Prerequsite.create(skill_template_id:ps.id, prereq_type:'attribute', prereq_name
 
 
 
-vh = VaultHunter.create(name: 'Angel', user_id: user.id, age: 23, race: 'Human', height:5, weight:120, toughness:5, wounds:2, shield: 2, current_shield: 1, loot:'None to speak of', money: 0, level:1)
+vh = VaultHunter.create(name: 'Angel', 
+                        user_id: user.id, 
+                        age: 23, 
+                        race: 'Human', 
+                        height:"5'2\"", 
+                        weight:"120lbs", 
+                        toughness:5, 
+                        wounds:2, 
+                        shield: 2, 
+                        current_shield: 1, 
+                        loot:'None to speak of', 
+                        money: 100, 
+                        level:1,
+                        current_skill_points: 0,
+                        current_proficiency_points: 0)
 blk.instance(vh, 1)
 fin.instance(vh, 2)
 sir.instance(vh, 5)

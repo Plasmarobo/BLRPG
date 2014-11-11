@@ -27,4 +27,10 @@ class VaultHunter < ActiveRecord::Base
     end
     return nil
   end
+  
+  def create_default_attributes
+    AttributeTemplate.find_each do |template|
+      template.instance(self, 0)
+    end
+  end
 end

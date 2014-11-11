@@ -20,11 +20,12 @@
 }
 .txt
 {
-  width:auto;
-  min-width:10em;
+  min-width:4em;
+  max-width:14em;
   border:none;
   border-bottom: solid;
   border-width: thin;
+  font-size:12pt;
 }
 .num
 {
@@ -113,4 +114,28 @@
   min-height:10em;
   border-bottom:solid;
   border-width: 2px;
+}
+
+.attacks
+{
+  height:auto;
+  max-height:20em;
+  overflow:auto;
+  overflow-x:hidden;
+}
+
+.profs
+{
+  height:auto;
+  max-height:25em;
+  overflow:auto;
+  overflow-x:hidden;
+}
+
+.skills
+{
+  height:auto;
+  max-height:15em;
+  overflow:auto;
+  overflow-x:hidden;
 }

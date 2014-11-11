@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141108014617) do
+ActiveRecord::Schema.define(version: 20141108161731) do
 
   create_table "attacks", force: true do |t|
     t.string   "name"
@@ -40,15 +40,6 @@ ActiveRecord::Schema.define(version: 20141108014617) do
     t.datetime "updated_at"
   end
 
-  create_table "attributes", force: true do |t|
-    t.string   "name"
-    t.integer  "value"
-    t.string   "short"
-    t.integer  "vault_hunter_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "prerequsites", force: true do |t|
     t.integer  "skill_template_id"
     t.string   "prereq_type"
@@ -71,6 +62,7 @@ ActiveRecord::Schema.define(version: 20141108014617) do
   create_table "proficiency_templates", force: true do |t|
     t.string   "name"
     t.string   "attribute_name"
+    t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -106,13 +98,13 @@ ActiveRecord::Schema.define(version: 20141108014617) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "username"
-    t.string   :confirmation_token
-    t.datetime :confirmed_at
-    t.datetime :confirmation_sent_at
-    t.string   :unconfirmed_email
-    t.integer  :failed_attempts, :default => 0
-    t.string   :unlock_token
-    t.datetime :locked_at
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",        default: 0
+    t.string   "unlock_token"
+    t.datetime "locked_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
@@ -124,8 +116,8 @@ ActiveRecord::Schema.define(version: 20141108014617) do
     t.string   "user_id"
     t.integer  "age"
     t.string   "race"
-    t.integer  "height"
-    t.integer  "weight"
+    t.string   "height"
+    t.string   "weight"
     t.integer  "toughness"
     t.integer  "wounds"
     t.integer  "shield"
@@ -135,6 +127,8 @@ ActiveRecord::Schema.define(version: 20141108014617) do
     t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "current_proficiency_points"
+    t.integer  "current_skill_points"
   end
 
 end

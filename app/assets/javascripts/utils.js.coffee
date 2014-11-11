@@ -1,3 +1,2 @@
-//JS utilities
-
+#Utility Library
 fadeout = (div, time) ->

@@ -1,2 +1,9 @@
-%h1 Hunters#new
-%p Find me in app/views/hunters/new.html.haml
+%h1 New Vault Hunter
+=form_tag("/hunters/create", method: :post) do
+  .form_group
+    = label_tag("vault_hunter[name]", "Name")
+    = text_field_tag("vault_hunter[name]", "", :class => "form-control short")
+  .form_group
+    = submit_tag("Save")
+
+    

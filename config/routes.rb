@@ -1,6 +1,80 @@
 Rails.application.routes.draw do
+  get 'attribute_instances/create'
+  get 'attribute_instances/update'
+
+  get 'attribute_instances/update'
+  post 'attribute_instances/update'
+
+  post 'attribute_instances/batch'
+
+  get 'proficiencies/new'
+
+  get 'proficiencies/create'
+  post 'proficiencies/create'
+
+  post 'proficiencies/batch'
+
+  get 'proficiencies/index'
+
+  get 'proficiencies/show'
+
+  get 'proficiencies/destroy'
+  post 'proficiencies/destroy'
+
+  get 'proficiencies/edit'
+
+  get 'proficiencies/update'
+
+  get 'skills/new'
+
+  get 'skills/create'
+  post 'skills/create'
+
+  post 'skills/batch'
+
+  get 'skills/index'
+
+  get 'skills/show'
+
+  get 'skills/destroy'
+  post 'skills/destroy'
+
+  get 'skills/edit'
+
+  get 'skills/update'
+
+  get 'attacks/index'
+
+  get 'attacks/new' => 'attacks#new', as: :new_attack
+
+  get 'attacks/new'
+  post 'attacks/new'
+
+  get 'attacks/create'
+  post 'attacks/create'
+
+  post 'attacks/batch'
+
+  get 'attacks/show'
+
+  get 'attacks/edit'
+
+  get 'attacks/update'
+
+  get 'attacks/destroy'
+  post 'attacks/destroy'
+
+  get 'proficiency_templates/list' => 'proficiency_templates#list', as: :proficiency_select
+  resources :proficiency_templates
+
+  get 'skill_templates/list' => 'skill_templates#list', as: :skill_select
+  resources :skill_templates
+
   get 'hunters/new'
   post 'hunters/new'
+
+  get 'hunters/create'
+  post 'hunters/create'
 
   get 'hunters/view'
 
@@ -11,22 +85,16 @@ Rails.application.routes.draw do
 
   get 'hunters/update'
   post 'hunters/update'
+  post 'hunters/:id/update' => 'hunters#update'
+  get 'hunters/:id/update' => 'hunters#update'
 
   get 'hunters/list'
 
+  get 'hunters/:id/skills' => 'hunters#skills'
+
+  get 'hunters/:id/potentials' => 'hunter#potentialskills'
+
   resources :hunters
-
-  get 'templates/list'
-
-  get 'templates/new'
-
-  get 'templates/edit'
-
-  get 'templates/delete'
-
-  get 'player/characters'
-
-  get 'player/sheet'
 
   get 'home/dashboard'
 

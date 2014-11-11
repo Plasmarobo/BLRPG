@@ -1,0 +1,17 @@
+.row.attack_pad{id: "attack_" + @attack.id.to_s, oncontextmenu: "delete_attack(" + attack.id.to_s + ");return false;"}
+  .row
+    .col-sm-5.hint Weapon
+    .col-sm-2.hint Pool
+    .col-sm-2.hint Damage
+  .row
+    .col-sm-5
+      %input{id: "vh_attack_name_" + @attack.id.to_s, class: "txt", value: @attack.name}
+    .col-sm-2
+      %input{id: "vh_attack_pool_" + @attack.id.to_s, class: "num", value: @attack.pool}
+    .col-sm-2
+      %input{id: "vh_attack_dmg_" + @attack.id.to_s, class: "num", value: @attack.dmg}
+  .row
+    .col-sm-12.hint Misc
+  .row
+    .col-sm-12
+      %input{id: "vh_attack_misc_" + @attack.id.to_s, class: "txt", value: @attack.misc}

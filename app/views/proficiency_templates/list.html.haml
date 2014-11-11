@@ -1,0 +1,17 @@
+.container
+  .row
+    .col-sm-4.hint
+      Name
+    .col-sm-3.hint
+      Attribute
+    .col-sm-5.hint
+      Description
+  .proficiency_templates{id: "proficiency_templates"}
+    -@proficiencies.each do |prof|
+      .row{onclick: 'add_proficiency(' + prof.id.to_s + ')'}
+        .col-sm-4
+          = prof.name
+        .col-sm-3
+          = prof.attribute_name
+        .col-sm-5
+          = prof.description

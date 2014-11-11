@@ -1,0 +1,5 @@
+.row{id: "action_" + @action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");return false;"}
+  .col-sm-3
+    = @action.name
+  .col-sm-9
+    = @action.description
