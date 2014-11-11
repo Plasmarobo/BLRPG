@@ -10,12 +10,12 @@
 
 @delete_attack = (attack_id) ->
   del_callback = () ->
-    @json_post 'attacks/destroy/' + attack_id, 
-      {confirm: "yes"}
+    @json_post '/attacks/destroy', 
+      {confirm: "yes", id: attack_id}
       () ->
-        @clean_modals
         $("#attack_" + attack_id).remove()
   @confirm_dialog("You are about to delete this attack forever, continue?", del_callback)
+  false
 
 @add_proficiency = (template_id) ->
   target = 'proficiencies'
@@ -24,13 +24,13 @@
   @clean_modals(false)
   
 @delete_proficiency = (proficiency_id) ->
-   del_callback = () ->
-    @json_post 'proficiencies/destroy/' + proficiency_id, 
-      {confirm: "yes"}
+  del_callback = () ->
+    @json_post '/proficiencies/destroy', 
+      {confirm: "yes", id: proficiency_id}
       () -> 
-        @clean_modals
         $("#proficiency_" + proficiency_id).remove()
   @confirm_dialog("You are about to delete this proficiency forever, continue?", del_callback)
+  false
 
 @add_action = (template_id) ->
   target = 'actions'
@@ -39,13 +39,13 @@
   @clean_modals(false)
   
 @delete_action = (action_id) ->
-   del_callback = () ->
-    @json_post 'actions/destroy/' + action_id, 
-      {confirm: "yes"}
+  del_callback = () ->
+    @json_post '/skills/destroy', 
+      {confirm: "yes", id: action_id}
       () -> 
-        @clean_modals
         $("#action_" + action_id).remove()
   @confirm_dialog("You are about to delete this action forever, continue?", del_callback)
+  false
 
 @package_sheet_changes = () ->
   namespace_inputs = $("[id^='vh_']");
@@ -183,20 +183,24 @@
                             {attribute_instances: vault_objects.attribs}
                             () ->
                               $("#count").html("5")
-                              $("#save_dialog").append("<h1>Success!</h1>")
+                              callback()
   
 @save_vault_hunter = (id) ->
-  @build_modal("save_dialog")
-  $("#save_dialog").html("<h1>Saving, please wait</h1><span id='count'>0</span><span id='target'>0</span>");
+  build_modal("save_dialog")
+  $("#save_dialog").modal('show');
+  $("#save_dialog").append("<div class='container mwin'><h1>Saving, please wait</h1><span id='count'>0</span>/<span id='target'>0</span></div>");
   vault_objects = package_sheet_changes()
   close_save_dialog = () ->
     $("#save_dialog").modal('hide');
   upload_vault_hunter(id, vault_objects, close_save_dialog)
   
 @confirm_dialog = (message, y_callback) ->
-  @build_modal("confirm")
-  $("#confirm").html("<h1>Are you sure?</h1><p>"+message+"</p>");
-  $("#confirm").append("<button id='yes_btn' class='btn btn-default'>Yes</button><button id='cancel_btn' class='btn btn-default'>Cancel</button>")
-  $("#yes_btn").onclick = y_callback
-  $("#cancel_btn").onclick = @clear_modals
+  build_modal("confirm")
+  $("#confirm").modal('show')
+  $("#confirm").append("<div class='container mwin'><h1>Are you sure?</h1><p>"+message+"</p><button id='yes_btn' class='btn btn-default'>Yes</button><button id='cancel_btn' class='btn btn-default'>Cancel</button></div>")
+  $("#yes_btn").click () ->
+    y_callback()
+    clean_modals(false)
+  $("#cancel_btn").click () ->
+    clean_modals(false)
   false

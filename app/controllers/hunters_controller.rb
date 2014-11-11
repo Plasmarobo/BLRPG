@@ -10,6 +10,8 @@ class HuntersController < ApplicationController
     @vault_hunter = VaultHunter.new(vault_hunter_params)
     @vault_hunter.user = current_user
     if @vault_hunter.save
+      #default attributes
+      @vault_hunter.create_default_attributes()
       flash[:notice] = "New hunter #{@vault_hunter.name} created"
       redirect_to action: :show, id: @vault_hunter.id
     else  
