@@ -73,7 +73,7 @@
         .region_title Attack Actions
         .attacks{id: :attacks}
           -@vault_hunter.attacks.each do |attack|
-            .row.attack_pad{id: "attack_" + attack.id.to_s}
+            .row.attack_pad{id: "attack_" + attack.id.to_s, oncontextmenu: "delete_attack(" + attack.id.to_s + ");"}
               .row
                 .col-sm-5.hint Weapon
                 .col-sm-2.hint Pool
@@ -91,7 +91,7 @@
                 .col-sm-12
                   %input{id: "vh_attack_misc_" + attack.id.to_s, class: "txt", value: attack.misc}
         .col-sm-12
-          %a{href: '#attack-window', 'data-toggle' => 'modal', 'data-target' => '#attack-window', onclick: 'build_modal("attack-window");set_modal_list("attack-window", "/attacks/new?vh="' + @vault_hunter.id.to_s + ');'}
+          %a{href: '#attack-window', 'data-toggle' => 'modal', 'data-target' => '#attack-window', onclick: 'build_modal("attack-window");set_modal_list("attack-window", "/hunters/' + @vault_hunter.id.to_s + '/skills");'}
             %img{src: "/images/plus.png"}
             Add Attack
       .row.spacer
@@ -105,7 +105,7 @@
           $
           %input{id: "vh_money", class: "longnum", value: @vault_hunter.money}
     .col-sm-6
-      .row
+      .row.profs
         .region_title 
           Proficiencies (
           %span.bucket{id: "current_proficiency_points"}
@@ -121,7 +121,7 @@
           Attribute
         .proficiencies{id: :proficiencies}
           -@vault_hunter.proficiencies.each do |proficiency|
-            .row{id: "proficiency_" + proficiency.id.to_s}
+            .row{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");"}
               .col-sm-5.prof_name
                 = proficiency.name
               .col-sm-2.prof_pool
@@ -135,7 +135,7 @@
             %img{src: "/images/plus.png"}
             Add Proficiency
       .row.spacer
-      .row
+      .row.skills
         .region_title 
           Action Skills (
           %span.bucket{id: "current_skill_points"}
@@ -147,7 +147,7 @@
           Description
         .actions{id: :actions}
           -@vault_hunter.skills.each do |action|
-            .row{id: "action_" + action.id.to_s}
+            .row{id: "action_" + action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");"}
               .col-sm-3
                 = action.name
               .col-sm-9

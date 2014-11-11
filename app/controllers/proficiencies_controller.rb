@@ -5,7 +5,8 @@ class ProficienciesController < ApplicationController
   def create
     if params[:parent] != nil and params[:vh] != nil and params[:points]
       parent = ProficiencyTemplate.find(params[:parent])
-      hunter = VaultHunter.find(param[:vh])
+      hunter = VaultHunter.find(params[:vh])
+      points = params[:points]
       @proficiency = parent.instance(hunter, points)
     end
     render :show, layout: false

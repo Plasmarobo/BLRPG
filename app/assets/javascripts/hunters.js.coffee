@@ -3,19 +3,28 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 @add_attack = (skill_id) ->
-  target = $('#attacks')
+  target = 'attacks'
   para = {vh: parseInt($('#vh_id').val()), parent: skill_id}
-  @transact_into('/attacks/new',para, target)
+  @transact_into('/attacks/create',para, target)
+  @clean_modals(false)
+
+@delete_attack = (attack_id) ->
 
 @add_proficiency = (template_id) ->
-  target = $('#proficiencies')
+  target = 'proficiencies'
   para = {vh: parseInt($('#vh_id').val()), parent: template_id, points: 0}
-  @transact_into('/proficiency/create', para, target)
+  @transact_into('/proficiencies/create', para, target)
+  @clean_modals(false)
+  
+@delete_proficiency = (proficiency_id) ->
 
 @add_action = (template_id) ->
-  target = $('#actions')
+  target = 'actions'
   para = {vh: parseInt($('#vh_id').val()), parent: template_id}
   @transact_into('/skills/create', para, target)
+  @clean_modals(false)
+  
+@delete_action = (action_id) ->
 
 @package_sheet_changes = () ->
   namespace_inputs = $("[id^='vh_']");
@@ -34,16 +43,16 @@
       properties = ns_name.match(prof_regex)
       id = properties[2]
       key = properties[1]
-      if not (id in proficiencies)
-        proficiencies[id] = {pool: 0, points: 0}
-      proficiencies[id][key] = field.value
+      if not (proficiencies.hasOwnProperty(id))
+        proficiencies[id] = {}
+      (proficiencies[id])[key] = field.value
     else if ns_name.substr(0, 6) == "attack"
       properties = ns_name.match(attack_regex)
       id = properties[2]
       key = properties[1]
-      if not (id in attacks)
-        attacks[id] = {name: "error_name", pool: 0, dmg: 0}
-      attacks[id][key] = field.value
+      if not (attacks.hasOwnProperty(id))
+        attacks[id] = {}
+      (attacks[id])[key] = field.value
     else if ns_name.substr(0, 6) == "attrib"
       properties = ns_name.match(attrib_regex)
       id = properties[1]
@@ -118,8 +127,12 @@
         base = data
       $("#" + target).append(base);
 
-@clean_modals = () ->
-  $('.modal').remove()
+@clean_modals = (include_error) ->
+  set = $('.modal')
+  if include_error
+    set.remove()
+  else
+    set.not('#error-window').remove()
 
 @build_modal = (id) ->
   clean_modals()
@@ -158,3 +171,11 @@
   close_save_dialog = () ->
     $("#save_dialog").modal('hide');
   upload_vault_hunter(id, vault_objects, close_save_dialog)
+  
+@confirm_dialog = (message, y_callback) ->
+  @build_modal("confirm")
+  $("#confirm").html("<h1>Are you sure?</h1><p>"+message+"</p>");
+  $("#confirm").append("<button id='yes_btn' class='btn btn-default'>Yes</button><button id='cancel_btn' class='btn btn-default'>Cancel</button>")
+  $("#yes_btn").onclick = y_callback
+  $("#cancel_btn").onclick = @clear_modals
+  false

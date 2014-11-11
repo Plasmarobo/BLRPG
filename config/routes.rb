@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   post 'attacks/new'
 
   get 'attacks/create'
+  post 'attacks/create'
 
   post 'attacks/batch'
 

@@ -9,7 +9,20 @@ class AttacksController < ApplicationController
   end
 
   def create
-    
+    if params[:parent] != nil and params[:parent] != ""
+      skill = params[:parent]
+    else
+      skill = nil
+    end
+    name = "Custom Attack"
+    if skill != nil
+      parent = Skill.find(skill)
+      if parent != nil
+        name = parent.name
+      end
+    end
+    @attack = Attack.create(name: name, vault_hunter_id: params[:vh], pool: 0, dmg: 0, misc: "", skill_id: skill)
+    render :show, layout: false
   end
 
   def batch
