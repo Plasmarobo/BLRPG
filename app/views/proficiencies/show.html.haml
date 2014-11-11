@@ -1,4 +1,4 @@
-.row{id: "proficiency_" + @proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;"}
+.row{id: "proficiency_" + @proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + @proficiency.id.to_s + ");return false;"}
   .col-sm-5.prof_name
     = @proficiency.name
   .col-sm-2.prof_pool

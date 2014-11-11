@@ -179,8 +179,8 @@
                         {attacks: vault_objects.attacks}
                         () ->
                           $("#count").html("4")
-                          json_post '/attribute_instances/update',
-                            {attribute_instances: vault_objects.attribs}
+                          json_post '/attribute_instances/batch',
+                            {attribute_instances: vault_objects.attributes}
                             () ->
                               $("#count").html("5")
                               callback()

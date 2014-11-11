@@ -46,6 +46,11 @@
   border-width: 2px;
   height:auto;
   width:auto;
+  background-color:#EEEEEE;
+}
+
+.softbox
+{
 }
 .cell
 {
@@ -109,33 +114,48 @@
 {
   margin:0.5em;
 }
+
+
+.attacks
+{
+  height:auto;
+  min-height:10em;
+  max-height:20em;
+  overflow:auto;
+  overflow-x:hidden;
+  background-color:#F0F0F0;
+  margin-right:1em;
+}
+
 .proficiencies
 {
   min-height:10em;
   border-bottom:solid;
   border-width: 2px;
-}
-
-.attacks
-{
-  height:auto;
-  max-height:20em;
-  overflow:auto;
-  overflow-x:hidden;
+  background-color:#F0F0F0;
 }
 
 .profs
 {
   height:auto;
+  min-height:10em;
   max-height:25em;
   overflow:auto;
   overflow-x:hidden;
 }
 
+.actions{
+  height:auto;
+  min-height:5em;
+  
+}
+
 .skills
 {
   height:auto;
-  max-height:15em;
+  min-height:5em;
+  max-height:20emem;
   overflow:auto;
   overflow-x:hidden;
+  background-color:#F0F0F0;
 }
