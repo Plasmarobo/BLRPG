@@ -7,26 +7,26 @@
   .row
     .row.single
       .field.col-sm-3
-        Name
+        .hint Name
         %input{id: "vh_name", class: "txt", value: @vault_hunter.name}
       .field.col-sm-1
-        Level
+        .hint Level
         %input{id: "vh_level", class: "num", value: @vault_hunter.level}
       .field.col-sm-3
-        Player
+        .hint Player
         %input{id: "dontparse_player", class: "txt", value: @vault_hunter.user.username, readonly: "true"}
       .field.col-sm-1
-        Age
+        .hint Age
         %input{id: "vh_age", class: "num", value: @vault_hunter.age}
       .field.col-sm-1
-        Height
+        .hint Height
         %input{id: "vh_height", class: "txt", value: @vault_hunter.height }
       .field.col-sm-1
-        Weight
+        .hint Weight
         %input{id: "vh_weight", class: "txt", value: @vault_hunter.weight}
     .row.single
       .field.col-sm-3
-        Race
+        .hint Race
         %input{id: "vh_race", class: "txt", value: @vault_hunter.race}
   .row.spacer
   .row
@@ -46,7 +46,7 @@
   .row.spacer
   .row
     .col-sm-6
-      .row
+      .row.softbox
         .col-sm-6
           .row
             .col-sm-12
