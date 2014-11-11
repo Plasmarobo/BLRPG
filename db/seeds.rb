@@ -1,9 +1,9 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
-user = User.new(username: 'plasmarobo', email: 'plasmarobo@gmail.com', password: 'password', password_confirmation: 'password')
-user.skip_confirmation!
-user.save!
+#user = User.new(username: 'plasmarobo', email: 'plasmarobo@gmail.com', password: 'password', password_confirmation: 'password')
+#user.skip_confirmation!
+#user.save!
 
 blk = AttributeTemplate.create(name: 'bulk', short: 'BLK')
 fin = AttributeTemplate.create(name: 'finesse', short: 'FIN')
@@ -23,27 +23,27 @@ Prerequsite.create(skill_template_id:ps.id, prereq_type:'attribute', prereq_name
 
 
 
-vh = VaultHunter.create(name: 'Angel', 
-                        user_id: user.id, 
-                        age: 23, 
-                        race: 'Human', 
-                        height:"5'2\"", 
-                        weight:"120lbs", 
-                        toughness:5, 
-                        wounds:2, 
-                        shield: 2, 
-                        current_shield: 1, 
-                        loot:'None to speak of', 
-                        money: 100, 
-                        level:1,
-                        current_skill_points: 0,
-                        current_proficiency_points: 0)
-blk.instance(vh, 1)
-fin.instance(vh, 2)
-sir.instance(vh, 5)
-tec.instance(vh, 3)
+#vh = VaultHunter.create(name: 'Angel', 
+#                        user_id: user.id, 
+#                        age: 23, 
+#                        race: 'Human', 
+#                        height:"5'2\"", 
+#                        weight:"120lbs", 
+#                        toughness:5, 
+#                        wounds:2, 
+#                        shield: 2, 
+#                        current_shield: 1, 
+#                        loot:'None to speak of', 
+#                        money: 100, 
+#                        level:1,
+#                        current_skill_points: 0,
+#                        current_proficiency_points: 0)
+#blk.instance(vh, 1)
+#fin.instance(vh, 2)
+#sir.instance(vh, 5)
+#tec.instance(vh, 3)
 
-atk_skill = ps.instance(vh)
-hack.instance(vh, 2)
+#atk_skill = ps.instance(vh)
+#hack.instance(vh, 2)
 
-atk = Attack.create(vault_hunter_id:vh.id, name: 'Aim', pool: vh.attribute_instances.find_by_name('finesse').value + 2, dmg: 2, misc: 'Fire 1', skill_id: atk_skill.id)
+#atk = Attack.create(vault_hunter_id:vh.id, name: 'Aim', pool: vh.attribute_instances.find_by_name('finesse').value + 2, dmg: 2, misc: 'Fire 1', skill_id: atk_skill.id)
