@@ -16,3 +16,6 @@
 /tmp
 /.c9
 .c9
+
+# Ignore secret config!
+config/application.yml

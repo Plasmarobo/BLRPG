@@ -5,11 +5,13 @@
 #user.skip_confirmation!
 #user.save!
 
+#Production Attributes
 blk = AttributeTemplate.create(name: 'bulk', short: 'BLK')
 fin = AttributeTemplate.create(name: 'finesse', short: 'FIN')
 sir = AttributeTemplate.create(name: 'sirenity', short: 'SIN')
 tec = AttributeTemplate.create(name: 'technomancy', short: 'TEC')
 
+#Production Proficiencies
 hack = ProficiencyTemplate.create(name: 'Hacking', description: 'Make computers do things')
 ProficiencyTemplate.create(name: 'Gunsmithing', description: 'Make pretty guns')
 ProficiencyTemplate.create(name: 'Medica', description: 'Fix bullet holes in people')
@@ -17,7 +19,7 @@ ProficiencyTemplate.create(name: 'Investigation', description: 'Looking for clue
 
 SkillTemplate.create(name: 'Aim', skill_type:'Basic', cooldown:0, duration:0, description: 'Basic ranged attack, roll Accuracy + [FIN]')
 SkillTemplate.create(name: 'Smash', skill_type:'Basic', cooldown:0, duration:0, description: 'Basic melee attack, roll Accuracy + [BLK]')
-ps = SkillTemplate.create(name: 'PhaseShift', skill_type:'Defining', cooldown:0, duration:0, description: 'Hack doors and computers with an action')
+SkillTemplate.create(name: 'PhaseShift', skill_type:'Defining', cooldown:0, duration:0, description: 'Hack doors and computers with an action')
 
 Prerequsite.create(skill_template_id:ps.id, prereq_type:'attribute', prereq_name: 'finesse', value:2)
 

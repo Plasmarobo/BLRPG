@@ -50,3 +50,5 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 
 gem 'bootstrap-modal-rails'
+
+gem 'omniauth-google-oauth2'
