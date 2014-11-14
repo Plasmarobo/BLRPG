@@ -1,5 +1,5 @@
 .row{id: "proficiency_" + @proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + @proficiency.id.to_s + ");return false;"}
-  .col-sm-5.prof_name
+  .col-sm-9.prof_name
     = @proficiency.name
-  .col-sm-2.prof_tier
+  .col-sm-3.prof_tier
     %input{id: "vh_proficiency_tier_" + @proficiency.id.to_s, value: @proficiency.tier, class: "num"}
