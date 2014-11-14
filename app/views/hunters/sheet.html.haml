@@ -111,25 +111,17 @@
           %span.bucket{id: "current_proficiency_points"}
             = @vault_hunter.current_proficiency_points
           )
-        .col-sm-5.prof_name.hint
+        .col-sm-9.prof_name.hint
           Name
-        .col-sm-2.prof_pool.hint
-          Pool
-        .col-sm-2.prof_points.hint
-          Points
-        .col-sm-3.prof_attribute.hint
-          Attribute
+        .col-sm-3.prof_tier.hint
+          Tier
         .proficiencies{id: :proficiencies}
           -@vault_hunter.proficiencies.each do |proficiency|
             .row{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;"}
-              .col-sm-5.prof_name
+              .col-sm-9.prof_name
                 = proficiency.name
-              .col-sm-2.prof_pool
-                %input{id: "vh_proficiency_pool_" + proficiency.id.to_s, value: proficiency.pool, class: "num"}
-              .col-sm-2.prof_points
-                %input{id: "vh_proficiency_points_" + proficiency.id.to_s, value: proficiency.points, class: "num"}
-              .col-sm-3.prof_attribute
-                = proficiency_attribute(@vault_hunter, proficiency)
+              .col-sm-3.prof_pool
+                %input{id: "vh_proficiency_tier_" + proficiency.id.to_s, value: proficiency.tier, class: "num"}
         .col-sm-12
           %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'build_modal("prof-window");set_modal_list("prof-window", "/proficiency_templates/list");'}
             %img{src: "/images/plus.png"}
