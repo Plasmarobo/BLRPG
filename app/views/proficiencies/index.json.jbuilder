@@ -3,9 +3,7 @@ json.array do
     json do
       json.id = prof.id
       json.name = prof.name
-      json.pool = prof.pool
-      json.points = prof.points
-      json.attribute_name = prof.attribute_name
+      json.tier = prof.tier
       json.vault_hunter_id = prof.vault_hunter_id
     end
   end

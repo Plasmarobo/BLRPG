@@ -1,6 +1,6 @@
 class HuntersController < ApplicationController
   before_filter :set_vault_hunter, only: [:show, :edit, :update, :delete, :skills, :potentialskills]
-  helper HuntersHelper
+
   def new
     @vault_hunter = VaultHunter.new  
     @vault_hunter.user = current_user
