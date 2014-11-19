@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  get 'import/google_sheet'
+
+  get 'import/json'
+
+  get 'import/csv'
+
+  get 'import/xlsx'
+
   get 'attribute_instances/create'
   get 'attribute_instances/update'
 
