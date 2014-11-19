@@ -1,13 +1,13 @@
-.container
-  .row
-    .col-sm-4.hint
-      Name
-    .col-sm-8.hint
-      Description
-  .proficiency_templates{id: "proficiency_templates"}
-    -@proficiencies.each do |prof|
-      .row{onclick: 'add_proficiency(' + prof.id.to_s + ')'}
-        .col-sm-4
-          = prof.name
-        .col-sm-8
-          = prof.description
+
+.row
+  .col-sm-4.hint
+    Name
+  .col-sm-8.hint
+    Description
+.proficiency_templates{id: "proficiency_templates"}
+  -@proficiencies.each_with_index do |prof, index|
+    .row{onclick: 'add_proficiency(' + prof.id.to_s + ')', class: (index % 2 == 0) ? "alt" : ""}
+      .col-sm-4
+        = prof.name
+      .col-sm-8
+        = prof.description

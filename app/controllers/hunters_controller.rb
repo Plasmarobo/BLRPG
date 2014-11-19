@@ -1,5 +1,5 @@
 class HuntersController < ApplicationController
-  before_filter :set_vault_hunter, only: [:show, :edit, :update, :delete, :skills, :potentialskills]
+  before_filter :set_vault_hunter, only: [:show, :share, :edit, :update, :delete, :skills, :potentialskills]
 
   def new
     @vault_hunter = VaultHunter.new  
@@ -21,18 +21,34 @@ class HuntersController < ApplicationController
   end
 
   def show
-    render :sheet
+    if current_user == @vault_hunter.user
+      render :sheet
+    else
+      redirect_to '/'
+    end
+  end
+
+  def share
+    render :share
   end
 
   def edit
-    render :sheet
+    if current_user == @vault_hunter.user
+      render :sheet
+    else
+      redirect_to '/'
+    end
   end
   
   def update
-    update_set = vault_hunter_params
-    @vault_hunter.update(update_set)
-    if @vault_hunter.save
-      render inline: "ok", layout: false
+    if current_user == @vault_hunter.user
+      update_set = vault_hunter_params
+      @vault_hunter.update(update_set)
+      if @vault_hunter.save
+        render inline: "ok", layout: false
+      else
+        render inline: "failed", layout: false
+      end
     else
       render inline: "failed", layout: false
     end
@@ -44,7 +60,7 @@ class HuntersController < ApplicationController
   
 
   def list
-    @vault_hunters = VaultHunter.all
+    @vault_hunters = current_user.vault_hunters
     render :list
   end
 
