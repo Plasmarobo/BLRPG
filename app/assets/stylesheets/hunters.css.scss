@@ -4,7 +4,12 @@
 .page
 {
   max-width:60em;
-  margin-left:1em;
+  margin-left:auto;
+  margin-right:auto;
+  border:solid;
+  border-width:1px;
+  border-color:#EEEEEE;
+  padding:4em;
 }
 .row
 {
