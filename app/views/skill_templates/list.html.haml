@@ -1,17 +1,17 @@
-.container
-  .row
-    .col-sm-3.hint
-      Name
-    .col-sm-3.hint
-      Type
-    .col-sm-6.hint
-      Description
-  .skill_templates{id: "skill_templates"}
-    -@skills.each do |skill|
-      .row{onclick: 'add_action(' + skill.id.to_s + ')'}
-        .col-sm-4
-          = skill.name
-        .col-sm-3
-          = skill.skill_type
-        .col-sm-5
-          = skill.description
+
+.row
+  .col-sm-3.hint
+    Name
+  .col-sm-3.hint
+    Type
+  .col-sm-6.hint
+    Description
+.skill_templates{id: "skill_templates"}
+  -@skills.each_with_index do |skill, index|
+    .row{onclick: 'add_action(' + skill.id.to_s + ')', class: (index % 2 == 0) ? "alt" : ""}
+      .col-sm-4
+        = skill.name
+      .col-sm-3
+        = skill.skill_type
+      .col-sm-5
+        = skill.description

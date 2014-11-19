@@ -116,8 +116,8 @@
         .col-sm-3.prof_tier.hint
           Tier
         .proficiencies{id: :proficiencies}
-          -@vault_hunter.proficiencies.each do |proficiency|
-            .row{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;"}
+          -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
+            .row{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;", class: (index % 2 == 0) ? "alt" : ""}
               .col-sm-9.prof_name
                 = proficiency.name
               .col-sm-3.prof_tier
@@ -138,8 +138,8 @@
         .col-sm-9.hint
           Description
         .actions{id: :actions}
-          -@vault_hunter.skills.each do |action|
-            .row{id: "action_" + action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");return false;"}
+          -@vault_hunter.skills.each_with_index do |action,index|
+            .row{id: "action_" + action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");return false;", class: (index % 2 == 0) ? "alt" : ""}
               .col-sm-3
                 = action.name
               .col-sm-9

@@ -102,6 +102,8 @@ Rails.application.routes.draw do
 
   get 'hunters/:id/potentials' => 'hunter#potentialskills'
 
+  get 'hunters/:id/share' => 'hunters#share'
+
   resources :hunters
 
   get 'home/dashboard'
