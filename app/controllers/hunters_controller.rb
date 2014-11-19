@@ -22,7 +22,10 @@ class HuntersController < ApplicationController
 
   def show
     if current_user == @vault_hunter.user
-      render :sheet
+      respond_to do |format|
+        format.html { render :sheet }
+        format.json { render :view }
+      end
     else
       redirect_to '/'
     end
