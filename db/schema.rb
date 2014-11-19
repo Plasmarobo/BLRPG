@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20141114173707) do
 
   create_table "proficiency_templates", force: true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20141114173707) do
     t.string   "skill_type"
     t.integer  "cooldown"
     t.integer  "duration"
-    t.string   "description"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
