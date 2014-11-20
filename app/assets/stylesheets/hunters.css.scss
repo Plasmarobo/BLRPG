@@ -3,13 +3,13 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .page
 {
-  max-width:60em;
+  max-width:65em;
   margin-left:auto;
   margin-right:auto;
   border:solid;
   border-width:1px;
   border-color:#EEEEEE;
-  padding:4em;
+  padding:2em;
 }
 .row
 {
@@ -25,7 +25,7 @@
 }
 .alt
 {
-  background-color:#DDDDDD;
+  background-color:#E5E5E5;
   box-sizing: border-box;
 }
 .txt
@@ -36,6 +36,8 @@
   border-bottom: solid;
   border-width: thin;
   font-size:12pt;
+  background-color:transparent;
+  max-width:100%;
 }
 .num
 {
@@ -44,6 +46,9 @@
   border-bottom: solid;
   border-width: thin;
   font-size:12pt;
+  background-color:transparent;
+  text-align:right;
+  max-width:100%;
 }
 .region_title
 {
@@ -56,11 +61,19 @@
   border-width: 2px;
   height:auto;
   width:auto;
-  background-color:#EEEEEE;
+  background-color:#F6F6F6;
 }
 
 .softbox
 {
+  background-color:#F6F6F6;
+  margin-right:1em;
+  padding-bottom:1em;
+  min-height:10em;
+  height:auto;
+  border-bottom:solid;
+  border-width: 2px;
+  text-align: center;
 }
 .cell
 {
@@ -76,6 +89,7 @@
   text-align: center;
   font-weight: bold;
   font-family: Verdana;
+  background-color:transparent;
 }
 .auto
 {
@@ -107,6 +121,7 @@
 {
   width:100%;
   min-height:10em;
+  background-color:transparent;
 }
 
 .longnum
@@ -116,6 +131,7 @@
   border-width: thin;
   min-width: 10em;
   text-align: right;
+  background-color:transparent;
 }
 .attack_pad
 {
@@ -130,8 +146,10 @@
   max-height:20em;
   overflow:auto;
   overflow-x:hidden;
-  background-color:#F0F0F0;
+  background-color:#F6F6F6;
   margin-right:1em;
+  border-bottom:solid;
+  border-width: 2px;
 }
 
 .proficiencies
@@ -139,7 +157,7 @@
   min-height:10em;
   border-bottom:solid;
   border-width: 2px;
-  background-color:#F0F0F0;
+  background-color:#F6F6F6;
 }
 
 .profs
@@ -153,8 +171,15 @@
 
 .actions{
   height:auto;
-  min-height:5em;
-  
+  min-height:10em;
+  border-bottom:solid;
+  border-width: 2px;
+  background-color:#F6F6F6;
+}
+
+.smalltext
+{
+  font-size:8pt;
 }
 
 .skills
@@ -164,5 +189,19 @@
   max-height:20emem;
   overflow:auto;
   overflow-x:hidden;
-  background-color:#F0F0F0;
+}
+
+.action
+{
+ padding-left:0.5em;
+ padding-right:0.5em;
+}
+
+.proficiencies
+{
+  padding-left:0.5em;
+  padding-right:0.5em;
+}
+.misc{
+  width:100%;
 }

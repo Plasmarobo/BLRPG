@@ -106,7 +106,7 @@
         .region_title Loot and Equipment
         .col-sm-12
           .txt_box
-            = @vault_hunter.loot
+            = find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe
         .region_title Money
         .col-sm-12
           .longnum
