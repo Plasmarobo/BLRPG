@@ -97,14 +97,19 @@ Rails.application.routes.draw do
   get 'hunters/:id/update' => 'hunters#update'
 
   get 'hunters/list'
+ 
 
   get 'hunters/:id/skills' => 'hunters#skills'
 
   get 'hunters/:id/potentials' => 'hunter#potentialskills'
 
   get 'hunters/:id/share' => 'hunters#share'
+  
+  get 'hunters/:id' => 'hunters#show'
 
-  resources :hunters
+  get 'hunters/index' => 'hunters#list'
+  get 'hunters/' => 'hunters#list'
+  get 'hunters' => 'hunters#list'
 
   get 'home/dashboard'
 

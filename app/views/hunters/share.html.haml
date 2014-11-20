@@ -1,146 +1,146 @@
-.container.page
+.container.vh_page
   .row
-    .row.single
-      .field.col-sm-3
-        .hint Name
-        .txt
+    .row.vh_single
+      .vh_field.col-sm-3
+        .vh_hint Name
+        .vh_txt
           = @vault_hunter.name
-      .field.col-sm-1
-        .hint Level
-        .num
+      .vh_field.col-sm-1
+        .vh_hint Level
+        .vh_num
           = @vault_hunter.level
-      .field.col-sm-3
-        .hint Player
-        .txt
+      .vh_field.col-sm-3
+        .vh_hint Player
+        .vh_txt
           = @vault_hunter.user.username
-      .field.col-sm-1
-        .hint Age
-        .num
+      .vh_field.col-sm-1
+        .vh_hint Age
+        .vh_num
           = @vault_hunter.age
-      .field.col-sm-1
-        .hint Height
-        .txt 
+      .vh_field.col-sm-1
+        .vh_hint Height
+        .vh_txt 
           = @vault_hunter.height
-      .field.col-sm-1
-        .hint Weight
-        .txt
+      .vh_field.col-sm-1
+        .vh_hint Weight
+        .vh_txt
           = @vault_hunter.weight
-    .row.single
-      .field.col-sm-3
-        .hint Race
-        .txt
+    .row.vh_single
+      .vh_field.col-sm-3
+        .vh_hint Race
+        .vh_txt
           = @vault_hunter.race
-  .row.spacer
+  .row.vh_spacer
   .row
-    .region_title Attributes
-    .row.hardbox
+    .vh_region_title Attributes
+    .row.vh_hardbox
       -@vault_hunter.attribute_instances.order('id').each do |attribute|
-        .cell.col-sm-3
+        .vh_cell.col-sm-3
           .row
             .col-sm-12
               = attribute.name.capitalize
           .row
             .col-sm-12
-              .bignum.auto
+              .vh_bignum.auto
                 = attribute.value
           .row
             .col-sm-12
               = "[" + attribute.short + "]"
-  .row.spacer
+  .row.vh_spacer
   .row
     .col-sm-6
-      .row.softbox
+      .row.vh_softbox
         .col-sm-6
           .row
             .col-sm-12
               Toughness
             .col-sm-12
-              .bignum.auto
+              .vh_bignum.vh_auto
                 = @vault_hunter.toughness
           .row
             .col-sm-12
               Current Wounds
             .col-sm-12
-              .bignum.auto
+              .vh_bignum.vh_auto
                 = @vault_hunter.wounds
         .col-sm-6
           .row
             .col-sm-12
               Shield
             .col-sm-12
-              .bignum.auto
+              .vh_bignum.vh_auto
                 = @vault_hunter.shield
           .row
             .col-sm-12
               Current Shield
             .col-sm-12
-              .bignum.auto
+              .vh_bignum.vh_auto
                 = @vault_hunter.current_shield
       .row
-        .region_title Attack Actions
-        .attacks
+        .vh_region_title Attack Actions
+        .vh_attacks
           -@vault_hunter.attacks.each do |attack|
-            .row.attack_pad
+            .row.vh_attack_pad
               .row
-                .col-sm-5.hint Weapon
-                .col-sm-2.hint Pool
-                .col-sm-2.hint Damage
+                .col-sm-5.vh_hint Weapon
+                .col-sm-2.vh_hint Pool
+                .col-sm-2.vh_hint Damage
               .row
                 .col-sm-5
-                  .txt
+                  .vh_txt
                     = attack.name
                 .col-sm-2
-                  .num
+                  .vh_num
                     = attack.pool
                 .col-sm-2
-                  .num
+                  .vh_num
                     = attack.dmg
               .row
-                .col-sm-12.hint Misc
+                .col-sm-12.vh_hint Misc
               .row
                 .col-sm-12
-                  .txt
+                  .vh_txt
                     = attack.misc
-      .row.spacer
+      .row.vh_spacer
       .row
-        .region_title Loot and Equipment
+        .vh_region_title Loot and Equipment
         .col-sm-12
-          .txt_box
+          .vh_txt_box
             = find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe
         .region_title Money
         .col-sm-12
-          .longnum
+          .vh_longnum
             = @vault_hunter.money
     .col-sm-6
-      .row.profs
-        .region_title 
+      .row.vh_profs
+        .vh_region_title 
           Proficiencies
-        .col-sm-9.prof_name.hint
+        .col-sm-9.vh_prof_name.vh_hint
           Name
-        .col-sm-3.prof_tier.hint
+        .col-sm-3.vh_prof_tier.vh_hint
           Tier
-        .proficiencies
+        .vh_proficiencies
           -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
-            .row{class: ((index % 2) == 0) ? "alt" : ""}
-              .col-sm-9.prof_name
+            .row{class: ((index % 2) == 0) ? "vh_alt" : ""}
+              .col-sm-9.vh_prof_name
                 = proficiency.name
-              .col-sm-3.prof_tier
-                .num
+              .col-sm-3.vh_prof_tier
+                .vh_num
                   = proficiency.tier
-      .row.spacer
-      .row.skills
-        .region_title 
+      .row.vh_spacer
+      .row.vh_skills
+        .vh_region_title 
           Action Skills
-        .col-sm-3.hint
+        .col-sm-3.vh_hint
           Name
-        .col-sm-9.hint
+        .col-sm-9.vh_hint
           Description
-        .actions
+        .vh_actions
           -@vault_hunter.skills.each_with_index do |action, index|
-            .row{class: ((index % 2) == 0) ? "alt" : ""}
+            .row{class: ((index % 2) == 0) ? "vh_alt" : ""}
               .col-sm-3
                 = action.name
               .col-sm-9
                 = action.description
-  .row.spacer
-.spacer
+  .row.vh_spacer
+.vh_spacer

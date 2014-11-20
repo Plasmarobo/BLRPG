@@ -3,7 +3,8 @@
   .form_group
     = label_tag("vault_hunter[name]", "Name")
     = text_field_tag("vault_hunter[name]", "", :class => "form-control short")
+  %br
   .form_group
-    = submit_tag("Save")
+    = submit_tag "Save", {class:"btn"}
 
     

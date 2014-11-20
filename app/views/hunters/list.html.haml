@@ -1,16 +1,28 @@
-%h1 Vault Hunters!
-%table
-  %tbody
-    %tr
-      %th
-        Name
-      %th 
-        Owner
-      %th
-        Level
-    - @vault_hunters.each do |hunter|
-      %tr
-        %td= hunter.name
-        %td= hunter.user.username
-        %td= hunter.level
+.container
+  .row
+    .col-sm-12
+      %h1 Your Vault Hunters
+  .row
+    .col-md-12
+      %a{href: "/hunters/new"}
+        Create new hunter 
+        %img{src:"/images/plus.png"}
+  .row.vh_spacer
+  .row
+    .col-md-8.vh_hint
+      Name
+    .col-md-3.vh_hint
+      Level
+    .col-md-1.vh_hint
+      Delete
+  - current_user.vault_hunters.each_with_index do |hunter, index|
+    .row{class: (index % 2 == 0) ? "" : "alt"}
+      .col-md-8  
+        %a{href: "/hunters/#{hunter.id}"}
+          = hunter.name
+      .col-md-3
+        = hunter.level
+      .col-md-1
+        %a{href: "/hunters/delete?id=#{hunter.id}"}
+          %img{src: "/images/delete.png"}
 

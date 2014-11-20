@@ -1,12 +1,12 @@
 
 .row
-  .col-sm-4.hint
+  .col-sm-4.vh_hint
     Name
-  .col-sm-8.hint
+  .col-sm-8.vh_hint
     Description
-.proficiency_templates{id: "proficiency_templates"}
+.vh_proficiency_templates{id: "proficiency_templates"}
   -@proficiencies.each_with_index do |prof, index|
-    .row{onclick: 'add_proficiency(' + prof.id.to_s + ')', class: (index % 2 == 0) ? "alt" : ""}
+    .row{onclick: 'add_proficiency(' + prof.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
       .col-sm-4
         = prof.name
       .col-sm-8

@@ -1,14 +1,14 @@
 
 .row
-  .col-sm-3.hint
+  .col-sm-3.vh_hint
     Name
-  .col-sm-3.hint
+  .col-sm-3.vh_hint
     Type
-  .col-sm-6.hint
+  .col-sm-6.vh_hint
     Description
-.skill_templates{id: "skill_templates"}
+.vh_skill_templates{id: "skill_templates"}
   -@skills.each_with_index do |skill, index|
-    .row{onclick: 'add_action(' + skill.id.to_s + ')', class: (index % 2 == 0) ? "alt" : ""}
+    .row{onclick: 'add_action(' + skill.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
       .col-sm-4
         = skill.name
       .col-sm-3

@@ -32,6 +32,10 @@
                           = hunter.name
                     %li.divider
                     %li
+                      %a{href: "/hunters/list"}
+                        %strong Manage
+                    %li.divider
+                    %li
                       %a{:href => "/hunters/new"} 
                         %strong New
             -if user_signed_in?
