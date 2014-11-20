@@ -30,45 +30,49 @@
         %input{id: "vh_race", class: "txt", value: @vault_hunter.race}
   .row.spacer
   .row
-    .region_title Attributes
-    .row.hardbox
-      -@vault_hunter.attribute_instances.order('id').each do |attribute|
-        .cell.col-sm-3
-          .row
-            .col-sm-12
-              = attribute.name.capitalize
-          .row
-            .col-sm-12
-              %input{id: "vh_attrib_" + attribute.id.to_s, class: "bignum", value: attribute.value}
-          .row
-            .col-sm-12
-              = "[" + attribute.short + "]"
+    .col-sm-12
+      .region_title Attributes
+    .col-sm-12
+      .row.hardbox
+        -@vault_hunter.attribute_instances.order('id').each do |attribute|
+          .cell.col-sm-3
+            .row
+              .col-sm-12
+                = attribute.name.capitalize
+            .row
+              .col-sm-12
+                %input{id: "vh_attrib_" + attribute.id.to_s, class: "bignum", value: attribute.value}
+            .row
+              .col-sm-12
+                = "[" + attribute.short + "]"
   .row.spacer
   .row
     .col-sm-6
-      .row.softbox
-        .col-sm-6
-          .row
-            .col-sm-12
-              Toughness
-            .col-sm-12
-              %input{id: "vh_toughness", class: "bignum", value: @vault_hunter.toughness}
-          .row
-            .col-sm-12
-              Current Wounds
-            .col-sm-12
-              %input{id: "vh_wounds", class: "bignum", value: @vault_hunter.wounds}
-        .col-sm-6
-          .row
-            .col-sm-12
-              Shield
-            .col-sm-12
-              %input{id: "vh_shield", class: "bignum", value: @vault_hunter.shield}
-          .row
-            .col-sm-12
-              Current Shield
-            .col-sm-12
-              %input{id: "vh_current_shield", class: "bignum", value: @vault_hunter.current_shield}
+      .row
+        .softbox
+          .col-sm-6
+            .row
+              .col-sm-12
+                Toughness
+              .col-sm-12
+                %input{id: "vh_toughness", class: "bignum", value: @vault_hunter.toughness}
+            .row
+              .col-sm-12
+                Current Wounds
+              .col-sm-12
+                %input{id: "vh_wounds", class: "bignum", value: @vault_hunter.wounds}
+          .col-sm-6
+            .row
+              .col-sm-12
+                Shield
+              .col-sm-12
+                %input{id: "vh_shield", class: "bignum", value: @vault_hunter.shield}
+            .row
+              .col-sm-12
+                Current Shield
+              .col-sm-12
+                %input{id: "vh_current_shield", class: "bignum", value: @vault_hunter.current_shield}
+      .row.spacer
       .row
         .region_title Attack Actions
         .attacks{id: :attacks}
@@ -89,7 +93,7 @@
                 .col-sm-12.hint Misc
               .row
                 .col-sm-12
-                  %input{id: "vh_attack_misc_" + attack.id.to_s, class: "txt", value: attack.misc}
+                  %input{id: "vh_attack_misc_" + attack.id.to_s, class: "txt misc", value: attack.misc}
         .col-sm-12
           %a{href: '#attack-window', 'data-toggle' => 'modal', 'data-target' => '#attack-window', onclick: 'build_modal("attack-window");set_modal_list("attack-window", "/hunters/' + @vault_hunter.id.to_s + '/skills");'}
             %img{src: "/images/plus.png"}
@@ -117,7 +121,7 @@
           Tier
         .proficiencies{id: :proficiencies}
           -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
-            .row{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;", class: (index % 2 == 0) ? "alt" : ""}
+            .row.proficiency{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;", class: (index % 2 == 0) ? "alt" : ""}
               .col-sm-9.prof_name
                 = proficiency.name
               .col-sm-3.prof_tier
@@ -139,10 +143,10 @@
           Description
         .actions{id: :actions}
           -@vault_hunter.skills.each_with_index do |action,index|
-            .row{id: "action_" + action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");return false;", class: (index % 2 == 0) ? "alt" : ""}
+            .row.action{id: "action_" + action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");return false;", class: (index % 2 == 0) ? "alt" : ""}
               .col-sm-3
                 = action.name
-              .col-sm-9
+              .col-sm-9.smalltext
                 = action.description
         .col-sm-12
           %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'build_modal("action-window");set_modal_list("action-window","/skill_templates/list");'}
