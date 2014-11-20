@@ -58,7 +58,12 @@ class HuntersController < ApplicationController
   end
 
   def delete
-    
+    if params[:confirm] == "yes"
+      if current_user == @vault_hunter.user
+        @vault_hunter.destroy
+        redirect_to '/hunters/list', notice: "Destroyed #{@vault_hunter.name}"
+      end
+    end
   end
   
 

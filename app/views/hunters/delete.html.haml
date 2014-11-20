@@ -1,2 +1,16 @@
-%h1 Hunters#delete
-%p Find me in app/views/hunters/delete.html.haml
+.container.text-center
+  .row
+    .col-md-12
+      %h1 
+        Delete 
+        = @vault_hunter.name
+        ?
+    .col-md-12
+      This cannot be undone.
+    .col-md-6
+      .vh_critical
+        =link_to "Yes", "/hunters/delete?id=#{@vault_hunter.id}&confirm=yes", {class:"btn btn-huge btn-danger"}
+    .col-md-6
+      .vh_critical
+        %a{href:'/hunters/list', class:"btn btn-huge btn-success"}
+          No
