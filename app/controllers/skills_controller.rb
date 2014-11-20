@@ -10,7 +10,7 @@ class SkillsController < ApplicationController
       hunter = VaultHunter.find(params[:vh])
       @action = parent.instance(hunter)
     end
-    render :show, layout: false
+    render :show, layout: false, locals: {skill: @action}
   end
 
   def batch
@@ -26,6 +26,7 @@ class SkillsController < ApplicationController
   end
 
   def show
+    render :show, locals: {skill: @action}
   end
 
   def destroy
@@ -39,6 +40,7 @@ class SkillsController < ApplicationController
   end
 
   def edit
+    render :edit, layout: false, locals: {skill: @action}
   end
 
   def update

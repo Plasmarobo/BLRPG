@@ -9,7 +9,7 @@ class ProficienciesController < ApplicationController
       points = params[:points]
       @proficiency = parent.instance(hunter, points)
     end
-    render :show, layout: false
+    render :show, layout: false, locals: {proficiency: @proficiency}
   end
 
   def batch
@@ -27,6 +27,7 @@ class ProficienciesController < ApplicationController
   end
 
   def show
+    render :show, locals: {proficiency: @proficiency}
   end
 
   def destroy
@@ -40,6 +41,7 @@ class ProficienciesController < ApplicationController
   end
 
   def edit
+    render :edit, locals: {proficiency: @proficiency}
   end
 
   def update

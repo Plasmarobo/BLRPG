@@ -1,6 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+fail_all:
   name: MyString
   player: MyString
   age: 1
@@ -19,7 +19,45 @@ one:
   proficiencies_id: 1
   skills_id: 1
 
-two:
+pass_one:
+  name: MyString
+  player: MyString
+  age: 1
+  race: MyString
+  heigh: 1
+  weight: 1
+  attributes_id: 1
+  toughness: 1
+  wounds: 1
+  shield: 1
+  current_shield: 1
+  attacks_id: 1
+  loot: MyText
+  money: 1
+  level: 1
+  proficiencies_id: 1
+  skills_id: 1
+  
+pass_two:
+  name: MyString
+  player: MyString
+  age: 1
+  race: MyString
+  heigh: 1
+  weight: 1
+  attributes_id: 1
+  toughness: 1
+  wounds: 1
+  shield: 1
+  current_shield: 1
+  attacks_id: 1
+  loot: MyText
+  money: 1
+  level: 1
+  proficiencies_id: 1
+  skills_id: 1
+  
+pass_three:
   name: MyString
   player: MyString
   age: 1

@@ -1,17 +1,22 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  type: 
+skill_1:
+  name: Skill One
+  type: Defining
   cooldown: 1
   duration: 1
-  description: MyText
-  prerequsite_id: 1
+  description: Skill One
 
-two:
-  name: MyString
-  type: 
+skill_2:
+  name: Skill Two
+  type: Upgrade
   cooldown: 1
   duration: 1
-  description: MyText
-  prerequsite_id: 1
+  description: Needs Skill One
+  
+skill_3:
+  name: Skill Three
+  type: Advanced
+  cooldown: 1
+  duration: 1
+  description: Test ALL prereqs

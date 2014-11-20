@@ -5,7 +5,7 @@ class AttacksController < ApplicationController
   def new
     @vault_hunter = VaultHunter.find(params[:vh])
     @attack = Attack.new
-    render :show, layout: false
+    render :show, layout: false, locals: {attack: @attack}
   end
 
   def create
@@ -22,7 +22,7 @@ class AttacksController < ApplicationController
       end
     end
     @attack = Attack.create(name: name, vault_hunter_id: params[:vh], pool: 0, dmg: 0, misc: "", skill_id: skill)
-    render :show, layout: false
+    render :show, layout: false, locals: {attack: @attack}
   end
 
   def batch

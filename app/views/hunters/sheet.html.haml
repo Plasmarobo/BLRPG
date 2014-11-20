@@ -77,23 +77,7 @@
         .vh_region_title Attack Actions
         .vh_attacks{id: :attacks}
           -@vault_hunter.attacks.each do |attack|
-            .row.vh_attack_pad{id: "attack_" + attack.id.to_s, oncontextmenu: "delete_attack(" + attack.id.to_s + ");return false;"}
-              .row
-                .col-sm-5.vh_hint Weapon
-                .col-sm-2.vh_hint Pool
-                .col-sm-2.vh_hint Damage
-              .row
-                .col-sm-5
-                  %input{id: "vh_attack_name_" + attack.id.to_s, class: "vh_txt", value: attack.name}
-                .col-sm-2
-                  %input{id: "vh_attack_pool_" + attack.id.to_s, class: "vh_num", value: attack.pool}
-                .col-sm-2
-                  %input{id: "vh_attack_dmg_" + attack.id.to_s, class: "vh_num", value: attack.dmg}
-              .row
-                .col-sm-12.vh_hint Misc
-              .row
-                .col-sm-12
-                  %input{id: "vh_attack_misc_" + attack.id.to_s, class: "vh_txt vh_misc", value: attack.misc}
+            = render template: "attacks/edit", layout: false, locals: {attack: attack}
         .col-sm-12
           %a{href: '#attack-window', 'data-toggle' => 'modal', 'data-target' => '#attack-window', onclick: 'build_modal("attack-window");set_modal_list("attack-window", "/hunters/' + @vault_hunter.id.to_s + '/skills");'}
             %img{src: "/images/plus.png"}
@@ -121,11 +105,7 @@
           Tier
         .vh_proficiencies{id: :proficiencies}
           -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
-            .row.vh_proficiency{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;", class: (index % 2 == 0) ? "vh_alt" : ""}
-              .col-sm-9.vh_prof_name
-                = proficiency.name
-              .col-sm-3.vh_prof_tier
-                %input{id: "vh_proficiency_tier_" + proficiency.id.to_s, value: proficiency.tier, class: "vh_num"}
+            = render template: "proficiencies/edit", layout: false, locals: {proficiency: proficiency, index: index}
         .col-sm-12
           %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'build_modal("prof-window");set_modal_list("prof-window", "/proficiency_templates/list");'}
             %img{src: "/images/plus.png"}
@@ -143,11 +123,7 @@
           Description
         .vh_actions{id: :actions}
           -@vault_hunter.skills.each_with_index do |action,index|
-            .row.action{id: "action_" + action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");return false;", class: (index % 2 == 0) ? "alt" : ""}
-              .col-sm-3
-                = action.name
-              .col-sm-9.vh_smalltext
-                = action.description
+            = render template: "skills/edit", layout: false, locals: {skill: action, index: index}
         .col-sm-12
           %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'build_modal("action-window");set_modal_list("action-window","/skill_templates/list");'}
             %img{src: "/images/plus.png"}

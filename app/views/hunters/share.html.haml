@@ -80,27 +80,7 @@
         .vh_region_title Attack Actions
         .vh_attacks
           -@vault_hunter.attacks.each do |attack|
-            .row.vh_attack_pad
-              .row
-                .col-sm-5.vh_hint Weapon
-                .col-sm-2.vh_hint Pool
-                .col-sm-2.vh_hint Damage
-              .row
-                .col-sm-5
-                  .vh_txt
-                    = attack.name
-                .col-sm-2
-                  .vh_num
-                    = attack.pool
-                .col-sm-2
-                  .vh_num
-                    = attack.dmg
-              .row
-                .col-sm-12.vh_hint Misc
-              .row
-                .col-sm-12
-                  .vh_txt
-                    = attack.misc
+            = render template: 'attacks/show', layout: false, locals: {attack: attack}
       .row.vh_spacer
       .row
         .vh_region_title Loot and Equipment
