@@ -1,161 +1,161 @@
-.container.page
+.container.vh_page
   %input{type: "hidden", id: "vh_current_skill_points", value: @vault_hunter.current_skill_points}
   %input{type: "hidden", id: "vh_current_proficiency_points", value: @vault_hunter.current_proficiency_points}
   %input{type: "hidden", id: "vh_id", value: @vault_hunter.id}
   -if user_signed_in?
     %input{type: "hidden", id: "current_user", value: current_user.id}
   .row
-    .row.single
-      .field.col-sm-3
-        .hint Name
-        %input{id: "vh_name", class: "txt", value: @vault_hunter.name}
-      .field.col-sm-1
-        .hint Level
-        %input{id: "vh_level", class: "num", value: @vault_hunter.level}
-      .field.col-sm-3
-        .hint Player
-        %input{id: "dontparse_player", class: "txt", value: @vault_hunter.user.username, readonly: "true"}
-      .field.col-sm-1
-        .hint Age
-        %input{id: "vh_age", class: "num", value: @vault_hunter.age}
-      .field.col-sm-1
-        .hint Height
-        %input{id: "vh_height", class: "txt", value: @vault_hunter.height }
-      .field.col-sm-1
-        .hint Weight
-        %input{id: "vh_weight", class: "txt", value: @vault_hunter.weight}
-    .row.single
-      .field.col-sm-3
-        .hint Race
-        %input{id: "vh_race", class: "txt", value: @vault_hunter.race}
-  .row.spacer
+    .row.vh_single
+      .vh_field.col-sm-3
+        .vh_hint Name
+        %input{id: "vh_name", class: "vh_txt", value: @vault_hunter.name}
+      .vh_field.col-sm-1
+        .vh_hint Level
+        %input{id: "vh_level", class: "vh_num", value: @vault_hunter.level}
+      .vh_field.col-sm-3
+        .vh_hint Player
+        %input{id: "dontparse_player", class: "vh_txt", value: @vault_hunter.user.username, readonly: "true"}
+      .vh_field.col-sm-1
+        .vh_hint Age
+        %input{id: "vh_age", class: "vh_num", value: @vault_hunter.age}
+      .vh_field.col-sm-1
+        .vh_hint Height
+        %input{id: "vh_height", class: "vh_txt", value: @vault_hunter.height }
+      .vh_field.col-sm-1
+        vh_.hint Weight
+        %input{id: "vh_weight", class: "vh_txt", value: @vault_hunter.weight}
+    .row.vh_single
+      .vh_field.col-sm-3
+        .vh_hint Race
+        %input{id: "vh_race", class: "vh_txt", value: @vault_hunter.race}
+  .row.vh_spacer
   .row
     .col-sm-12
-      .region_title Attributes
+      .vh_region_title Attributes
     .col-sm-12
-      .row.hardbox
+      .row.vh_hardbox
         -@vault_hunter.attribute_instances.order('id').each do |attribute|
-          .cell.col-sm-3
+          .vh_cell.col-sm-3
             .row
               .col-sm-12
                 = attribute.name.capitalize
             .row
               .col-sm-12
-                %input{id: "vh_attrib_" + attribute.id.to_s, class: "bignum", value: attribute.value}
+                %input{id: "vh_attrib_" + attribute.id.to_s, class: "vh_bignum", value: attribute.value}
             .row
               .col-sm-12
                 = "[" + attribute.short + "]"
-  .row.spacer
+  .row.vh_spacer
   .row
     .col-sm-6
       .row
-        .softbox
+        .vh_softbox
           .col-sm-6
             .row
               .col-sm-12
                 Toughness
               .col-sm-12
-                %input{id: "vh_toughness", class: "bignum", value: @vault_hunter.toughness}
+                %input{id: "vh_toughness", class: "vh_bignum", value: @vault_hunter.toughness}
             .row
               .col-sm-12
                 Current Wounds
               .col-sm-12
-                %input{id: "vh_wounds", class: "bignum", value: @vault_hunter.wounds}
+                %input{id: "vh_wounds", class: "vh_bignum", value: @vault_hunter.wounds}
           .col-sm-6
             .row
               .col-sm-12
                 Shield
               .col-sm-12
-                %input{id: "vh_shield", class: "bignum", value: @vault_hunter.shield}
+                %input{id: "vh_shield", class: "vh_bignum", value: @vault_hunter.shield}
             .row
               .col-sm-12
                 Current Shield
               .col-sm-12
-                %input{id: "vh_current_shield", class: "bignum", value: @vault_hunter.current_shield}
-      .row.spacer
+                %input{id: "vh_current_shield", class: "vh_bignum", value: @vault_hunter.current_shield}
+      .row.vh_spacer
       .row
-        .region_title Attack Actions
-        .attacks{id: :attacks}
+        .vh_region_title Attack Actions
+        .vh_attacks{id: :attacks}
           -@vault_hunter.attacks.each do |attack|
-            .row.attack_pad{id: "attack_" + attack.id.to_s, oncontextmenu: "delete_attack(" + attack.id.to_s + ");return false;"}
+            .row.vh_attack_pad{id: "attack_" + attack.id.to_s, oncontextmenu: "delete_attack(" + attack.id.to_s + ");return false;"}
               .row
-                .col-sm-5.hint Weapon
-                .col-sm-2.hint Pool
-                .col-sm-2.hint Damage
+                .col-sm-5.vh_hint Weapon
+                .col-sm-2.vh_hint Pool
+                .col-sm-2.vh_hint Damage
               .row
                 .col-sm-5
-                  %input{id: "vh_attack_name_" + attack.id.to_s, class: "txt", value: attack.name}
+                  %input{id: "vh_attack_name_" + attack.id.to_s, class: "vh_txt", value: attack.name}
                 .col-sm-2
-                  %input{id: "vh_attack_pool_" + attack.id.to_s, class: "num", value: attack.pool}
+                  %input{id: "vh_attack_pool_" + attack.id.to_s, class: "vh_num", value: attack.pool}
                 .col-sm-2
-                  %input{id: "vh_attack_dmg_" + attack.id.to_s, class: "num", value: attack.dmg}
+                  %input{id: "vh_attack_dmg_" + attack.id.to_s, class: "vh_num", value: attack.dmg}
               .row
-                .col-sm-12.hint Misc
+                .col-sm-12.vh_hint Misc
               .row
                 .col-sm-12
-                  %input{id: "vh_attack_misc_" + attack.id.to_s, class: "txt misc", value: attack.misc}
+                  %input{id: "vh_attack_misc_" + attack.id.to_s, class: "vh_txt vh_misc", value: attack.misc}
         .col-sm-12
           %a{href: '#attack-window', 'data-toggle' => 'modal', 'data-target' => '#attack-window', onclick: 'build_modal("attack-window");set_modal_list("attack-window", "/hunters/' + @vault_hunter.id.to_s + '/skills");'}
             %img{src: "/images/plus.png"}
             Add Attack
-      .row.spacer
+      .row.vh_spacer
       .row
-        .region_title Loot and Equipment
+        .vh_region_title Loot and Equipment
         .col-sm-12
-          %textarea{id: "vh_loot", class: "txt_box"}
+          %textarea{id: "vh_loot", class: "vh_txt_box"}
             = @vault_hunter.loot
-        .region_title Money
+        .vh_region_title Money
         .col-sm-12
           $
-          %input{id: "vh_money", class: "longnum", value: @vault_hunter.money}
+          %input{id: "vh_money", class: "vh_longnum", value: @vault_hunter.money}
     .col-sm-6
-      .row.profs
-        .region_title 
+      .row.vh_profs
+        .vh_region_title 
           Proficiencies (
-          %span.bucket{id: "current_proficiency_points"}
+          %span.vh_bucket{id: "current_proficiency_points"}
             = @vault_hunter.current_proficiency_points
           )
-        .col-sm-9.prof_name.hint
+        .col-sm-9.vh_prof_name.vh_hint
           Name
-        .col-sm-3.prof_tier.hint
+        .col-sm-3.vh_prof_tier.vh_hint
           Tier
-        .proficiencies{id: :proficiencies}
+        .vh_proficiencies{id: :proficiencies}
           -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
-            .row.proficiency{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;", class: (index % 2 == 0) ? "alt" : ""}
-              .col-sm-9.prof_name
+            .row.vh_proficiency{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;", class: (index % 2 == 0) ? "vh_alt" : ""}
+              .col-sm-9.vh_prof_name
                 = proficiency.name
-              .col-sm-3.prof_tier
-                %input{id: "vh_proficiency_tier_" + proficiency.id.to_s, value: proficiency.tier, class: "num"}
+              .col-sm-3.vh_prof_tier
+                %input{id: "vh_proficiency_tier_" + proficiency.id.to_s, value: proficiency.tier, class: "vh_num"}
         .col-sm-12
           %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'build_modal("prof-window");set_modal_list("prof-window", "/proficiency_templates/list");'}
             %img{src: "/images/plus.png"}
             Add Proficiency
-      .row.spacer
-      .row.skills
-        .region_title 
+      .row.vh_spacer
+      .row.vh_skills
+        .vh_region_title 
           Action Skills (
-          %span.bucket{id: "current_skill_points"}
+          %span.vh_bucket{id: "current_skill_points"}
             = @vault_hunter.current_skill_points
           )
-        .col-sm-3.hint
+        .col-sm-3.vh_hint
           Name
-        .col-sm-9.hint
+        .col-sm-9.vh_hint
           Description
-        .actions{id: :actions}
+        .vh_actions{id: :actions}
           -@vault_hunter.skills.each_with_index do |action,index|
             .row.action{id: "action_" + action.id.to_s, oncontextmenu: "delete_action(" + action.id.to_s + ");return false;", class: (index % 2 == 0) ? "alt" : ""}
               .col-sm-3
                 = action.name
-              .col-sm-9.smalltext
+              .col-sm-9.vh_smalltext
                 = action.description
         .col-sm-12
           %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'build_modal("action-window");set_modal_list("action-window","/skill_templates/list");'}
             %img{src: "/images/plus.png"}
             Add Action-Skill
-  .row.spacer
+  .row.vh_spacer
   .row
     .col-sm-12
       %button.btn.btn-default{type: "submit", onclick:'save_vault_hunter(' + @vault_hunter.id.to_s + ');'} 
         Save Changes
-  .row.spacer
-.spacer
+  .row.vh_spacer
+.vh_spacer
