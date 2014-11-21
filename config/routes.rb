@@ -1,4 +1,14 @@
 Rails.application.routes.draw do
+  get 'races/list'
+
+  get 'races/new'
+
+  get 'races/create'
+
+  get 'races/destroy'
+
+  get 'races/edit'
+
   get 'minions/new'
   post 'minions/new'
 
@@ -97,6 +107,7 @@ Rails.application.routes.draw do
   resources :skill_templates
 
   get 'hunters/build'
+  get 'hunters/:id/build' => 'hunters#build'
 
   get 'hunters/new'
   post 'hunters/new'

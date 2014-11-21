@@ -1,0 +1,102 @@
+.container
+  .row
+    .col-md-12.h1.text-center
+      Distribute Attributes:
+    .row.toggler{id: 'attributes'}
+      .col-md-4
+      .col-md-4
+        .vh_bignum{id: 'attribute_points'}
+      .col-md-4
+        Points remain
+      .col-md-12.vh_build_window{id: 'attributes_window'}  
+        - @vault_hunter.attribute_instances.each do |attribute_inst|
+          .row
+            .col-md-3
+            .col-md-2
+              = attribute_inst.name.capitalize
+            .col-md-1{onclick:"remove_attribute_point(#{attribute_inst.id});"}
+              \-
+            .col-md-1
+              .vh_build_number{id: "vh_build_attribute_#{attribute_inst.id}"}
+                = attribute_inst.value
+            .col-md-1{onclick:"add_attribute_point(#{attribute_inst.id});"}
+            .col-md-3
+              \+
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "switch('race', populate('races_window','races/list')); return false;" }
+          Next
+  
+  .row
+    .col-md-12.h1.text-center
+      Pick a race:
+    .row.toggler{id: 'race', style: "display:none"}
+      .col-md-12.vh_build_window{id: 'races_window'}
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "switch('description')"}
+          Next
+  
+  .row
+    .col-md-12.h1.text-center
+      Describe your character:
+    .row.toggler{id: 'description', style: "display:none"}
+      .col-md-6
+        .row
+          .col-sm-12
+            .vh_region_title Description
+            %textarea{id: "vh_builder_description", class: "vh_txt_box vh_smalltext form-control"}
+              = @vault_hunter.description
+          .col-sm-12
+            .vh_region_title Traits
+            %textarea{id: "vh_builder_traits", class: "vh_txt_box vh_smalltext form-control"}
+              = @vault_hunter.traits
+      .col-md-6
+        .row.vh_rp
+          .col-sm-12
+            .vh_region_title Background
+            %textarea{id: "vh_builder_background", class: "vh_txt_box vh_smalltext form-control"}
+              = @vault_hunter.background
+          .col-sm-12
+            .vh_region_title Flaws
+            %textarea{id: "vh_builder_flaws", class: "vh_txt_box vh_smalltext form-control"}
+              = @vault_hunter.flaws
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "switch('proficiencies', populate('proficiencies_window', 'proficiencies/list'))"}
+          Next
+  
+  .row
+    .col-md-12.h1.text-center
+      Select your proficiencies:
+    .row.toggler{id: 'proficiencies', style: "display:none"}
+      .vh_region_title Improve
+      .row.proficiencies
+        - @vault_hunter.proficiencies.each do |proficiency|
+          .col-md-5
+            = proficiency.name
+          .col-md-5{id: "vh_build_proficiency_#{proficiency.id}"}
+            = proficiency.tier
+          .col-md-2{onclick: "improve_proficiency(#{proficiency.id})"}
+            \+
+      .vh_region_title Add New:
+      .col-md-12.vh_build_window{id: 'proficiencies_window'}
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "switch('action_skills', populate('action_skills_window', 'hunters/#{@vault_hunter.id}/potentialskills'))"}
+          Next
+  
+  .row
+    .col-md-12.h1.text-center
+      Select your action-skills:
+    .row.toggler{id: 'action_skills', style: "display:none"}
+      .vh_region_title Action Skills
+      .col-md-12.vh_build_window{id: 'action_skills_window'}
+      .vh_region_title Custom Skill Builder (coming soon)
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "switch('equipment')"}
+          Next
+    
+  .row
+    .col-md-12.h1.text-center
+      Purchase Equipment:
+    .row.toggler{id: 'equipment', style: "display:none"}  
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "builder_save()"}
+          Review

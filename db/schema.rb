@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141120231221) do
+ActiveRecord::Schema.define(version: 20141121041506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,16 @@ ActiveRecord::Schema.define(version: 20141120231221) do
     t.datetime "updated_at"
   end
 
+  create_table "perks", force: true do |t|
+    t.integer  "race_id"
+    t.text     "description"
+    t.string   "type"
+    t.string   "name"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "prerequsites", force: true do |t|
     t.integer  "skill_template_id"
     t.string   "prereq_type"
@@ -73,6 +83,13 @@ ActiveRecord::Schema.define(version: 20141120231221) do
   end
 
   create_table "proficiency_templates", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "races", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
