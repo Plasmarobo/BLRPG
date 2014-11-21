@@ -1,4 +1,22 @@
 Rails.application.routes.draw do
+  get 'minions/new'
+  post 'minions/new'
+
+  get 'minions/create'
+  post 'minions/create'
+
+  get 'minions/show'
+  post 'minions/show'
+  
+  post 'minions/batch'
+
+  get 'minions/edit'
+
+  get 'minions/index'
+
+  get 'minions/destroy'
+  post 'minions/destroy'
+
   get 'import/google_sheet'
 
   get 'import/json'

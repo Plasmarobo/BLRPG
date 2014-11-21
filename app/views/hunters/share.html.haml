@@ -86,11 +86,15 @@
         .vh_region_title Loot and Equipment
         .col-sm-12
           .vh_txt_box
-            = find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe
+            = (@vault_hunter.loot.nil?) ? ("") : (find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe)
         .region_title Money
         .col-sm-12
           .vh_longnum
             = @vault_hunter.money
+        .vh_region_title Minions
+        .col-sm-12
+          - @vault_hunter.minions.each do |minion|
+            = render template: 'minions/show', layout: false, locals: {minion: minion}
     .col-sm-6
       .row.vh_profs
         .vh_region_title 
@@ -122,5 +126,19 @@
                 = action.name
               .col-sm-9
                 = action.description
+        .row.vh_spacer
+      .row.vh_rp
+        .col-sm-12
+          .vh_txt_box
+            = (@vault_hunter.description.nil?) ? ("") : (find_and_preserve @vault_hunter.description.split("\n").join('<br>').html_safe)
+        .col-sm-12
+          .vh_txt_box
+            = (@vault_hunter.background.nil?) ? ("") : (find_and_preserve @vault_hunter.background.split("\n").join('<br>').html_safe)
+        .col-sm-12
+          .vh_txt_box
+            = (@vault_hunter.traits.nil?) ? ("") : (find_and_preserve @vault_hunter.traits.split("\n").join('<br>').html_safe)
+        .col-sm-12
+          .vh_txt_box
+            = (@vault_hunter.flaws.nil?) ? ("") : (find_and_preserve @vault_hunter.flaws.split("\n").join('<br>').html_safe)
   .row.vh_spacer
 .vh_spacer

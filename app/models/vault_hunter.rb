@@ -5,6 +5,7 @@ class VaultHunter < ActiveRecord::Base
     has_many :proficiencies
     has_many :attacks
     has_many :attribute_instances
+    has_many :minions
     
   def meets_prereq(type, name, value)
     case(type)

@@ -1,0 +1,9 @@
+.row
+  .col-sm-3.vh_hint
+    Name
+  .col-sm-9
+    = minion.name
+  .col-sm-12
+    .vh_txt_box
+      = find_and_preserve minion.description.split("\n").join('<br>').html_safe
+  

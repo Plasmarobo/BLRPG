@@ -17,19 +17,19 @@
     .col-sm-2.vh_hint Other
   .row
     .col-sm-3
-      %input{id: "vh_attack_pool_" + attack.id.to_s, class: "vh_num", value: attack.pool}
+      %input{id: "vh_attack_totalpool_" + attack.id.to_s, class: "vh_num", value: attack.totalpool}
     .col-sm-1 
       \=
     .col-sm-2
-      %input{id: "vh_attack_base_pool_" + attack.id.to_s, class: "vh_num", value: attack.base_pool}
+      %input{id: "vh_attack_basepool_" + attack.id.to_s, class: "vh_num", value: attack.basepool}
     .col-sm-1
       \+
     .col-sm-2
-      %input{id: "vh_attack_attrib_pool_" + attack.id.to_s, class: "vh_num", value: (attack.attribute_instance) ? attack.attribute_instance.value : 0}
+      %input{id: "no_save_attrib_pool_" + attack.id.to_s, class: "vh_num", value: (attack.attribute_instance) ? attack.attribute_instance.value : 0}
     .col-sm-1
       \+
     .col-sm-2
-      %input{id: "vh_attack_base_pool_" + attack.id.to_s, class: "vh_num", value: attack.misc_pool}
+      %input{id: "vh_attack_otherpool_" + attack.id.to_s, class: "vh_num", value: attack.otherpool}
   .row
     .col-sm-12.vh_hint Misc
   .row

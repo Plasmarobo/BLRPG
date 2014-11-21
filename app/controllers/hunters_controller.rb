@@ -103,7 +103,11 @@ class HuntersController < ApplicationController
                                           :money, 
                                           :level,
                                           :current_skill_points,
-                                          :current_proficiency_points)
+                                          :current_proficiency_points,
+                                          :description,
+                                          :background,
+                                          :traits,
+                                          :flaws)
     end
     
     def set_vault_hunter

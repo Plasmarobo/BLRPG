@@ -46,14 +46,30 @@
         $("#action_" + action_id).remove()
   @confirm_dialog("You are about to delete this action forever, continue?", del_callback)
   false
+  
+@add_minion = () ->
+  target = 'minions'
+  para = {vh: parseInt($('#vh_id').val())}
+  @transact_into('/minions/create',para, target)
+
+@delete_minion = (minion_id) ->
+  del_callback = () ->
+    @json_post '/minions/destroy', 
+      {confirm: "yes", id: action_id}
+      () -> 
+        $("#minion_" + minion_id).remove()
+  @confirm_dialog("You are about to delete this minion forever, continue?", del_callback)
+  false
 
 @package_sheet_changes = () ->
   namespace_inputs = $("[id^='vh_']");
   prof_regex = /proficiency_([a-z]+)_([0-9]+)/
+  minion_regex = /minion_([a-z]+)_([0-9]+)/
   attack_regex = /attack_([a-z]+)_([0-9]+)/
   attrib_regex = /attrib_([0-9]+)/
   hunter = {}
   attacks = {}
+  minions = {}
   proficiencies = {}
   skills = {}
   attribs = {}
@@ -67,6 +83,13 @@
       if not (proficiencies.hasOwnProperty(id))
         proficiencies[id] = {}
       (proficiencies[id])[key] = field.value
+    else if ns_name.substr(0, 6) == "minion"
+      properties = ns_name.match(minion_regex)
+      id = properties[2]
+      key = properties[1]
+      if not (minions.hasOwnProperty(id))
+        minions[id] = {}
+      (minions[id])[key] = field.value
     else if ns_name.substr(0, 6) == "attack"
       properties = ns_name.match(attack_regex)
       id = properties[2]
@@ -87,7 +110,8 @@
     proficiencies: proficiencies,
     attacks:       attacks,
     skills:        skills,
-    attributes:    attribs
+    attributes:    attribs,
+    minions:       minions
   }
   return result;
 
@@ -161,7 +185,7 @@
   $('body').append(div)
 
 @upload_vault_hunter = (id, vault_objects, callback) ->
-  $("#target").html("5")
+  $("#target").html("6")
   $("#count").html("0")
   json_post '/hunters/' + id + '/update',
             {vault_hunter: vault_objects.vault_hunter}
@@ -183,7 +207,11 @@
                             {attribute_instances: vault_objects.attributes}
                             () ->
                               $("#count").html("5")
-                              callback()
+                              json_post '/minions/batch',
+                                {minions: vault_objects.minions}
+                                () ->
+                                  $("#count").html("6")
+                                  callback()
   
 @save_vault_hunter = (id) ->
   build_modal("save_dialog")

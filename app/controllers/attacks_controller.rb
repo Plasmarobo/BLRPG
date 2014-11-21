@@ -1,4 +1,5 @@
 class AttacksController < ApplicationController
+  before_filter :set_attack, only: [:show, :edit]
   def index
   end
 
@@ -21,7 +22,7 @@ class AttacksController < ApplicationController
         name = parent.name
       end
     end
-    @attack = Attack.create(name: name, vault_hunter_id: params[:vh], pool: 0, dmg: 0, misc: "", skill_id: skill)
+    @attack = Attack.create(name: name, vault_hunter_id: params[:vh], totalpool: 0, basepool:0, otherpool:0, dmg: 0, misc: "", skill_id: skill)
     render :show, layout: false, locals: {attack: @attack}
   end
 
@@ -35,9 +36,11 @@ class AttacksController < ApplicationController
   end
 
   def show
+    render :show, layout: false, locals: {attack: @attack}
   end
 
   def edit
+    render :edit, layout: false, locals: {attack: @attack}
   end
 
   def update
@@ -51,4 +54,9 @@ class AttacksController < ApplicationController
       render inline: "no confirm", layout: false
     end
   end
+  
+  private
+    def set_attack
+      @attack = Attack.find(params[:id])
+    end
 end
