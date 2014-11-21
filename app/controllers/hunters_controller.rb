@@ -1,5 +1,5 @@
 class HuntersController < ApplicationController
-  before_filter :set_vault_hunter, only: [:show, :share, :edit, :update, :delete, :skills, :potentialskills]
+  before_filter :set_vault_hunter, only: [:build, :show, :share, :edit, :update, :delete, :skills, :potentialskills]
 
   def new
     @vault_hunter = VaultHunter.new  
@@ -18,6 +18,10 @@ class HuntersController < ApplicationController
       flash[:alert] = "Something went wrong"
       redirect_to action: :new
     end
+  end
+  
+  def build
+    
   end
 
   def show

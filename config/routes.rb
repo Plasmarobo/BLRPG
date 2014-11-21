@@ -96,6 +96,8 @@ Rails.application.routes.draw do
   get 'skill_templates/list' => 'skill_templates#list', as: :skill_select
   resources :skill_templates
 
+  get 'hunters/build'
+
   get 'hunters/new'
   post 'hunters/new'
 

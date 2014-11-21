@@ -1,6 +1,7 @@
-- style = index.nil? ? "" : (index % 2) == 0 ? "vh_alt" : ""
+- style = (index.nil?) ? ("") : (index % 2) == 0 ? "vh_alt" : ""
 .row{class: style}
   .col-sm-3
     = skill.name
   .col-sm-9
-    = skill.description
+    .vh_smalltext
+      = skill.description

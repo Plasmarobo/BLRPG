@@ -3,7 +3,8 @@
     Name
   .col-sm-9
     = minion.name
+  .col-sm-3.vh_hint Description
   .col-sm-12
-    .vh_txt_box
+    .vh_txt_box.vh_smalltext
       = find_and_preserve minion.description.split("\n").join('<br>').html_safe
   
