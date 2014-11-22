@@ -1,4 +1,5 @@
 .container
+  %input{type: "hidden", id: "vh_race_id", value: @vault_hunter.race_id}
   .row
     .col-md-12.h1.text-center{onclick: "advance('attributes', null);"}
       Distribute Attributes:
@@ -28,18 +29,18 @@
                 .col-sm-4
       .col-md-12.vh_spacer
       .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "advance('race', populate('races_window','/races/list')); return false;" }
+        .btn.btn-success.btn-huge{onclick: "advance(#{(@vault_hunter.has_race?) ? '\'race\', populate(\'races_window\',\'/races/list\'))' : '\'description\', null)'}; return false;" }
           Next
-  
-  .row
-    .col-md-12.h1.text-center{onclick: "advance('race', null);"}
-      Pick a race:
-    .row.toggler{id: 'race', style: "display:none"}
-      .col-md-12.vh_build_window{id: 'races_window'}
-      .col-md-12.vh_spacer
-      .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "advance('description', null); return false;"}
-          Next
+  - if @vault_hunter.has_race?
+    .row
+      .col-md-12.h1.text-center{onclick: "advance('race', null);"}
+        Pick a race:
+      .row.toggler{id: 'race', style: "display:none"}
+        .col-md-12.vh_build_window{id: 'races_window'}
+        .col-md-12.vh_spacer
+        .col-md-12.text-center
+          .btn.btn-success.btn-huge{onclick: "advance('description', null); return false;"}
+            Next
   
   .row
     .col-md-12.h1.text-center{onclick: "advance('description', null);"}
@@ -74,23 +75,28 @@
     .col-md-12.h1.text-center{onclick: "advance('proficiencies', null);"}
       Select your proficiencies:
     .row.toggler{id: 'proficiencies', style: "display:none"}
+      .col-sm-6
       .col-sm-2.text-right
         .vh_bignum{id: 'proficiency_points'}
           = (@vault_hunter.current_proficiency_points.nil?) ? 0 : @vault_hunter.current_proficiency_points
-      .vh_region_title Improve
-      .col-md-12.proficiencies
-        - @vault_hunter.proficiencies.each_with_index do |proficiency, index|
-          .row{class: (index %2) == 0 ? "" : "vh_alt"}
-          .col-md-5.vh_build_large
-            = proficiency.name
-          .col-md-1.vh_build_huge{id: "vh_build_proficiency_#{proficiency.id}"}
-            = proficiency.tier
-          .col-md-1.vh_build_huge{onclick: "improve_proficiency(#{proficiency.id})"}
-            \+
-          .col-md-4
-      .vh_region_title Add New:
-      .col-md-12.vh_build_window{id: 'proficiencies_window'}
-      .col-md-12.vh_spacer
+      .col-sm-4.text-left
+        Points remaining
+      .col-md-12
+        .vh_region_title Improve
+        .col-md-12.proficiencies
+          - @vault_hunter.proficiencies.each_with_index do |proficiency, index|
+            .row{class: (index %2) == 0 ? "" : "vh_alt"}
+            .col-md-5.vh_build_large
+              = proficiency.name
+            .col-md-1.vh_build_huge{id: "vh_build_proficiency_#{proficiency.id}"}
+              = proficiency.tier
+            .col-md-1.vh_build_huge{onclick: "improve_proficiency(#{proficiency.id})"}
+              \+
+            .col-md-4
+      .col-md-12
+        .vh_region_title Add New:
+        .col-md-12.vh_build_window{id: 'proficiencies_window'}
+        .col-md-12.vh_spacer
       .col-md-12.text-center
         .btn.btn-success.btn-huge{onclick: "advance('action_skills', populate('action_skills_window', '/hunters/#{@vault_hunter.id}/potentialskills')); return false;"}
           Next
@@ -99,12 +105,16 @@
     .col-md-12.h1.text-center{onclick: "advance('action_skills', null);"}
       Select your action-skills:
     .row.toggler{id: 'action_skills', style: "display:none"}
+      .col-sm-6
       .col-sm-2.text-right
         .vh_bignum{id: 'skill_points'}
           = (@vault_hunter.current_skill_points.nil?) ? 0 : @vault_hunter.current_skill_points
-      .vh_region_title Action Skills
-      .col-md-12.vh_build_window{id: 'action_skills_window'}
-      .vh_region_title Custom Skill Builder (coming soon)
+      .col-sm-4.text-left
+        Points remain
+      .col-md-12
+        .vh_region_title Action Skills
+        .col-md-12.vh_build_window{id: 'action_skills_window'}
+        .vh_region_title Custom Skill Builder (coming soon)
       .col-md-12.vh_spacer
       .col-md-12.text-center
         .btn.btn-success.btn-huge{onclick: "advance('equipment', null); return false;"}

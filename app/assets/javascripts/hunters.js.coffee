@@ -2,6 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+@select_race = (race_id) ->
+  $("#vh_race_id").val(race_id)
+  $("#race_name").val($("#race_name_" + race_id).val())
+  @clean_modals(false)
+  
 @add_attack = (skill_id) ->
   target = 'attacks'
   para = {vh: parseInt($('#vh_id').val()), parent: skill_id}

@@ -61,6 +61,60 @@ class HuntersController < ApplicationController
       render inline: "failed", layout: false
     end
   end
+  
+  def validate_attribute_changes
+    result = true
+    changed_attributes = params[:changed_attributes]
+    changed_attributes.each do |attrib_change|
+      if not @vault_hunter.improve_attribute(attrib_change.id, attrib_change.value) then
+        result = false
+      end
+    end
+    if result == true then
+      render :inline, "success"
+    else
+      render :inline, "invalid"
+    end
+  end
+  
+  def validate_proficiency_changes
+    result = true
+    #Format: template_id
+    new_proficiencies = params[:new_proficiencies]
+    #Format: id, points
+    changed_proficiencies = params[:changed_proficiencies]
+    new_proficiencies.each do |candiate|
+      if not @vault_hunter.add_proficiency(candidate) then
+        result = false
+      end
+    end
+    changed_proficiencies.each do |candiate|
+      if not @vault_hunter.improve_proficiency(candidate.id, candidate.points) then
+        result = false
+      end
+    end
+    if result == true then
+      render :inline, "success"
+    else
+      render :inline, "invalid"
+    end
+  end
+  
+  def validate_skill_changes
+    result = true
+    new_skills = params[:skills]
+    new_skills.each do |candidate_id|
+      candidate = SkillTemplate.find(candidate_id)
+      if not @vault_hunter.add_skill(candidate) then
+        result = false
+      end
+    end
+    if result == true then
+      render :inline, "success"
+    else
+      render :inline, "invalid"
+    end
+  end
 
   def delete
     if params[:confirm] == "yes"

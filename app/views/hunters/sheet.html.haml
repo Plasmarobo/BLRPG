@@ -2,6 +2,7 @@
   %input{type: "hidden", id: "vh_current_skill_points", value: @vault_hunter.current_skill_points}
   %input{type: "hidden", id: "vh_current_proficiency_points", value: @vault_hunter.current_proficiency_points}
   %input{type: "hidden", id: "vh_id", value: @vault_hunter.id}
+  %input{type: "hidden", id: "vh_race_id", value: @vault_hunter.race_id}
   -if user_signed_in?
     %input{type: "hidden", id: "current_user", value: current_user.id}
   .row
@@ -27,7 +28,10 @@
     .row.vh_single
       .vh_field.col-sm-3
         .vh_hint Race
-        %input{id: "vh_race", class: "vh_txt", value: @vault_hunter.race}
+        -if @vault_hunter.has_race?
+          %input{id: "race_name", class: "vh_txt", value: @vault_hunter.race.name.capitalize, readonly: "true", onclick: 'build_modal("race-window");set_modal_list("race-window", "/races/list");'}
+        -else
+          %input{id: "race_name", class: "vh_txt", placeholder: "Select Race", readonly: "true", onclick: 'build_modal("race-window");set_modal_list("race-window", "/races/list");'}
   .row.vh_spacer
   .row
     .col-sm-12

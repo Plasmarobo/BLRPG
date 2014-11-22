@@ -1,11 +1,12 @@
 class VaultHunter < ActiveRecord::Base
     belongs_to :user
-    has_many :skills
+    has_many :skills, dependent: :destroy
     has_many :skill_templates, through: :skills
-    has_many :proficiencies
-    has_many :attacks
-    has_many :attribute_instances
-    has_many :minions
+    has_many :proficiencies, dependent: :destroy
+    has_many :attacks, dependent: :destroy
+    has_many :attribute_instances, dependent: :destroy
+    has_many :minions, dependent: :destroy
+    belongs_to :race
     
   def meets_prereq?(skill_template)
     skill_template.prerequsites.each do |prereq|
@@ -51,6 +52,10 @@ class VaultHunter < ActiveRecord::Base
     end
     self.level >= level
   end
+  
+  def has_race?
+    not self.race_id.nil?
+  end
 
   def find_attribute_inst_by_name(name)
     self.attribute_instances.each do | attribute_inst |
@@ -79,4 +84,72 @@ class VaultHunter < ActiveRecord::Base
     self.shield = 0
     self.money = 150
   end
+  
+  def improve_attribute(id, value)
+    if self.current_attribute_points >= value
+      self.current_attribute_points -= value
+      attribute_inst = self.attribute_instances.find(id)
+      if attribute_inst.nil? then
+        return false
+      else
+        attribute_inst.value += value
+        if self.save() then
+          attribute_inst.save()
+          return true
+        else
+          return false
+        end
+      end
+    end
+    return false
+  end
+  
+  def add_skill(candidate)
+    if self.current_skill_points > 0 then
+      if self.meets_prereq?(candiate) then
+        self.current_skill_points -= 1
+        if self.save() then
+          candiate.instance(self)
+          return true
+        end
+      end
+    end
+    return false
+  end
+  
+  def add_proficiency(id)
+    if self.current_proficiency_points > 0 then
+      candidate = ProficiencyTemplate.find(id)
+      if candidate.nil?
+        return false
+      else
+        self.current_proficiency_points -= 1
+        if self.save() then
+          candidate.instance(self, 1)
+          return true
+        end
+      end
+    end
+    return false
+  end
+  
+  def improve_proficiency(id, points)
+    if self.current_proficiency_points >= points then
+      candiate = self.proficiencies.find(id)
+      if candiate.nil? then
+        return false
+      else
+        if self.level <= points + candidate.tier
+          candidate.tier += points
+          self.current_proficiency_points -= points
+          if self.save() then
+            candiate.save()
+            return true
+          end
+        end
+      end
+    end
+    return false
+  end
+  
 end

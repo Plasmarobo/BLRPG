@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141122200613) do
+ActiveRecord::Schema.define(version: 20141122210402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,7 +144,6 @@ ActiveRecord::Schema.define(version: 20141122200613) do
     t.string   "name"
     t.string   "user_id"
     t.integer  "age"
-    t.string   "race"
     t.string   "height"
     t.string   "weight"
     t.integer  "toughness"
@@ -166,6 +165,7 @@ ActiveRecord::Schema.define(version: 20141122200613) do
     t.integer  "total_proficiency_points"
     t.integer  "total_skill_points"
     t.integer  "current_attribute_points"
+    t.integer  "race_id"
   end
 
 end
