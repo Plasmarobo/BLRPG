@@ -66,7 +66,7 @@ class HuntersController < ApplicationController
     result = true
     changed_attributes = params[:changed_attributes]
     changed_attributes.each do |attrib_change|
-      if not @vault_hunter.improve_attribute(attrib_change.id, attrib_change.value) then
+      if not @vault_hunter.set_attribute(attrib_change.id, attrib_change.value) then
         result = false
       end
     end
@@ -89,7 +89,7 @@ class HuntersController < ApplicationController
       end
     end
     changed_proficiencies.each do |candiate|
-      if not @vault_hunter.improve_proficiency(candidate.id, candidate.points) then
+      if not @vault_hunter.set_proficiency(candidate.id, candidate.points) then
         result = false
       end
     end

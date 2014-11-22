@@ -29,7 +29,7 @@
       .vh_field.col-sm-3
         .vh_hint Race
         .vh_txt
-          = @vault_hunter.race
+          = (@vault_hunter.race.nil?) ? "Not set" :  @vault_hunter.race.name
   .row.vh_spacer
   .row
     .vh_region_title Attributes

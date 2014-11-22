@@ -1,4 +1,5 @@
 .container.vh_page
+  = javascript_include_tag :hunters
   %input{type: "hidden", id: "vh_current_skill_points", value: @vault_hunter.current_skill_points}
   %input{type: "hidden", id: "vh_current_proficiency_points", value: @vault_hunter.current_proficiency_points}
   %input{type: "hidden", id: "vh_id", value: @vault_hunter.id}

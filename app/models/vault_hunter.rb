@@ -85,14 +85,15 @@ class VaultHunter < ActiveRecord::Base
     self.money = 150
   end
   
-  def improve_attribute(id, value)
-    if self.current_attribute_points >= value
-      self.current_attribute_points -= value
-      attribute_inst = self.attribute_instances.find(id)
-      if attribute_inst.nil? then
+  def set_attribute(id, value)
+    attribute_inst = self.attribute_instances.find(id)
+    if attribute_inst.nil? then
         return false
-      else
-        attribute_inst.value += value
+    else
+      delta = value - attribute_inst.value
+      if self.current_attribute_points >= delta
+        self.current_attribute_points -= delta
+        attribute_inst.value = value
         if self.save() then
           attribute_inst.save()
           return true
@@ -133,15 +134,16 @@ class VaultHunter < ActiveRecord::Base
     return false
   end
   
-  def improve_proficiency(id, points)
-    if self.current_proficiency_points >= points then
-      candiate = self.proficiencies.find(id)
-      if candiate.nil? then
-        return false
-      else
-        if self.level <= points + candidate.tier
-          candidate.tier += points
-          self.current_proficiency_points -= points
+  def set_proficiency(id, tier)
+    candiate = self.proficiencies.find(id)
+    if candiate.nil? then
+      return false
+    else
+      delta = tier - candiate.tier
+      if self.current_proficiency_points >= delta then
+        if self.level <= tier
+          candidate.tier = tier
+          self.current_proficiency_points -= delta
           if self.save() then
             candiate.save()
             return true
