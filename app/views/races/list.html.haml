@@ -1,2 +1,13 @@
-%h1 Races#list
-%p Find me in app/views/races/list.html.haml
+.row
+  .col-sm-3.vh_hint
+    Name
+  .col-sm-9.vh_hint
+    Description
+.vh_races
+  - @races.each_with_index do |race, index|
+    .row{onclick: 'select_race(' + race.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
+      .col-sm-3
+        = race.name
+      .col-sm-9
+        = race.description
+

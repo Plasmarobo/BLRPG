@@ -8,9 +8,13 @@ class ApplicationController < ActionController::Base
   
   protected
   
-  def redirect_https        
-    redirect_to :protocol => "https://" unless request.ssl?
-    return true
+  def redirect_https
+    if !Rails.env.development?        
+      redirect_to :protocol => "https://" unless request.ssl?
+      return true
+    else
+      return true
+    end
   end
     
 

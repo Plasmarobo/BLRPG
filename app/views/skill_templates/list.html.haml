@@ -7,7 +7,7 @@
   .col-sm-6.vh_hint
     Description
 .vh_skill_templates{id: "skill_templates"}
-  -@skills.each_with_index do |skill, index|
+  -skills.each_with_index do |skill, index|
     .row{onclick: 'add_action(' + skill.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
       .col-sm-4
         = skill.name

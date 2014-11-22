@@ -83,11 +83,11 @@ class HuntersController < ApplicationController
 
   #All skills who's prerequsties are met
   def potentialskills
-    @skills = Skill_Templates.all
+    @skills = SkillTemplate.all.to_a
     @skills.select! do |skill|
       @vault_hunter.meets_prereq(skill)
     end
-    render layout: nil
+    render 'skill_templates/list', layout: false, locals: {skills: @skills}
   end
 
   private

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'races/list'
+  post 'races/list'
 
   get 'races/new'
 
@@ -101,6 +102,7 @@ Rails.application.routes.draw do
   post 'attacks/destroy'
 
   get 'proficiency_templates/list' => 'proficiency_templates#list', as: :proficiency_select
+  post 'proficiency_templates/list' => 'proficiency_templates#list'
   resources :proficiency_templates
 
   get 'skill_templates/list' => 'skill_templates#list', as: :skill_select
@@ -132,7 +134,8 @@ Rails.application.routes.draw do
 
   get 'hunters/:id/skills' => 'hunters#skills'
 
-  get 'hunters/:id/potentials' => 'hunter#potentialskills'
+  get 'hunters/:id/potentialskills' => 'hunters#potentialskills'
+  post 'hunters/:id/potentialskills' => 'hunters#potentialskills'
 
   get 'hunters/:id/share' => 'hunters#share'
   

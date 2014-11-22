@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20141121041506) do
   create_table "perks", force: true do |t|
     t.integer  "race_id"
     t.text     "description"
-    t.string   "type"
+    t.string   "perk_type"
     t.string   "name"
     t.integer  "value"
     t.datetime "created_at"

@@ -8,7 +8,7 @@ class SkillTemplatesController < ApplicationController
   def list
     @skills = SkillTemplate.all
     respond_to do |format|
-      format.html {render layout: nil}
+      format.html {render layout: nil, locals: {skills: @skills}}
       format.json
     end
   end

@@ -7,17 +7,22 @@ class VaultHunter < ActiveRecord::Base
     has_many :attribute_instances
     has_many :minions
     
-  def meets_prereq(type, name, value)
-    case(type)
-    when 'attribute'
-      return self.find_attribute_by_name(name).value >= value
-    when 'level'
-      return self.level >= value
-    when 'skill'
-      return self.skill_templates.find_by_name(name) != nil
-    else
-      return false
+  def meets_prereq(skill_template)
+    result = true
+    skill_template.prerequsites do |prereq|
+    
+      case(prereq.prereq_type)
+      when 'attribute'
+        result |= self.find_attribute_by_name(prereq.name).value >= prereq.value
+      when 'level'
+        result |= self.level >= prereq.value
+      when 'skill'
+        result |= self.skill_templates.find_by_name(prereq.name).first != nil
+      else
+        result = false
+      end
     end
+    return result
   end
 
   def find_attribute_by_name(name)
