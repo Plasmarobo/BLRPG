@@ -178,6 +178,7 @@
     set.remove()
   else
     set.not('#error-window').remove()
+  $('body').removeClass("modal-open")
 
 @build_modal = (id) ->
   clean_modals()

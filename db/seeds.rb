@@ -74,7 +74,7 @@ skill = SkillTemplate.create(name:'Tackle', skill_type:'Basic', duration: 0, coo
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "bulk", prereq_type: "attribute", value: 4)
 
 skill = SkillTemplate.create(name:'Bullrush', skill_type:'Upgrade', duration: 0, cooldown: 0, description:'Using Tackle does not stun you.')
-Prerequsite.create(skill_template_id:skill.id, prereq_name: "tackle", prereq_type: "skill", value: 3)
+Prerequsite.create(skill_template_id:skill.id, prereq_name: "Tackle", prereq_type: "skill", value: 3)
 
 skill = SkillTemplate.create(name:'Hammerthrow', skill_type:'Basic', duration: 0, cooldown: 0, description:'When you make a melee attack against an enemy (limit of 50lbs per point of BLK) you may subtract up to three points of damage from the attack. You may throw the target 5ft for each point of damage subtracted in this way.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "bulk", prereq_type: "attribute", value: 3)
@@ -120,7 +120,7 @@ Prerequsite.create(skill_template_id:skill.id, prereq_name: "sirenity", prereq_t
 
 skill = SkillTemplate.create(name:'Bleeding Blade', skill_type:'Basic', duration: 3, cooldown: 5, description:'Your melee strike causes enemies to bleed, taking constant minor damage per turn. The first attack that hits after activating this skill imparts Bleed 3 to the target.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "finesse", prereq_type: "attribute", value: 4)
-Prerequsite.create(skill_template_id:skill.id, prereq_name: "bluk", prereq_type: "attribute", value: 2)
+Prerequsite.create(skill_template_id:skill.id, prereq_name: "bulk", prereq_type: "attribute", value: 2)
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "level", prereq_type: "level", value: 3)
 
 skill = SkillTemplate.create(name:'Penetrating Shot', skill_type:'Basic', duration: 0, cooldown: 5, description:'Make a Basic ranged attack. This attack ignores shields entirely. This skill applies only to non-rapid weapons, and applies only to the first attack made in a turn.')

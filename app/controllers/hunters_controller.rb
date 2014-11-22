@@ -8,6 +8,7 @@ class HuntersController < ApplicationController
   
   def create
     @vault_hunter = VaultHunter.new(vault_hunter_params)
+    @vault_hunter.set_default_values()
     @vault_hunter.user = current_user
     if @vault_hunter.save
       #default attributes
@@ -85,9 +86,9 @@ class HuntersController < ApplicationController
   def potentialskills
     @skills = SkillTemplate.all.to_a
     @skills.select! do |skill|
-      @vault_hunter.meets_prereq(skill)
+      (!@vault_hunter.has_skill?(skill)) and @vault_hunter.meets_prereq?(skill)
     end
-    render 'skill_templates/list', layout: false, locals: {skills: @skills}
+    render 'skill_templates/list', layout: nil, locals: {skills: @skills}
   end
 
   private

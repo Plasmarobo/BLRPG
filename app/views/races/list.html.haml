@@ -7,7 +7,7 @@
   - @races.each_with_index do |race, index|
     .row{onclick: 'select_race(' + race.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
       .col-sm-3
-        = race.name
+        = race.name.capitalize
       .col-sm-9
         = race.description
 

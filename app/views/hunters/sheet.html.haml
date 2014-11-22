@@ -134,7 +134,7 @@
           -@vault_hunter.skills.each_with_index do |action,index|
             = render template: "skills/edit", layout: false, locals: {skill: action, index: index}
         .col-sm-12
-          %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'build_modal("action-window");set_modal_list("action-window","/skill_templates/list");'}
+          %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'build_modal("action-window");set_modal_list("action-window","/hunters/' + @vault_hunter.id.to_s + '/potentialskills");'}
             %img{src: "/images/plus.png"}
             Add Action-Skill
       .row.vh_spacer

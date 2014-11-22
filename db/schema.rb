@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121041506) do
+ActiveRecord::Schema.define(version: 20141122200613) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,10 @@ ActiveRecord::Schema.define(version: 20141121041506) do
     t.text     "background"
     t.text     "traits"
     t.text     "flaws"
+    t.integer  "total_attribute_points"
+    t.integer  "total_proficiency_points"
+    t.integer  "total_skill_points"
+    t.integer  "current_attribute_points"
   end
 
 end

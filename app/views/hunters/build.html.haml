@@ -6,7 +6,7 @@
       .col-sm-6
       .col-sm-2.text-right
         .vh_bignum{id: 'attribute_points'}
-          = (@vault_hunter.current_skill_points.nil?) ? 0 : @vault_hunter.current_skill_points
+          = (@vault_hunter.current_attribute_points.nil?) ? 0 : @vault_hunter.current_attribute_points
       .col-sm-4.text-left
         Points remain
       .col-sm-12.vh_build_window{id: 'attributes_window'}  
@@ -74,15 +74,20 @@
     .col-md-12.h1.text-center{onclick: "advance('proficiencies', null);"}
       Select your proficiencies:
     .row.toggler{id: 'proficiencies', style: "display:none"}
+      .col-sm-2.text-right
+        .vh_bignum{id: 'proficiency_points'}
+          = (@vault_hunter.current_proficiency_points.nil?) ? 0 : @vault_hunter.current_proficiency_points
       .vh_region_title Improve
-      .row.proficiencies
-        - @vault_hunter.proficiencies.each do |proficiency|
-          .col-md-5
+      .col-md-12.proficiencies
+        - @vault_hunter.proficiencies.each_with_index do |proficiency, index|
+          .row{class: (index %2) == 0 ? "" : "vh_alt"}
+          .col-md-5.vh_build_large
             = proficiency.name
-          .col-md-5{id: "vh_build_proficiency_#{proficiency.id}"}
+          .col-md-1.vh_build_huge{id: "vh_build_proficiency_#{proficiency.id}"}
             = proficiency.tier
-          .col-md-2{onclick: "improve_proficiency(#{proficiency.id})"}
+          .col-md-1.vh_build_huge{onclick: "improve_proficiency(#{proficiency.id})"}
             \+
+          .col-md-4
       .vh_region_title Add New:
       .col-md-12.vh_build_window{id: 'proficiencies_window'}
       .col-md-12.vh_spacer
@@ -94,6 +99,9 @@
     .col-md-12.h1.text-center{onclick: "advance('action_skills', null);"}
       Select your action-skills:
     .row.toggler{id: 'action_skills', style: "display:none"}
+      .col-sm-2.text-right
+        .vh_bignum{id: 'skill_points'}
+          = (@vault_hunter.current_skill_points.nil?) ? 0 : @vault_hunter.current_skill_points
       .vh_region_title Action Skills
       .col-md-12.vh_build_window{id: 'action_skills_window'}
       .vh_region_title Custom Skill Builder (coming soon)
