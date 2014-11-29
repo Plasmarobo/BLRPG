@@ -1,16 +1,17 @@
 .container
-  = javascript_include_tag :builder
   %input{type: "hidden", id: "vh_race_id", value: @vault_hunter.race_id}
+  %input{type: "hidden", id: "vh_id", value: @vault_hunter.id}
   .row
-    .col-md-12.h1.text-center{onclick: "advance('attributes', null);"}
+    .col-md-12.h1.text-center{onclick: "advance('attribute', null);"}
       Distribute Attributes:
-    .row.toggler{id: 'attributes'}
-      .col-sm-6
-      .col-sm-2.text-right
-        .vh_bignum{id: 'attribute_points'}
-          = (@vault_hunter.current_attribute_points.nil?) ? 0 : @vault_hunter.current_attribute_points
-      .col-sm-4.text-left
-        Points remain
+    .row.toggler{id: 'attribute'}
+      .col-md-12
+        .col-sm-6
+        .col-sm-2.text-right
+          .vh_bignum{id: 'attribute_points'}
+            = (@vault_hunter.current_attribute_points.nil?) ? 0 : @vault_hunter.current_attribute_points
+        .col-sm-4.text-left
+          Points remain
       .col-sm-12.vh_build_window{id: 'attributes_window'}  
         - @vault_hunter.attribute_instances.each do |attribute_inst|
           .row
@@ -24,14 +25,14 @@
                   \-
                 .col-sm-2.vh_build_huge.text-center
                   .vh_build_number{id: "vh_build_attribute_#{attribute_inst.id}"}
-                  = attribute_inst.value
+                    = attribute_inst.value
                 .col-sm-1.vh_build_huge.text-left{onclick:"add_attribute_point(#{attribute_inst.id});"}
                   \+
                 .col-sm-4
       .col-md-12.vh_spacer
-      .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "advance(#{(@vault_hunter.has_race?) ? '\'race\', populate(\'races_window\',\'/races/list\'))' : '\'description\', null)'}; return false;" }
-          Next
+    .col-md-12.text-center
+      .btn.btn-success.btn-huge{onclick: "advance(#{(@vault_hunter.has_race?) ? '\'race\', populate(\'races_window\',\'/races/list\'))' : '\'description\', null)'}; return false;" }
+        Next
           
   - if @vault_hunter.has_race?
     .row
@@ -70,13 +71,13 @@
               = @vault_hunter.flaws
       .col-md-12.vh_spacer
       .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "package_description(); advance('proficiencies', populate('proficiencies_window', '/proficiency_templates/list')); return false;"}
+        .btn.btn-success.btn-huge{onclick: "package_description(); advance('proficiency', populate('proficiencies_window', '/proficiency_templates/list?mode=builder')); return false;"}
           Next
   
   .row
-    .col-md-12.h1.text-center{onclick: "advance('proficiencies', null);"}
+    .col-md-12.h1.text-center{onclick: "advance('proficiency', null);"}
       Select your proficiencies:
-    .row.toggler{id: 'proficiencies', style: "display:none"}
+    .row.toggler{id: 'proficiency', style: "display:none"}
       .col-sm-6
       .col-sm-2.text-right
         .vh_bignum{id: 'proficiency_points'}
@@ -85,20 +86,20 @@
         Points remaining
       .col-md-12
         .vh_region_title Improve
-        .col-md-12.proficiencies
+        .col-md-12{id: 'proficiencies'}
           - @vault_hunter.proficiencies.each_with_index do |proficiency, index|
             .row{class: (index %2) == 0 ? "" : "vh_alt"}
-            .col-md-5.vh_build_large
-              = proficiency.name
-            .col-md-1.vh_build_huge{id: "vh_build_proficiency_#{proficiency.id}"}
-              = proficiency.tier
-            .col-md-1.vh_build_huge{onclick: "update_proficiency(#{proficiency.id})"}
-              \+
-            .col-md-4
-      .col-md-12
-        .vh_region_title Add New:
-        .col-md-12.vh_build_window{id: 'proficiencies_window'}
-        .col-md-12.vh_spacer
+              .col-md-5.vh_build_large
+                = proficiency.name
+              .col-md-1.vh_build_huge{id: "vh_build_proficiency_#{proficiency.id}"}
+                = proficiency.tier
+              .col-md-1.vh_build_huge{onclick: "update_proficiency(#{proficiency.id})"}
+                \+
+              .col-md-4
+        .col-md-12
+          .vh_region_title Add New:
+          .col-md-12.vh_build_window{id: 'proficiencies_window'}
+          .col-md-12.vh_spacer
       .col-md-12.text-center
         .btn.btn-success.btn-huge{onclick: "advance('action_skills', populate('action_skills_window', '/hunters/#{@vault_hunter.id}/potentialskills')); return false;"}
           Next
@@ -113,11 +114,17 @@
           = (@vault_hunter.current_skill_points.nil?) ? 0 : @vault_hunter.current_skill_points
       .col-sm-4.text-left
         Points remain
-      .col-md-12
-        .vh_region_title Action Skills
-        .col-md-12.vh_build_window{id: 'action_skills_window'}
-        .vh_region_title Custom Skill Builder (coming soon)
-      .col-md-12.vh_spacer
+      .col-md-12{id: 'skills'}
+          -@vault_hunter.skills.each_with_index do |skill, index|
+            .row{class: (index %2) == 0 ? "" : "vh_alt"}
+              .col-md-12.vh_build_large
+                = skill.name
+      - if @vault_hunter.current_skill_points > 0
+        .col-md-12
+          .vh_region_title Action Skills
+          .col-md-12.vh_build_window{id: 'action_skills_window'}
+          .vh_region_title Custom Skill Builder (coming soon)
+        .col-md-12.vh_spacer
       .col-md-12.text-center
         .btn.btn-success.btn-huge{onclick: "advance('equipment', null); return false;"}
           Next
@@ -128,5 +135,5 @@
     .row.toggler{id: 'equipment', style: "display:none"}  
       .col-md-12.vh_spacer
       .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "builder_save(); return false;"}
+        .btn.btn-success.btn-huge{onclick: "builder_review(); return false;"}
           Review

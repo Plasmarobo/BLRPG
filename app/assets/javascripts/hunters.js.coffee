@@ -153,10 +153,10 @@
       $("#" + target).append(base);
     error: (jqXHR, status) ->
       if base != null
-        base.append(data)
+        base.append(status)
       else
-        base = data
-      $("#" + target).append(base);
+        base = status
+      $("#" + target).append(status);
 
 @query_into = (url, target, base = null) ->
   $.ajax url,
