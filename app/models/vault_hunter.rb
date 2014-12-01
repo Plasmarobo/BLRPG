@@ -45,6 +45,15 @@ class VaultHunter < ActiveRecord::Base
     return false
   end
   
+  def has_proficiency?(name)
+    self.proficiencies.each do |prof|
+      if prof.name == name
+        return true
+      end
+    end
+    return false
+  end
+  
   def has_level?(level)
     if self.level.nil?
       self.level = 1

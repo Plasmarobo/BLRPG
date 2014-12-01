@@ -1,5 +1,5 @@
 class HuntersController < ApplicationController
-  before_filter :set_vault_hunter, only: [:build, :show, :share, :edit, :update, :delete, :skills, :potentialskills]
+  before_filter :set_vault_hunter, only: [:build, :show, :share, :edit, :update, :delete, :skills, :potentialskills, :potentialproficiencies]
 
   def new
     @vault_hunter = VaultHunter.new  
@@ -142,7 +142,15 @@ class HuntersController < ApplicationController
     @skills.select! do |skill|
       (!@vault_hunter.has_skill?(skill)) and @vault_hunter.meets_prereq?(skill)
     end
-    render 'skill_templates/list', layout: nil, locals: {skills: @skills}
+    render 'skill_templates/list', layout: false, locals: {skills: @skills}
+  end
+  
+  def potentialproficiencies
+    @proficiencies = ProficiencyTemplate.all.to_a
+    @proficiencies.select! do |prof|
+      (!@vault_hunter.has_proficiency?(prof.name))
+    end
+    render 'proficiency_templates/list', layout: false, locals: {proficiencies: @proficiencies}
   end
 
   private

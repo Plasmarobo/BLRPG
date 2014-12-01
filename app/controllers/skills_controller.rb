@@ -1,4 +1,5 @@
 class SkillsController < ApplicationController
+  before_filter :set_skill, only: [:show, :edit]
   def new
     skill_temp = SkillTemplate.find(params[:template_id])
     skill_temp.instance(params[:vh])
@@ -8,9 +9,9 @@ class SkillsController < ApplicationController
     if params[:parent] != nil and params[:vh] != nil
       parent = SkillTemplate.find(params[:parent])
       hunter = VaultHunter.find(params[:vh])
-      @action = parent.instance(hunter)
+      @skill = parent.instance(hunter)
     end
-    render :show, layout: false, locals: {skill: @action, index: nil}
+    render :show, layout: false, locals: {skill: @skill, index: nil}
   end
 
   def batch
@@ -26,7 +27,7 @@ class SkillsController < ApplicationController
   end
 
   def show
-    render :show, locals: {skill: @action, index: nil}
+    render :show, locals: {skill: @skill, index: nil}
   end
 
   def destroy
@@ -41,9 +42,14 @@ class SkillsController < ApplicationController
   end
 
   def edit
-    render :edit, layout: false, locals: {skill: @action, index: nil}
+    render :edit, layout: false, locals: {skill: @skill, index: nil}
   end
 
   def update
   end
+  
+  private
+    def set_skill
+      @skill = Skill.find(params[:id])
+    end
 end

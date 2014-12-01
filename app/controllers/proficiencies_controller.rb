@@ -9,7 +9,10 @@ class ProficienciesController < ApplicationController
       points = params[:points]
       @proficiency = parent.instance(hunter, points)
     end
-    render :show, layout: false, locals: {proficiency: @proficiency, index: nil}
+    respond_to do |format|
+      format.html {render :show, layout: false, locals: {proficiency: @proficiency, index: nil}}
+      format.json {render json: @proficiency}
+    end
   end
 
   def batch
@@ -27,7 +30,10 @@ class ProficienciesController < ApplicationController
   end
 
   def show
-    render :show, locals: {proficiency: @proficiency, index: nil}
+    respond_to do |format|
+      format.html {render :show, layout: false, locals: {proficiency: @proficiency, index: nil}}
+      format.json {render json: @proficiency}
+    end
   end
 
   def destroy

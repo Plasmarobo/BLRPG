@@ -25,7 +25,7 @@ validate_change = (target_id, parent_id, value) ->
   result &= (current_points + value) >= 0
   return result
   
-@valdiated_add = (target, parent_id) ->
+validated_add = (target, parent_id) ->
   value = Number($("#" + target).text())
   value += 1
   if !validate_change(target, parent_id, 1)
@@ -35,7 +35,7 @@ validate_change = (target_id, parent_id, value) ->
     change_display_value(parent_id, -1)
     return true
 
-@validated_remove = (target, parent_id) ->
+validated_remove = (target, parent_id) ->
   value = Number($("#"+target).text())
   value -= 1
   if !validate_change(target, parent_id, -1)
@@ -47,7 +47,7 @@ validate_change = (target_id, parent_id, value) ->
 
 @add_attribute_point = (id) ->
   target = "vh_build_attribute_" + id
-  if @validated_add(target, 'attribute_points')
+  if validated_add(target, 'attribute_points')
     if !changed_attributes.hasOwnProperty(id)
       changed_attributes[id] = {'id': id, 'value': 1}
     else
@@ -58,7 +58,7 @@ validate_change = (target_id, parent_id, value) ->
 
 @remove_attribute_point = (id) ->
   target = "vh_build_attribute_" + id
-  if @validated_remove(target, 'attribute_points')
+  if validated_remove(target, 'attribute_points')
     if !changed_attributes.hasOwnProperty(id)
       changed_attributes[id] = {'id': id, 'value': -1}
     else
@@ -84,7 +84,7 @@ validate_new = (parent_id) ->
 
 @update_proficiency = (id) ->
   target = "vh_build_proficiency_" +id
-  if @validated_add(target, 'proficiency_points')
+  if validated_add(target, 'proficiency_points')
     if !changed_proficiencies.hasOwnProperty(id)
       changed_proficiencies[id] = {'id':id, 'value': 1}
     else
@@ -93,9 +93,9 @@ validate_new = (parent_id) ->
   else
     return false
   
-@undo_update_proficiency = (id)
+@undo_update_proficiency = (id) ->
   target = "vh_build_proficiency_" +id
-  if @validated_remove(target, 'proficiency_points')
+  if validated_remove(target, 'proficiency_points')
     if !changed_proficiencies.hasOwnProperty(id)
       changed_proficiencies[id] = {'id':id, 'value': -1}
     else
@@ -109,38 +109,46 @@ validate_new = (parent_id) ->
     change_display_value('proficiency_points', -1)
     new_proficiencies.push({id: template_id})
     para = {vh: parseInt($('#vh_id').val()), parent: template_id, points: 1}
-    @json_post 'proficiencies/create.json', 
-      para
+    @json_post '/proficiencies/create.json',
+      para,
       (new_prof) ->
         build_prof_row(new_prof)
+        populate('proficiencies', '/hunters/#{@vault_hunter.id}/poentialproficiencies?mode=builder')
 
-@undo_build_proficiency = (proficiency_id) ->
-  confirm_dialog("It's against the rules to delete proficiencies, do you want to proceed?", 
-    (proficiency_id) ->
-      @json_post 'proficiencies/destroy',
-        {confirm: 'yes', id: proficiency_id}
-        () ->
-          change_display_value('proficiency_points', 1)
-          $('#vh_build_proficiency_' + proficiency_id).remove()
+@drop_proficiency = (proficiency_id) ->
+  success_callback =  () ->
+    change_display_value('proficiency_points', 1)
+    $('#vh_build_proficiency_' + proficiency_id).remove()
+  post_callback = () ->
+    @json_post '/proficiencies/destroy',
+      {confirm: 'yes', id: proficiency_id}
+      success_callback()
+  confirm_dialog "It's against the rules to delete proficiencies, do you want \
+  to proceed?",
+    post_callback
 
-@build_skill = (template_id) ->
+@build_action = (template_id) ->
   if validate_new('skill_points')
     change_display_value('skill_points', -1)
     new_skills.push({id: template_id})
     para = {vh: parseInt($('#vh_id').val()), parent: template_id}
-    @json_post 'skills/create.json', 
-      para
+    @json_post '/skills/create.json',
+      para,
       (new_skill) ->
         build_skill_row(new_skill)
+        populate('actions_skills_window', '/hunters/#{@vault_hunter.id}/poentialskills?mode=builder')
 
-@undo_build_skill = (skill_id) ->
-  confirm_dialog("It's against the rules to delete action skills, do you want to proceed?",
-    (skill_id) ->
-      @json_post 'skills/destroy',
-        {confirm: 'yes', id: skill_id}
-        () ->
-          change_display_value('skill_points', 1)
-          $('#vh_build_proficiency_' + skill_id).remove()
+@drop_action = (skill_id) ->
+  success_callback = () ->
+    change_display_value('skill_points', 1)
+    $('#vh_build_proficiency_' + skill_id).remove()
+  post_callback = () ->
+    @json_post '/skills/destroy',
+      {confirm: 'yes', id: skill_id}
+      success_callback()
+  confirm_dialog "It's against the rules to delete action skills, do you want \
+  to proceed?",
+    post_callback
 
 @advance = (target_id, callback) ->
   $('.toggler').hide()
@@ -152,12 +160,13 @@ validate_new = (parent_id) ->
   $.ajax url,
     type: 'POST'
     beforeSend: (xhr) ->
-      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+      xhr.setRequestHeader('X-CSRF-Token', \
+      $('meta[name="csrf-token"]').attr('content'))
     dataType: 'html'
     success: (data) ->
       $('#' + target_id).append(data)
     error: (jqXHR, status) ->
-      $("#" + target_id).append(data);
+      $("#" + target_id).append(data)
       
 @build_prof_row = (prof_object) ->
   profs = $("#proficiencies")
@@ -166,17 +175,18 @@ validate_new = (parent_id) ->
   if profs.children().length > 0
     if not profs.children().last().hasClass("vh_alt")
       row.addClass("vh_alt")
-  row.append(insert_content_div("col-md-5 vh_build_large", prof_object.name);
-  row.append(insert_content_div("col-md-1 vh_build_huge", prof_object.tier, "vh_build_proficiency_" + proficiency.id))
+  row.append(insert_content_div("col-md-5 vh_build_large", prof_object.name))
+  row.append(insert_content_div("col-md-1 vh_build_huge", prof_object.tier, \
+  "vh_build_proficiency_" + proficiency.id))
   row.append(insert_content_div("col-md-1 vh_build_huge", "+"))
-  row.children().last().click () ->
-    update_proficiency(prof_object.id)
-  row.append(insert_content_div("col-md-4", ""))
-  row.on('oncontextmenu', () ->
-    undo_build_proficiency(prof_object.id)
+  row.append(insert_content_div("col-md-1", "<img src='/images/delete.png'></img>"))
+  row.children().last().on click: ->
+    @update_proficiency(prof_object.id)
+    false
+  row.append(insert_content_div("col-md-3", ""))
   profs.append(row)
   return row
-  
+
 @build_skill_row = (skill_object) ->
   skills = $('#skills')
   row = $('<div></div>')
@@ -184,15 +194,19 @@ validate_new = (parent_id) ->
     if not skills.children().last().hasClass("vh_alt")
       row.addClass('vh_alt')
   row.addClass('row')
+  row.append(insert_content_div("col-md-11 vh_build_large", skill_object.name))
+  row.append(insert_content_div("col-md-1", "<img src='/images/delete.png'></img>"))
+  skills.append(row)
+  return row
+  
 
-insert_content_div = (class_name, content, id = null) ->
+insert_content_div = (class_name, content, id) ->
   div = $('<div></div>')
   div.addClass(class_name)
-  div.html(content)
-  if id != null
+  div.text(content)
+  if id != undefined
     div.attr('id', id)
   return div
-      
+
 @builder_review = () ->
-  
-  
+  alert("Reviewing")
