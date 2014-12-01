@@ -34,9 +34,11 @@ Prerequsite.create(skill_template_id:skill.id, prereq_name: "technomancy", prere
 
 skill = SkillTemplate.create(name:'Assault Turret', skill_type:'Upgrade', duration: 3, cooldown: 5, description:'Digistructed turrets gain Rapid 3 and the attack pool increases by 1.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name:"technomancy", prereq_type: "attribute", value: 4)
+Prerequsite.create(skill_template_id:skill.id, prereq_name:"Digistruct Turret", prereq_type:"skill", value: 0)
 
 skill = SkillTemplate.create(name:'Support Turret', skill_type:'Defining', duration: 0, cooldown: 0, description:'When a player begins their turn next to a Digistructed turret of your creation, they heal 1 wound.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "technomancy", prereq_type: "attribute", value: 4)
+Prerequsite.create(skill_template_id:skill.id, prereq_name:"Digistruct Turret", prereq_type:"skill", value: 0)
 
 skill = SkillTemplate.create(name:'Dual Wield', skill_type:'Active', duration: 3, cooldown: 5, description:'Choose two light weapons. You may make one attack with each weapon (2 attacks per turn) but you attack pools are halved.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "finesse", prereq_type: "attribute", value: 3)

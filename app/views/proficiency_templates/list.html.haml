@@ -7,7 +7,7 @@
 .vh_proficiency_templates{id: "proficiency_templates"}
   -@proficiencies.each_with_index do |prof, index|
     - if params[:mode] == "builder"
-      .row{onclick: 'build_proficiency(' + prof.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
+      .row{id: "vh_build_prof_row_#{prof.id}", onclick: 'build_proficiency(' + prof.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
         .col-sm-4
           = prof.name
         .col-sm-8

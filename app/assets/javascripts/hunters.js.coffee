@@ -141,7 +141,21 @@
     beforeSend: (xhr) ->
       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
     dataType: 'html'
-    success: success_callback(data)
+    success: (data) ->
+      success_callback(data)
+    error: (jqXHR, status) ->
+      build_modal("error-window")
+      $("#error-window").append(status);
+
+@submit_post = (url, payload, success_callback) ->
+  $.ajax url,
+    type: 'POST'
+    dataType: 'json'
+    data: payload
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+    dataType: 'text'
+    success: success_callback
     error: (jqXHR, status) ->
       build_modal("error-window")
       $("#error-window").append(status);

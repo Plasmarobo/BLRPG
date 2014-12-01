@@ -9,7 +9,7 @@
 .vh_skill_templates{id: "skill_templates"}
   -skills.each_with_index do |skill, index|
     -if params[:mode] == 'builder'
-      .row{onclick: 'build_action(' + skill.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
+      .row{id: "vh_build_skill_row_#{skill.id}", onclick: 'build_action(' + skill.id.to_s + ')', class: (index % 2 == 0) ? " vh_alt" : ""}
         .col-sm-4
           = skill.name
         .col-sm-3

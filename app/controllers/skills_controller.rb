@@ -31,7 +31,7 @@ class SkillsController < ApplicationController
   end
 
   def destroy
-    skill = Skill.find(param[:id])
+    skill = Skill.find(params[:id])
     if params[:confirm] == "yes"
       skill.destroy
       render inline: "destroyed", layout: false

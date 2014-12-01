@@ -139,6 +139,8 @@ Rails.application.routes.draw do
   
   get 'hunters/:id/potentialproficiencies' => 'hunters#potentialproficiencies'
   post 'hunters/:id/potentialproficiencies' => 'hunters#potentialproficiencies'
+  
+  post 'hunters/:id/verify' => 'hunters#verify'
 
   get 'hunters/:id/share' => 'hunters#share'
   
