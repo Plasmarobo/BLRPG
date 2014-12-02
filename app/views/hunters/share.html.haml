@@ -107,7 +107,7 @@
           Tier
         .vh_proficiencies
           -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
-          = render template: "proficiencies/show", layout: false, locals: {proficiency: proficiency, index: index}
+            = render template: "proficiencies/show", layout: false, locals: {proficiency: proficiency, index: index}
       .row.vh_spacer
       .row.vh_skills
         .vh_region_title 
