@@ -29,9 +29,9 @@
       .vh_field.col-sm-3
         .vh_hint Race
         -if @vault_hunter.has_race?
-          %input{id: "race_name", class: "vh_txt", value: @vault_hunter.race.name.capitalize, readonly: "true", onclick: 'build_modal("race-window");set_modal_list("race-window", "/races/list");'}
+          %input{id: "vh_race_name", class: "vh_txt", value: @vault_hunter.race.name.capitalize, readonly: "true", onclick: 'build_modal("race-window");set_modal_list("race-window", "/races/list");$("#race-window").modal("show");'}
         -else
-          %input{id: "race_name", class: "vh_txt", placeholder: "Select Race", readonly: "true", onclick: 'build_modal("race-window");set_modal_list("race-window", "/races/list");'}
+          %input{id: "vh_race_name", class: "vh_txt", placeholder: "Select Race", readonly: "true", onclick: 'build_modal("race-window");set_modal_list("race-window", "/races/list");$("#race-window").modal("show");'}
   .row.vh_spacer
   .row
     .col-sm-12
@@ -108,10 +108,7 @@
     .col-sm-6
       .row.vh_profs
         .vh_region_title 
-          Proficiencies (
-          %span.vh_bucket{id: "current_proficiency_points"}
-            = @vault_hunter.current_proficiency_points
-          )
+          Proficiencies
         .col-sm-9.vh_prof_name.vh_hint
           Name
         .col-sm-3.vh_prof_tier.vh_hint
@@ -120,16 +117,13 @@
           -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
             = render template: "proficiencies/edit", layout: false, locals: {proficiency: proficiency, index: index}
         .col-sm-12
-          %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'build_modal("prof-window");set_modal_list("prof-window", "/proficiency_templates/list");'}
+          %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'build_modal("prof-window");set_modal_list("prof-window", "/hunters/' + @vault_hunter.id.to_s + '/potentialproficiencies");'}
             %img{src: "/images/plus.png"}
             Add Proficiency
       .row.vh_spacer
       .row.vh_skills
         .vh_region_title 
-          Action Skills (
-          %span.vh_bucket{id: "current_skill_points"}
-            = @vault_hunter.current_skill_points
-          )
+          Action Skills
         .col-sm-3.vh_hint
           Name
         .col-sm-9.vh_hint

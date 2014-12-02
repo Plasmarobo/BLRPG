@@ -15,6 +15,28 @@ class AttributeInstancesController < ApplicationController
     end
     render inline: "ok", layout: false
   end
+  
+  def validate_batch
+    valid = true
+    if params[:attribute_instances] != nil
+      params[:attribute_instances].each do |key, value|
+        target = AttributeInstance.find(key)
+        delta = value.to_i - target.value.to_i
+        if delta <= target.vault_hunter.current_attribute_points
+          target.vault_hunter.current_attribute_points -= delta
+          target.vault_hunter.save
+          target.update({value: value})
+        else
+          valid = false
+        end
+      end
+    end
+    if valid
+      render inline: "ok", layout: false
+    else
+      render inline: "fail", layout: false, status: :expectation_failed
+    end
+  end
 
   protected
 

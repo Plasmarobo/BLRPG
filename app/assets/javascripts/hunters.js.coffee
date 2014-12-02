@@ -2,9 +2,12 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-@select_race = (race_id) ->
+@select_race = (race_id, name) ->
   $("#vh_race_id").val(race_id)
-  $("#race_name").val($("#race_name_" + race_id).val())
+  if name != undefined and $("#vh_race_name").length > 0
+    $("#vh_race_name").val(name)
+  $(".vh_races>.row").removeClass("vh_selected")
+  $("#race_" + race_id).addClass("vh_selected")
   @clean_modals(false)
   
 @add_attack = (skill_id) ->

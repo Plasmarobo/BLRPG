@@ -32,24 +32,16 @@
                 .col-sm-4
       .col-md-12.vh_spacer
       .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "advance(#{(@vault_hunter.has_race?) ? '\'race\'); populate(\'races_window\',\'/races/list\');' : '\'description\');'}; return false;" }
-          Next
-          
-  - if @vault_hunter.has_race?
-    .row
-      .col-md-12.h1.text-center{onclick: "advance('race');  populate('races_window, '/races/list');"}
-        Pick a race:
-      .row.toggler{id: 'race', style: "display:none"}
-        .col-md-12.vh_build_window{id: 'races_window'}
-        .col-md-12.vh_spacer
-        .col-md-12.text-center
-          .btn.btn-success.btn-huge{onclick: "advance('description'); return false;"}
-            Next
+        .btn.btn-success.btn-huge{onclick: 'upload_attributes(function(){advance("description");populate("races_window", "/races/list");});' }
+          Save & Continue
   
   .row
-    .col-md-12.h1.text-center{onclick: "advance('description', null);"}
+    .col-md-12.h1.text-center{onclick: "advance('description');populate('races_window, '/races/list');"}
       Describe your character:
     .row.toggler{id: 'description', style: "display:none"}
+      .col-md-12.vh_spacer
+      .col-md-12.vh_build_window{id: 'races_window'}
+      .col-md-12.vh_spacer
       .col-md-6
         .row
           .col-sm-12
@@ -72,8 +64,8 @@
               = @vault_hunter.flaws
       .col-md-12.vh_spacer
       .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "advance('proficiency'); populate('proficiencies_window', '/hunters/#{@vault_hunter.id}/potentialproficiencies?mode=builder'); return false;"}
-          Next
+        .btn.btn-success.btn-huge{onclick: "upload_hunter(function(){advance('proficiency'); populate('proficiencies_window', '/hunters/#{@vault_hunter.id}/potentialproficiencies?mode=builder');});"}
+          Save & Continue
   
   .row
     .col-md-12.h1.text-center{onclick: "advance('proficiency'); populate('proficiencies_window', '/hunters/#{@vault_hunter.id}/potentialproficiencies?mode=builder');"}
@@ -105,8 +97,8 @@
           .col-md-12.vh_build_window{id: 'proficiencies_window'}
           .col-md-12.vh_spacer
       .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "advance('action_skills'); populate('action_skills_window', '/hunters/#{@vault_hunter.id}/potentialskills?mode=builder'); return false;"}
-          Next
+        .btn.btn-success.btn-huge{onclick: "upload_proficiencies(function(){advance('action_skills'); populate('action_skills_window', '/hunters/#{@vault_hunter.id}/potentialskills?mode=builder');});"}
+          Save & Continue
   
   .row
     .col-md-12.h1.text-center{onclick: "advance('action_skills'); populate('action_skills_window', '/hunters/#{@vault_hunter.id}/potentialskills?mode=builder');"}
@@ -126,15 +118,15 @@
               = skill.name
             .col-md-1{onclick: "drop_action(#{skill.id})"}
               = image_tag '/images/delete.png'
-      - if @vault_hunter.current_skill_points > 0
-        .col-md-12
-          .vh_region_title Action Skills
-          .col-md-12.vh_build_window{id: 'action_skills_window'}
-          .col-md-12.vh_spacer
-          .vh_region_title Custom Skill Builder (coming soon)
+      .col-md-12.vh_spacer
+      .col-md-12
+        .vh_region_title Action Skills
+        .col-md-12.vh_build_window{id: 'action_skills_window'}
         .col-md-12.vh_spacer
+        .vh_region_title Custom Skill Builder (coming soon)
+      .col-md-12.vh_spacer
       .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "advance('equipment'); return false;"}
+        .btn.btn-success.btn-huge{onclick: "advance('equipment');"}
           Next
 
   .row
@@ -145,5 +137,5 @@
         Equipment not yet in database
       .col-md-12.vh_spacer
       .col-md-12.text-center
-        .btn.btn-success.btn-huge{onclick: "builder_review(); return false;"}
-          Save Changes
+        .btn.btn-success.btn-huge{onclick: "upload_equipment(function(){show_sheet_link();});"}
+          Save & Review

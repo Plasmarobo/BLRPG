@@ -1,5 +1,5 @@
 class HuntersController < ApplicationController
-  before_filter :set_vault_hunter, only: [:build, :show, :share, :edit, :update, :delete, :skills, :potentialskills, :potentialproficiencies]
+  before_filter :set_vault_hunter, only: [:build, :show, :share, :edit, :update, :delete, :skills, :potentialskills, :potentialproficiencies, :verify]
 
   def new
     @vault_hunter = VaultHunter.new  
@@ -152,10 +152,6 @@ class HuntersController < ApplicationController
     end
     render 'proficiency_templates/list', layout: false, locals: {proficiencies: @proficiencies}
   end
-  
-  def verify
-    
-  end
 
   private
     def vault_hunter_params
@@ -163,7 +159,7 @@ class HuntersController < ApplicationController
                                           :level, 
                                           :user_id, 
                                           :age, 
-                                          :race, 
+                                          :race_id, 
                                           :height, 
                                           :weight, 
                                           :toughness, 

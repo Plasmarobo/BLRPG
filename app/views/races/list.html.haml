@@ -5,7 +5,7 @@
     Description
 .vh_races
   - @races.each_with_index do |race, index|
-    .row{id: "race_" + race.id.to_s, onclick: 'select_race(' + race.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
+    .row{id: "race_" + race.id.to_s, onclick: 'select_race(' + race.id.to_s + ',\'' + race.name.capitalize + '\')', class: (index % 2 == 0) ? "vh_alt" : ""}
       .col-sm-3{id: "race_name_" + race.id.to_s}
         = race.name.capitalize
       .col-sm-9

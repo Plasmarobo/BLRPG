@@ -9,6 +9,6 @@ class SkillTemplate < ActiveRecord::Base
         #  skill = Skill.create(vault_hunter_id:vault_hunter.id, skill_template_id:self.id)
         #end
         #skill
-        skill = Skill.create(vault_hunter_id:vault_hunter.id, skill_template_id:self.id)
+        skill = Skill.create(vault_hunter_id: vault_hunter.id, skill_template_id: self.id)
     end
 end

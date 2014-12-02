@@ -43,13 +43,16 @@ Rails.application.routes.draw do
   post 'attribute_instances/update'
 
   post 'attribute_instances/batch'
+  post 'attribute_instances/validate_batch'
 
   get 'proficiencies/new'
 
   get 'proficiencies/create'
   post 'proficiencies/create'
+  post 'proficiencies/validated_create'
 
   post 'proficiencies/batch'
+  post 'proficiencies/validate_batch'
 
   get 'proficiencies/index'
 
@@ -57,6 +60,7 @@ Rails.application.routes.draw do
 
   get 'proficiencies/destroy'
   post 'proficiencies/destroy'
+  post 'proficiencies/drop'
 
   get 'proficiencies/edit'
 
@@ -66,6 +70,7 @@ Rails.application.routes.draw do
 
   get 'skills/create'
   post 'skills/create'
+  post 'skills/validated_create'
 
   post 'skills/batch'
 
@@ -75,6 +80,7 @@ Rails.application.routes.draw do
 
   get 'skills/destroy'
   post 'skills/destroy'
+  post 'skills/drop'
 
   get 'skills/edit'
 
