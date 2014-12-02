@@ -144,7 +144,7 @@ validate_new = (parent_id) ->
 
 @show_sheet_link = () ->
   build_modal("link-window")
-  $("#link-window").append($("<div class='container mwin text-center'><a href='/hunters/" + parseInt($("#vh_id").val()) + "' class='btn btn-success btn-huge'>View Sheet</a></div>"))
+  $("#link-window").append($("<div class='container mwin text-center'><a href='/hunters/" + parseInt($("#vh_id").val()) + "' class='btn btn-success btn-huge force_v_center'>View Sheet</a></div>"))
   $("#link-window").modal("show")
 
 @advance = (target_id, callback) ->

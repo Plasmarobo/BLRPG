@@ -62,7 +62,7 @@
 
 @delete_minion = (minion_id) ->
   del_callback = () ->
-    @json_post '/minions/destroy', 
+    @submit_post '/minions/destroy', 
       {confirm: "yes", id: minion_id}
       () -> 
         $("#minion_" + minion_id).remove()
@@ -130,16 +130,17 @@
     data: payload
     beforeSend: (xhr) ->
       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-    dataType: 'json'
-    success: success_callback
+    success: (data) ->
+      success_callback(data)
     error: (jqXHR, status) ->
       build_modal("error-window")
       $("#error-window").append(status);
+      $("#error-window").modal("show");
       
 @html_post = (url, payload, success_callback) ->
   $.ajax url,
     type: 'POST'
-    dataType: 'json'
+    dataType: 'html'
     data: payload
     beforeSend: (xhr) ->
       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
@@ -149,19 +150,21 @@
     error: (jqXHR, status) ->
       build_modal("error-window")
       $("#error-window").append(status);
+      $("#error-window").modal("show");
 
 @submit_post = (url, payload, success_callback) ->
   $.ajax url,
     type: 'POST'
-    dataType: 'json'
+    dataType: 'text'
     data: payload
     beforeSend: (xhr) ->
       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-    dataType: 'text'
-    success: success_callback
+    success: (data) ->
+      success_callback(data)
     error: (jqXHR, status) ->
       build_modal("error-window")
       $("#error-window").append(status);
+      $("#error-window").modal("show");
 
 @set_modal_list = (id, url) ->
   div = $('<div>', {class: 'container mwin'});
@@ -223,36 +226,36 @@
 @upload_vault_hunter = (id, vault_objects, callback) ->
   $("#target").html("6")
   $("#count").html("0")
-  json_post '/hunters/' + id + '/update',
-            {vault_hunter: vault_objects.vault_hunter}
+  @submit_post '/hunters/' + id + '/update',
+    {vault_hunter: vault_objects.vault_hunter}
+    () ->
+      $("#count").html("1")
+      @submit_post '/proficiencies/batch',
+        {proficiencies: vault_objects.proficiencies}
+        () ->
+          $("#count").html("2")
+          @submit_post '/skills/batch',
+            {skills: vault_objects.skills}
             () ->
-              $("#count").html("1")
-              json_post '/proficiencies/batch',
-                {proficiencies: vault_objects.proficiencies}
+              $('#count').html("3")
+              @submit_post '/attacks/batch',
+                {attacks: vault_objects.attacks}
                 () ->
-                  $("#count").html("2")
-                  json_post '/skills/batch',
-                    {skills: vault_objects.skills}
+                  $("#count").html("4")
+                  @submit_post '/attribute_instances/batch',
+                    {attribute_instances: vault_objects.attributes}
                     () ->
-                      $('#count').html("3")
-                      json_post '/attacks/batch',
-                        {attacks: vault_objects.attacks}
+                      $("#count").html("5")
+                      @submit_post '/minions/batch',
+                        {minions: vault_objects.minions}
                         () ->
-                          $("#count").html("4")
-                          json_post '/attribute_instances/batch',
-                            {attribute_instances: vault_objects.attributes}
-                            () ->
-                              $("#count").html("5")
-                              json_post '/minions/batch',
-                                {minions: vault_objects.minions}
-                                () ->
-                                  $("#count").html("6")
-                                  callback()
+                          $("#count").html("6")
+                          callback()
   
 @save_vault_hunter = (id) ->
   build_modal("save_dialog")
   $("#save_dialog").modal('show');
-  $("#save_dialog").append("<div class='container mwin'><h1>Saving, please wait</h1><span id='count'>0</span>/<span id='target'>0</span></div>");
+  $("#save_dialog").append("<div class='container mwin'><h1>Saving, please wait</h1><br /><img src='/images/ajax-loader.gif'></img><span id='count'>0</span>/<span id='target'>0</span></div>");
   vault_objects = package_sheet_changes()
   close_save_dialog = () ->
     $("#save_dialog").modal('hide');
