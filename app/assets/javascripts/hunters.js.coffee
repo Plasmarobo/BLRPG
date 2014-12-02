@@ -2,6 +2,14 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+@select_race = (race_id, name) ->
+  $("#vh_race_id").val(race_id)
+  if name != undefined and $("#vh_race_name").length > 0
+    $("#vh_race_name").val(name)
+  $(".vh_races>.row").removeClass("vh_selected")
+  $("#race_" + race_id).addClass("vh_selected")
+  @clean_modals(false)
+  
 @add_attack = (skill_id) ->
   target = 'attacks'
   para = {vh: parseInt($('#vh_id').val()), parent: skill_id}
@@ -46,14 +54,30 @@
         $("#action_" + action_id).remove()
   @confirm_dialog("You are about to delete this action forever, continue?", del_callback)
   false
+  
+@add_minion = () ->
+  target = 'minions'
+  para = {vh: parseInt($('#vh_id').val())}
+  @transact_into('/minions/create',para, target)
+
+@delete_minion = (minion_id) ->
+  del_callback = () ->
+    @json_post '/minions/destroy', 
+      {confirm: "yes", id: action_id}
+      () -> 
+        $("#minion_" + minion_id).remove()
+  @confirm_dialog("You are about to delete this minion forever, continue?", del_callback)
+  false
 
 @package_sheet_changes = () ->
   namespace_inputs = $("[id^='vh_']");
   prof_regex = /proficiency_([a-z]+)_([0-9]+)/
+  minion_regex = /minion_([a-z]+)_([0-9]+)/
   attack_regex = /attack_([a-z]+)_([0-9]+)/
   attrib_regex = /attrib_([0-9]+)/
   hunter = {}
   attacks = {}
+  minions = {}
   proficiencies = {}
   skills = {}
   attribs = {}
@@ -67,6 +91,13 @@
       if not (proficiencies.hasOwnProperty(id))
         proficiencies[id] = {}
       (proficiencies[id])[key] = field.value
+    else if ns_name.substr(0, 6) == "minion"
+      properties = ns_name.match(minion_regex)
+      id = properties[2]
+      key = properties[1]
+      if not (minions.hasOwnProperty(id))
+        minions[id] = {}
+      (minions[id])[key] = field.value
     else if ns_name.substr(0, 6) == "attack"
       properties = ns_name.match(attack_regex)
       id = properties[2]
@@ -87,7 +118,8 @@
     proficiencies: proficiencies,
     attacks:       attacks,
     skills:        skills,
-    attributes:    attribs
+    attributes:    attribs,
+    minions:       minions
   }
   return result;
 
@@ -98,7 +130,34 @@
     data: payload
     beforeSend: (xhr) ->
       xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+    dataType: 'json'
+    success: success_callback
+    error: (jqXHR, status) ->
+      build_modal("error-window")
+      $("#error-window").append(status);
+      
+@html_post = (url, payload, success_callback) ->
+  $.ajax url,
+    type: 'POST'
+    dataType: 'json'
+    data: payload
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
     dataType: 'html'
+    success: (data) ->
+      success_callback(data)
+    error: (jqXHR, status) ->
+      build_modal("error-window")
+      $("#error-window").append(status);
+
+@submit_post = (url, payload, success_callback) ->
+  $.ajax url,
+    type: 'POST'
+    dataType: 'json'
+    data: payload
+    beforeSend: (xhr) ->
+      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+    dataType: 'text'
     success: success_callback
     error: (jqXHR, status) ->
       build_modal("error-window")
@@ -124,10 +183,10 @@
       $("#" + target).append(base);
     error: (jqXHR, status) ->
       if base != null
-        base.append(data)
+        base.append(status)
       else
-        base = data
-      $("#" + target).append(base);
+        base = status
+      $("#" + target).append(status);
 
 @query_into = (url, target, base = null) ->
   $.ajax url,
@@ -154,6 +213,7 @@
     set.remove()
   else
     set.not('#error-window').remove()
+  $('body').removeClass("modal-open")
 
 @build_modal = (id) ->
   clean_modals()
@@ -161,7 +221,7 @@
   $('body').append(div)
 
 @upload_vault_hunter = (id, vault_objects, callback) ->
-  $("#target").html("5")
+  $("#target").html("6")
   $("#count").html("0")
   json_post '/hunters/' + id + '/update',
             {vault_hunter: vault_objects.vault_hunter}
@@ -183,7 +243,11 @@
                             {attribute_instances: vault_objects.attributes}
                             () ->
                               $("#count").html("5")
-                              callback()
+                              json_post '/minions/batch',
+                                {minions: vault_objects.minions}
+                                () ->
+                                  $("#count").html("6")
+                                  callback()
   
 @save_vault_hunter = (id) ->
   build_modal("save_dialog")

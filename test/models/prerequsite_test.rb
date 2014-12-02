@@ -15,4 +15,8 @@ class PrerequsiteTest < ActiveSupport::TestCase
   test "Prereq Skill" do
     assert false
   end
+  
+  test "Prereq All" do
+    assert false
+  end
 end

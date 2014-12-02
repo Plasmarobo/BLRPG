@@ -1,2 +1,6 @@
-%h1 Proficiencies#edit
-%p Find me in app/views/proficiencies/edit.html.haml
+- style = index.nil? ? "" : (index % 2) == 0 ? "vh_alt" : ""
+.row{id: "proficiency_" + proficiency.id.to_s, oncontextmenu: "delete_proficiency(" + proficiency.id.to_s + ");return false;", class: style}
+  .col-sm-9.prof_name
+    = proficiency.name
+  .col-sm-3.prof_tier
+    %input{id: "vh_proficiency_tier_" + proficiency.id.to_s, value: proficiency.tier, class: "vh_num"}

@@ -10,15 +10,35 @@ blk = AttributeTemplate.create(name: 'bulk', short: 'BLK')
 fin = AttributeTemplate.create(name: 'finesse', short: 'FIN')
 sir = AttributeTemplate.create(name: 'sirenity', short: 'SIN')
 tec = AttributeTemplate.create(name: 'technomancy', short: 'TEC')
+#RACES!
+human = Race.create(name: 'human', description:"You’re soft, fleshy, but you can channel Sirenity and have no limits on any attributes. Human is generally the best choice for someone new to the game.")
+cyborg = Race.create(name: 'cyborg', description:"Half machine, half human. Your technomancy is boosted, but your Sirenity is limited. You can also install self-augments to improve yourself.")
+robot = Race.create(name: 'robot', description:"All metal baby! You don’t have internal organs, and you run on only the finest pure electrons. Your metal shell provides you with some armor and technomancers might be able to give you a bit of a boost.")
+
+Perk.create(race_id: human.id, description: "Unique talents: Extra proficiency at level 1", perk_type: "proficiency", value: 1, name: "Extra proficiency")
+Perk.create(race_id: human.id, description: "Vulnerable to fire", perk_type: "vulnerablility", value: 0, name: "Vulnerabilty: Fire")
+Perk.create(race_id: human.id, description: "Needs to eat and breathe", perk_type:"flavor", value: 0, name: "Metabolism")
+
+Perk.create(race_id: cyborg.id, description: "Intrinsic Technology: +1 Technomancy", perk_type: "attribute", value: 1, name: "+1 Technomancy")
+Perk.create(race_id: cyborg.id, description: "Vulnerable to shock", perk_type: "vulnerablility", value: 0, name: "Vulnerabilty: Shock")
+Perk.create(race_id: cyborg.id, description: "Limited Sirenity (2)", perk_type:"limit", value: 2, name: "sirenity")
+
+Perk.create(race_id: robot.id, description: "Immune to Diesease", perk_type: "flavor", value: 0, name: "Disease Immunity")
+Perk.create(race_id: robot.id, description: "Immune to Fire", perk_type: "flavor", value: 0, name: "Fire Immunity")
+Perk.create(race_id: robot.id, description: "Vulnerable to corrosive", perk_type: "vulnerablility", value: 0, name: "Vulnerabilty: Corrosive")
+Perk.create(race_id: robot.id, description: "The Sirenity of a Robot is always 0", perk_type:"limit", value: 0, name: "sirenity")
+
 #Prereq types: attribute level skill
 skill = SkillTemplate.create(name:'Digistruct Turret', skill_type:'Defining', duration: 3, cooldown: 5, description:'Digistructs in a battle turret (model dependent on corporate affiliation) that does damage to enemies. The turret attacks the nearest enemy with a pool of 5. It has a weapon damage of 1.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "technomancy", prereq_type: "attribute", value: 3)
 
 skill = SkillTemplate.create(name:'Assault Turret', skill_type:'Upgrade', duration: 3, cooldown: 5, description:'Digistructed turrets gain Rapid 3 and the attack pool increases by 1.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name:"technomancy", prereq_type: "attribute", value: 4)
+Prerequsite.create(skill_template_id:skill.id, prereq_name:"Digistruct Turret", prereq_type:"skill", value: 0)
 
 skill = SkillTemplate.create(name:'Support Turret', skill_type:'Defining', duration: 0, cooldown: 0, description:'When a player begins their turn next to a Digistructed turret of your creation, they heal 1 wound.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "technomancy", prereq_type: "attribute", value: 4)
+Prerequsite.create(skill_template_id:skill.id, prereq_name:"Digistruct Turret", prereq_type:"skill", value: 0)
 
 skill = SkillTemplate.create(name:'Dual Wield', skill_type:'Active', duration: 3, cooldown: 5, description:'Choose two light weapons. You may make one attack with each weapon (2 attacks per turn) but you attack pools are halved.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "finesse", prereq_type: "attribute", value: 3)
@@ -56,7 +76,7 @@ skill = SkillTemplate.create(name:'Tackle', skill_type:'Basic', duration: 0, coo
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "bulk", prereq_type: "attribute", value: 4)
 
 skill = SkillTemplate.create(name:'Bullrush', skill_type:'Upgrade', duration: 0, cooldown: 0, description:'Using Tackle does not stun you.')
-Prerequsite.create(skill_template_id:skill.id, prereq_name: "tackle", prereq_type: "skill", value: 3)
+Prerequsite.create(skill_template_id:skill.id, prereq_name: "Tackle", prereq_type: "skill", value: 3)
 
 skill = SkillTemplate.create(name:'Hammerthrow', skill_type:'Basic', duration: 0, cooldown: 0, description:'When you make a melee attack against an enemy (limit of 50lbs per point of BLK) you may subtract up to three points of damage from the attack. You may throw the target 5ft for each point of damage subtracted in this way.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "bulk", prereq_type: "attribute", value: 3)
@@ -102,7 +122,7 @@ Prerequsite.create(skill_template_id:skill.id, prereq_name: "sirenity", prereq_t
 
 skill = SkillTemplate.create(name:'Bleeding Blade', skill_type:'Basic', duration: 3, cooldown: 5, description:'Your melee strike causes enemies to bleed, taking constant minor damage per turn. The first attack that hits after activating this skill imparts Bleed 3 to the target.')
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "finesse", prereq_type: "attribute", value: 4)
-Prerequsite.create(skill_template_id:skill.id, prereq_name: "bluk", prereq_type: "attribute", value: 2)
+Prerequsite.create(skill_template_id:skill.id, prereq_name: "bulk", prereq_type: "attribute", value: 2)
 Prerequsite.create(skill_template_id:skill.id, prereq_name: "level", prereq_type: "level", value: 3)
 
 skill = SkillTemplate.create(name:'Penetrating Shot', skill_type:'Basic', duration: 0, cooldown: 5, description:'Make a Basic ranged attack. This attack ignores shields entirely. This skill applies only to non-rapid weapons, and applies only to the first attack made in a turn.')

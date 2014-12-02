@@ -1,5 +1,7 @@
-.row{id: "action_" + @action.id.to_s, oncontextmenu: "delete_action(" + @action.id.to_s + ");return false;"}
+- style = (index.nil?) ? ("") : (index % 2) == 0 ? "vh_alt" : ""
+.row{class: style}
   .col-sm-3
-    = @action.name
+    = skill.name
   .col-sm-9
-    = @action.description
+    .vh_smalltext
+      = skill.description

@@ -1,5 +1,5 @@
 class HuntersController < ApplicationController
-  before_filter :set_vault_hunter, only: [:show, :share, :edit, :update, :delete, :skills, :potentialskills]
+  before_filter :set_vault_hunter, only: [:build, :show, :share, :edit, :update, :delete, :skills, :potentialskills, :potentialproficiencies, :verify]
 
   def new
     @vault_hunter = VaultHunter.new  
@@ -8,6 +8,7 @@ class HuntersController < ApplicationController
   
   def create
     @vault_hunter = VaultHunter.new(vault_hunter_params)
+    @vault_hunter.set_default_values()
     @vault_hunter.user = current_user
     if @vault_hunter.save
       #default attributes
@@ -18,6 +19,10 @@ class HuntersController < ApplicationController
       flash[:alert] = "Something went wrong"
       redirect_to action: :new
     end
+  end
+  
+  def build
+    
   end
 
   def show
@@ -56,6 +61,60 @@ class HuntersController < ApplicationController
       render inline: "failed", layout: false
     end
   end
+  
+  def validate_attribute_changes
+    result = true
+    changed_attributes = params[:changed_attributes]
+    changed_attributes.each do |attrib_change|
+      if not @vault_hunter.set_attribute(attrib_change.id, attrib_change.value) then
+        result = false
+      end
+    end
+    if result == true then
+      render :inline, "success"
+    else
+      render :inline, "invalid"
+    end
+  end
+  
+  def validate_proficiency_changes
+    result = true
+    #Format: template_id
+    new_proficiencies = params[:new_proficiencies]
+    #Format: id, points
+    changed_proficiencies = params[:changed_proficiencies]
+    new_proficiencies.each do |candiate|
+      if not @vault_hunter.add_proficiency(candidate) then
+        result = false
+      end
+    end
+    changed_proficiencies.each do |candiate|
+      if not @vault_hunter.set_proficiency(candidate.id, candidate.points) then
+        result = false
+      end
+    end
+    if result == true then
+      render :inline, "success"
+    else
+      render :inline, "invalid"
+    end
+  end
+  
+  def validate_skill_changes
+    result = true
+    new_skills = params[:skills]
+    new_skills.each do |candidate_id|
+      candidate = SkillTemplate.find(candidate_id)
+      if not @vault_hunter.add_skill(candidate) then
+        result = false
+      end
+    end
+    if result == true then
+      render :inline, "success"
+    else
+      render :inline, "invalid"
+    end
+  end
 
   def delete
     if params[:confirm] == "yes"
@@ -79,11 +138,19 @@ class HuntersController < ApplicationController
 
   #All skills who's prerequsties are met
   def potentialskills
-    @skills = Skill_Templates.all
+    @skills = SkillTemplate.all.to_a
     @skills.select! do |skill|
-      @vault_hunter.meets_prereq(skill)
+      (!@vault_hunter.has_skill?(skill.name)) and @vault_hunter.meets_prereq?(skill)
     end
-    render layout: nil
+    render 'skill_templates/list', layout: false, locals: {skills: @skills}
+  end
+  
+  def potentialproficiencies
+    @proficiencies = ProficiencyTemplate.all.to_a
+    @proficiencies.select! do |prof|
+      (!@vault_hunter.has_proficiency?(prof.name))
+    end
+    render 'proficiency_templates/list', layout: false, locals: {proficiencies: @proficiencies}
   end
 
   private
@@ -92,7 +159,7 @@ class HuntersController < ApplicationController
                                           :level, 
                                           :user_id, 
                                           :age, 
-                                          :race, 
+                                          :race_id, 
                                           :height, 
                                           :weight, 
                                           :toughness, 
@@ -103,7 +170,11 @@ class HuntersController < ApplicationController
                                           :money, 
                                           :level,
                                           :current_skill_points,
-                                          :current_proficiency_points)
+                                          :current_proficiency_points,
+                                          :description,
+                                          :background,
+                                          :traits,
+                                          :flaws)
     end
     
     def set_vault_hunter

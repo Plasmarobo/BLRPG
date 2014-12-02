@@ -3,8 +3,14 @@
     = f.label "Name"
     = f.text_field :name, autofocus: true, class: 'form-control'
   .form_group
-    = f.label "Dice Pool"
+    = f.label "Total Pool"
     = f.text_field :pool, class: 'form-control'
+  .form_group
+    = f.label "Base Pool"
+    = f.text_field :base_pool, class: 'form-control
+  .form_group
+    = f.label "Other Pool"
+    = f.text_field :misc_pool, class: 'form-control'
   .form_group
     = f.label "Damage"
     = f.text_field :dmg, class: 'form-control'

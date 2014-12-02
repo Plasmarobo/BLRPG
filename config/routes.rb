@@ -1,4 +1,33 @@
 Rails.application.routes.draw do
+  get 'races/list'
+  post 'races/list'
+
+  get 'races/new'
+
+  get 'races/create'
+
+  get 'races/destroy'
+
+  get 'races/edit'
+
+  get 'minions/new'
+  post 'minions/new'
+
+  get 'minions/create'
+  post 'minions/create'
+
+  get 'minions/show'
+  post 'minions/show'
+  
+  post 'minions/batch'
+
+  get 'minions/edit'
+
+  get 'minions/index'
+
+  get 'minions/destroy'
+  post 'minions/destroy'
+
   get 'import/google_sheet'
 
   get 'import/json'
@@ -14,13 +43,16 @@ Rails.application.routes.draw do
   post 'attribute_instances/update'
 
   post 'attribute_instances/batch'
+  post 'attribute_instances/validate_batch'
 
   get 'proficiencies/new'
 
   get 'proficiencies/create'
   post 'proficiencies/create'
+  post 'proficiencies/validated_create'
 
   post 'proficiencies/batch'
+  post 'proficiencies/validate_batch'
 
   get 'proficiencies/index'
 
@@ -28,6 +60,7 @@ Rails.application.routes.draw do
 
   get 'proficiencies/destroy'
   post 'proficiencies/destroy'
+  post 'proficiencies/drop'
 
   get 'proficiencies/edit'
 
@@ -37,6 +70,7 @@ Rails.application.routes.draw do
 
   get 'skills/create'
   post 'skills/create'
+  post 'skills/validated_create'
 
   post 'skills/batch'
 
@@ -46,6 +80,7 @@ Rails.application.routes.draw do
 
   get 'skills/destroy'
   post 'skills/destroy'
+  post 'skills/drop'
 
   get 'skills/edit'
 
@@ -73,10 +108,14 @@ Rails.application.routes.draw do
   post 'attacks/destroy'
 
   get 'proficiency_templates/list' => 'proficiency_templates#list', as: :proficiency_select
+  post 'proficiency_templates/list' => 'proficiency_templates#list'
   resources :proficiency_templates
 
   get 'skill_templates/list' => 'skill_templates#list', as: :skill_select
   resources :skill_templates
+
+  get 'hunters/build'
+  get 'hunters/:id/build' => 'hunters#build'
 
   get 'hunters/new'
   post 'hunters/new'
@@ -101,7 +140,13 @@ Rails.application.routes.draw do
 
   get 'hunters/:id/skills' => 'hunters#skills'
 
-  get 'hunters/:id/potentials' => 'hunter#potentialskills'
+  get 'hunters/:id/potentialskills' => 'hunters#potentialskills'
+  post 'hunters/:id/potentialskills' => 'hunters#potentialskills'
+  
+  get 'hunters/:id/potentialproficiencies' => 'hunters#potentialproficiencies'
+  post 'hunters/:id/potentialproficiencies' => 'hunters#potentialproficiencies'
+  
+  post 'hunters/:id/verify' => 'hunters#verify'
 
   get 'hunters/:id/share' => 'hunters#share'
   

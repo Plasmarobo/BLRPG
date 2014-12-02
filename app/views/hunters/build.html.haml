@@ -1,0 +1,141 @@
+.container
+  %input{type: "hidden", id: "vh_race_id", value: @vault_hunter.race_id}
+  %input{type: "hidden", id: "vh_id", value: @vault_hunter.id}
+  .row
+    .col-md-12.h1.text-center{onclick: "advance('attribute', null);"}
+      Distribute Attributes:
+    .row.toggler{id: 'attribute'}
+      .col-md-12
+        .col-sm-6
+        .col-sm-2.text-right
+          .vh_bignum{id: 'attribute_points'}
+            = (@vault_hunter.current_attribute_points.nil?) ? 0 : @vault_hunter.current_attribute_points
+        .col-sm-4.text-left
+          Points remain
+      .col-md-12.vh_spacer
+      .col-sm-12.vh_build_window{id: 'attributes_window'}  
+        - @vault_hunter.attribute_instances.each do |attribute_inst|
+          .row
+            .col-md-2
+            .col-md-2.vh_build_large.text-center
+              = attribute_inst.name.capitalize
+            .col-md-8
+              .row.text-center
+                .col-sm-4
+                .col-sm-1.vh_build_huge.text-right{onclick:"remove_attribute_point(#{attribute_inst.id});"}
+                  \-
+                .col-sm-2.vh_build_huge.text-center
+                  .vh_build_number{id: "vh_build_attribute_#{attribute_inst.id}"}
+                    = attribute_inst.value
+                .col-sm-1.vh_build_huge.text-left{onclick:"add_attribute_point(#{attribute_inst.id});"}
+                  \+
+                .col-sm-4
+      .col-md-12.vh_spacer
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: 'upload_attributes(function(){advance("description");populate("races_window", "/races/list");});' }
+          Save & Continue
+  
+  .row
+    .col-md-12.h1.text-center{onclick: "advance('description');populate('races_window, '/races/list');"}
+      Describe your character:
+    .row.toggler{id: 'description', style: "display:none"}
+      .col-md-12.vh_spacer
+      .col-md-12.vh_build_window{id: 'races_window'}
+      .col-md-12.vh_spacer
+      .col-md-6
+        .row
+          .col-sm-12
+            .vh_region_title Description
+            %textarea{id: "vh_builder_description", class: "vh_txt_box vh_smalltext form-control"}
+              = @vault_hunter.description
+          .col-sm-12
+            .vh_region_title Traits
+            %textarea{id: "vh_builder_traits", class: "vh_txt_box vh_smalltext form-control"}
+              = @vault_hunter.traits
+      .col-md-6
+        .row.vh_rp
+          .col-sm-12
+            .vh_region_title Background
+            %textarea{id: "vh_builder_background", class: "vh_txt_box vh_smalltext form-control"}
+              = @vault_hunter.background
+          .col-sm-12
+            .vh_region_title Flaws
+            %textarea{id: "vh_builder_flaws", class: "vh_txt_box vh_smalltext form-control"}
+              = @vault_hunter.flaws
+      .col-md-12.vh_spacer
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "upload_hunter(function(){advance('proficiency'); populate('proficiencies_window', '/hunters/#{@vault_hunter.id}/potentialproficiencies?mode=builder');});"}
+          Save & Continue
+  
+  .row
+    .col-md-12.h1.text-center{onclick: "advance('proficiency'); populate('proficiencies_window', '/hunters/#{@vault_hunter.id}/potentialproficiencies?mode=builder');"}
+      Select your proficiencies:
+    .row.toggler{id: 'proficiency', style: "display:none"}
+      .col-sm-6
+      .col-sm-2.text-right
+        .vh_bignum{id: 'proficiency_points'}
+          = (@vault_hunter.current_proficiency_points.nil?) ? 0 : @vault_hunter.current_proficiency_points
+      .col-sm-4.text-left
+        Points remaining
+      .col-md-12.vh_spacer
+      .col-md-12
+        .vh_region_title Improve
+        .col-md-12{id: 'proficiencies'}
+          - @vault_hunter.proficiencies.each_with_index do |proficiency, index|
+            .row{id: "vh_build_prof_row_#{proficiency.id}", class: (index %2) == 0 ? "" : "vh_alt"}
+              .col-md-5.vh_build_large
+                = proficiency.name
+              .col-md-1.vh_build_huge{id: "vh_build_proficiency_#{proficiency.id}"}
+                = proficiency.tier
+              .col-md-1.vh_build_huge{onclick: "update_proficiency(#{proficiency.id})"}
+                \+
+              .col-md-1{onclick: "drop_proficiency(#{proficiency.id})"}
+                = image_tag '/images/delete.png'
+              .col-md-3
+        .col-md-12
+          .vh_region_title Add New:
+          .col-md-12.vh_build_window{id: 'proficiencies_window'}
+          .col-md-12.vh_spacer
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "upload_proficiencies(function(){advance('action_skills'); populate('action_skills_window', '/hunters/#{@vault_hunter.id}/potentialskills?mode=builder');});"}
+          Save & Continue
+  
+  .row
+    .col-md-12.h1.text-center{onclick: "advance('action_skills'); populate('action_skills_window', '/hunters/#{@vault_hunter.id}/potentialskills?mode=builder');"}
+      Select your action-skills:
+    .row.toggler{id: 'action_skills', style: "display:none"}
+      .col-sm-6
+      .col-sm-2.text-right
+        .vh_bignum{id: 'skill_points'}
+          = (@vault_hunter.current_skill_points.nil?) ? 0 : @vault_hunter.current_skill_points
+      .col-sm-4.text-left
+        Points remain
+      .col-md-12.vh_spacer
+      .col-md-12{id: 'skills'}
+        -@vault_hunter.skills.each_with_index do |skill, index|
+          .row{id: "vh_build_skill_row_#{skill.id}", class: (index %2) == 0 ? "" : "vh_alt"}
+            .col-md-11.vh_build_large
+              = skill.name
+            .col-md-1{onclick: "drop_action(#{skill.id})"}
+              = image_tag '/images/delete.png'
+      .col-md-12.vh_spacer
+      .col-md-12
+        .vh_region_title Action Skills
+        .col-md-12.vh_build_window{id: 'action_skills_window'}
+        .col-md-12.vh_spacer
+        .vh_region_title Custom Skill Builder (coming soon)
+      .col-md-12.vh_spacer
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "advance('equipment');"}
+          Next
+
+  .row
+    .col-md-12.h1.text-center{onclick: "advance('equipment');"}
+      Purchase Equipment:
+    .row.toggler{id: 'equipment', style: "display:none"}  
+      .col-md-12.text-center{id: 'equipment_window'}
+        Equipment not yet in database
+      .col-md-12.vh_spacer
+      .col-md-12.text-center
+        .btn.btn-success.btn-huge{onclick: "upload_equipment(function(){show_sheet_link();});"}
+          Save & Review

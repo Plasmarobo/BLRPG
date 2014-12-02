@@ -1,11 +1,26 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  skill_id: 1
-  prereq_type: MyString
-  value: 1
+level_req:
+  skill_id: skill_3
+  prereq_type: level
+  prereq_name: level
+  value: 3
 
-two:
-  skill_id: 1
-  prereq_type: MyString
-  value: 1
+atrib_req:
+  skill_id: skill_3
+  prereq_type: attribute
+  prereq_name: finesse
+  value: 3
+  
+skill_req:
+  skill: skill_2
+  prereq_type: skill
+  prereq_name: "Skill One"
+  value: 0
+  
+skill_req2:
+  skill: skill_3
+  prereq_type: skill
+  prereq_name: "Skill Two"
+  value: 0
+  

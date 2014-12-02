@@ -11,20 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114173707) do
+ActiveRecord::Schema.define(version: 20141122210402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "attacks", force: true do |t|
     t.string   "name"
-    t.integer  "pool"
+    t.integer  "totalpool"
     t.integer  "dmg"
     t.string   "misc"
     t.integer  "vault_hunter_id"
     t.integer  "skill_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "basepool"
+    t.integer  "attribute_instance_id"
+    t.integer  "otherpool"
   end
 
   create_table "attribute_instances", force: true do |t|
@@ -39,6 +42,24 @@ ActiveRecord::Schema.define(version: 20141114173707) do
   create_table "attribute_templates", force: true do |t|
     t.string   "name"
     t.string   "short"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "minions", force: true do |t|
+    t.integer  "vault_hunter_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "perks", force: true do |t|
+    t.integer  "race_id"
+    t.text     "description"
+    t.string   "perk_type"
+    t.string   "name"
+    t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -62,6 +83,13 @@ ActiveRecord::Schema.define(version: 20141114173707) do
   end
 
   create_table "proficiency_templates", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "races", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
@@ -116,7 +144,6 @@ ActiveRecord::Schema.define(version: 20141114173707) do
     t.string   "name"
     t.string   "user_id"
     t.integer  "age"
-    t.string   "race"
     t.string   "height"
     t.string   "weight"
     t.integer  "toughness"
@@ -130,6 +157,15 @@ ActiveRecord::Schema.define(version: 20141114173707) do
     t.datetime "updated_at"
     t.integer  "current_proficiency_points"
     t.integer  "current_skill_points"
+    t.text     "description"
+    t.text     "background"
+    t.text     "traits"
+    t.text     "flaws"
+    t.integer  "total_attribute_points"
+    t.integer  "total_proficiency_points"
+    t.integer  "total_skill_points"
+    t.integer  "current_attribute_points"
+    t.integer  "race_id"
   end
 
 end

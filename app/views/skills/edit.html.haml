@@ -1,2 +1,7 @@
-%h1 Skills#edit
-%p Find me in app/views/skills/edit.html.haml
+- style = index.nil? ? "" : (index % 2) == 0 ? "vh_alt" : ""
+.row{id: "action_" + skill.id.to_s, oncontextmenu: "delete_action(" + skill.id.to_s + ");return false;", class: style}
+  .col-sm-3
+    = skill.name
+  .col-sm-9
+    .vh_smalltext
+      = skill.description

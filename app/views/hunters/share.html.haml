@@ -29,7 +29,7 @@
       .vh_field.col-sm-3
         .vh_hint Race
         .vh_txt
-          = @vault_hunter.race
+          = (@vault_hunter.race.nil?) ? "Not set" :  @vault_hunter.race.name
   .row.vh_spacer
   .row
     .vh_region_title Attributes
@@ -80,37 +80,23 @@
         .vh_region_title Attack Actions
         .vh_attacks
           -@vault_hunter.attacks.each do |attack|
-            .row.vh_attack_pad
-              .row
-                .col-sm-5.vh_hint Weapon
-                .col-sm-2.vh_hint Pool
-                .col-sm-2.vh_hint Damage
-              .row
-                .col-sm-5
-                  .vh_txt
-                    = attack.name
-                .col-sm-2
-                  .vh_num
-                    = attack.pool
-                .col-sm-2
-                  .vh_num
-                    = attack.dmg
-              .row
-                .col-sm-12.vh_hint Misc
-              .row
-                .col-sm-12
-                  .vh_txt
-                    = attack.misc
+            = render template: 'attacks/show', layout: false, locals: {attack: attack}
       .row.vh_spacer
       .row
         .vh_region_title Loot and Equipment
         .col-sm-12
           .vh_txt_box
-            = find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe
+            = (@vault_hunter.loot.nil?) ? ("") : (find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe)
         .region_title Money
         .col-sm-12
           .vh_longnum
             = @vault_hunter.money
+        .vh_spacer
+        .vh_region_title Minions
+        .col-sm-12
+          .vh_minions
+            - @vault_hunter.minions.each do |minion|
+              = render template: 'minions/show', layout: false, locals: {minion: minion}
     .col-sm-6
       .row.vh_profs
         .vh_region_title 
@@ -121,12 +107,7 @@
           Tier
         .vh_proficiencies
           -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
-            .row{class: ((index % 2) == 0) ? "vh_alt" : ""}
-              .col-sm-9.vh_prof_name
-                = proficiency.name
-              .col-sm-3.vh_prof_tier
-                .vh_num
-                  = proficiency.tier
+             = render template: "proficiencies/show", layout: false, locals: {proficiency: proficiency, index: index}
       .row.vh_spacer
       .row.vh_skills
         .vh_region_title 
@@ -137,10 +118,24 @@
           Description
         .vh_actions
           -@vault_hunter.skills.each_with_index do |action, index|
-            .row{class: ((index % 2) == 0) ? "vh_alt" : ""}
-              .col-sm-3
-                = action.name
-              .col-sm-9
-                = action.description
+            = render template: "skills/show", layout: false, locals: {skill: action, index: index}
+        .row.vh_spacer
+      .row.vh_rp
+        .col-sm-12
+          .region_title Description
+          .vh_txt_box.vh_smalltext
+            = (@vault_hunter.description.nil?) ? ("") : (find_and_preserve @vault_hunter.description.split("\n").join('<br>').html_safe)
+        .col-sm-12
+          .region_title Background
+          .vh_txt_box.vh_smalltext
+            = (@vault_hunter.background.nil?) ? ("") : (find_and_preserve @vault_hunter.background.split("\n").join('<br>').html_safe)
+        .col-sm-12
+          .region_title Traits
+          .vh_txt_box.vh_smalltext
+            = (@vault_hunter.traits.nil?) ? ("") : (find_and_preserve @vault_hunter.traits.split("\n").join('<br>').html_safe)
+        .col-sm-12
+          .region_title Flaws
+          .vh_txt_box.vh_smalltext
+            = (@vault_hunter.flaws.nil?) ? ("") : (find_and_preserve @vault_hunter.flaws.split("\n").join('<br>').html_safe)
   .row.vh_spacer
 .vh_spacer

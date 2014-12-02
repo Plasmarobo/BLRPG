@@ -7,11 +7,20 @@
   .col-sm-6.vh_hint
     Description
 .vh_skill_templates{id: "skill_templates"}
-  -@skills.each_with_index do |skill, index|
-    .row{onclick: 'add_action(' + skill.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
-      .col-sm-4
-        = skill.name
-      .col-sm-3
-        = skill.skill_type
-      .col-sm-5
-        = skill.description
+  -skills.each_with_index do |skill, index|
+    -if params[:mode] == 'builder'
+      .row{id: "vh_build_skill_row_#{skill.id}", onclick: 'build_action(' + skill.id.to_s + ')', class: (index % 2 == 0) ? " vh_alt" : ""}
+        .col-sm-4
+          = skill.name
+        .col-sm-3
+          = skill.skill_type
+        .col-sm-5
+          = skill.description
+    -else
+      .row{onclick: 'add_action(' + skill.id.to_s + ')', class: (index % 2 == 0) ? "vh_alt" : ""}
+        .col-sm-4
+          = skill.name
+        .col-sm-3
+          = skill.skill_type
+        .col-sm-5
+          = skill.description
