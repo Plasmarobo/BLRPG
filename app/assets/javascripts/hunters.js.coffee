@@ -12,7 +12,7 @@
   
 @add_attack = (skill_id) ->
   target = 'attacks'
-  para = {vh: parseInt($('#vh_id').val()), parent: skill_id}
+  para = {vh: parseInt($('#vh_id').val()), parent: skill_id, mode: "edit"}
   @transact_into('/attacks/create',para, target)
   @clean_modals(false)
 
@@ -57,7 +57,7 @@
   
 @add_minion = () ->
   target = 'minions'
-  para = {vh: parseInt($('#vh_id').val())}
+  para = {vh: parseInt($('#vh_id').val()), mode: "edit"}
   @transact_into('/minions/create',para, target)
 
 @delete_minion = (minion_id) ->

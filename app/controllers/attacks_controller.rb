@@ -23,7 +23,11 @@ class AttacksController < ApplicationController
       end
     end
     @attack = Attack.create(name: name, vault_hunter_id: params[:vh], totalpool: 0, basepool:0, otherpool:0, dmg: 0, misc: "", skill_id: skill)
-    render :show, layout: false, locals: {attack: @attack}
+    if params[:mode] == "edit"
+      render:edit, layout: false, locals: {attack: @attack}
+    else
+      render :show, layout: false, locals: {attack: @attack}
+    end
   end
 
   def batch

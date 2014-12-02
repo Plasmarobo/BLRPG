@@ -13,7 +13,11 @@ class MinionsController < ApplicationController
   def create
     name = "CL4P-TP"
     @minion = Minion.create(name: name, vault_hunter_id: params[:vh], description: "Helllooooooo travelers!")
-    render :show, layout: false, locals: {minion: @minion}
+    if params[:mode] == "edit"
+      render :edit, layout: false, locals: {minion: @minion}
+    else
+      render :show, layout: false, locals: {minion: @minion}
+    end
   end
 
   def batch
