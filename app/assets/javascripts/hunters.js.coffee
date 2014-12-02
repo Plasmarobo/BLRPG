@@ -63,7 +63,7 @@
 @delete_minion = (minion_id) ->
   del_callback = () ->
     @json_post '/minions/destroy', 
-      {confirm: "yes", id: action_id}
+      {confirm: "yes", id: minion_id}
       () -> 
         $("#minion_" + minion_id).remove()
   @confirm_dialog("You are about to delete this minion forever, continue?", del_callback)
