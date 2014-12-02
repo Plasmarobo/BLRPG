@@ -4,18 +4,18 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_filter :authenticate_user!, :except => [:home, :share]
-  before_filter :redirect_https
+  #before_filter :redirect_https
   
   protected
   
-  def redirect_https
-    if !Rails.env.development?        
-      redirect_to :protocol => "https://" unless request.ssl?
-      return true
-    else
-      return true
-    end
-  end
+  #def redirect_https
+  #  if !Rails.env.development?        
+  #    redirect_to :protocol => "https://" unless request.ssl?
+  #    return true
+  #  else
+  #    return true
+  #  end
+  #end
     
 
   def configure_permitted_parameters
