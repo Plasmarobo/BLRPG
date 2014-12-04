@@ -1,7 +1,11 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
+vh_id = -1
 
+$ ->
+  vh_id = parseInt($('#vh_id').val()
+  
 @select_race = (race_id, name) ->
   $("#vh_race_id").val(race_id)
   if name != undefined and $("#vh_race_name").length > 0
@@ -12,13 +16,13 @@
   
 @add_attack = (skill_id) ->
   target = 'attacks'
-  para = {vh: parseInt($('#vh_id').val()), parent: skill_id, mode: "edit"}
+  para = {vh: vh_id, parent: skill_id, mode: "edit"}
   @transact_into('/attacks/create',para, target)
   @clean_modals(false)
 
 @delete_attack = (attack_id) ->
   del_callback = () ->
-    @json_post '/attacks/destroy', 
+    @json_post '/hunters/' + vh_id + '/attacks/destroy', 
       {confirm: "yes", id: attack_id}
       () ->
         $("#attack_" + attack_id).remove()
@@ -27,7 +31,7 @@
 
 @add_proficiency = (template_id) ->
   target = 'proficiencies'
-  para = {vh: parseInt($('#vh_id').val()), parent: template_id, points: 0}
+  para = {vh: vh_id, parent: template_id, points: 0}
   @transact_into('/proficiencies/create', para, target)
   @clean_modals(false)
   
@@ -42,7 +46,7 @@
 
 @add_action = (template_id) ->
   target = 'actions'
-  para = {vh: parseInt($('#vh_id').val()), parent: template_id}
+  para = {vh: vh_id, parent: template_id}
   @transact_into('/skills/create', para, target)
   @clean_modals(false)
   
@@ -57,7 +61,7 @@
   
 @add_minion = () ->
   target = 'minions'
-  para = {vh: parseInt($('#vh_id').val()), mode: "edit"}
+  para = {vh: vh_id, mode: "edit"}
   @transact_into('/minions/create',para, target)
 
 @delete_minion = (minion_id) ->
@@ -227,30 +231,9 @@
   $("#target").html("6")
   $("#count").html("0")
   @submit_post '/hunters/' + id + '/update',
-    {vault_hunter: vault_objects.vault_hunter}
+    {vault_hunter: vault_objects}
     () ->
-      $("#count").html("1")
-      @submit_post '/proficiencies/batch',
-        {proficiencies: vault_objects.proficiencies}
-        () ->
-          $("#count").html("2")
-          @submit_post '/skills/batch',
-            {skills: vault_objects.skills}
-            () ->
-              $('#count').html("3")
-              @submit_post '/attacks/batch',
-                {attacks: vault_objects.attacks}
-                () ->
-                  $("#count").html("4")
-                  @submit_post '/attribute_instances/batch',
-                    {attribute_instances: vault_objects.attributes}
-                    () ->
-                      $("#count").html("5")
-                      @submit_post '/minions/batch',
-                        {minions: vault_objects.minions}
-                        () ->
-                          $("#count").html("6")
-                          callback()
+      callback()
   
 @save_vault_hunter = (id) ->
   build_modal("save_dialog")

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141122210402) do
+ActiveRecord::Schema.define(version: 20141203185500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,8 +155,8 @@ ActiveRecord::Schema.define(version: 20141122210402) do
     t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "current_proficiency_points"
-    t.integer  "current_skill_points"
+    t.integer  "spent_proficiency_points"
+    t.integer  "spent_skill_points"
     t.text     "description"
     t.text     "background"
     t.text     "traits"
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 20141122210402) do
     t.integer  "total_attribute_points"
     t.integer  "total_proficiency_points"
     t.integer  "total_skill_points"
-    t.integer  "current_attribute_points"
+    t.integer  "spent_attribute_points"
     t.integer  "race_id"
   end
 

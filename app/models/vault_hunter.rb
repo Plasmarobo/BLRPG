@@ -127,6 +127,9 @@ class VaultHunter < ActiveRecord::Base
     return false
   end
   
+  def drop_skill(id)
+  end
+  
   def add_proficiency(id)
     if self.current_proficiency_points > 0 then
       candidate = ProficiencyTemplate.find(id)
@@ -161,6 +164,29 @@ class VaultHunter < ActiveRecord::Base
       end
     end
     return false
+  end
+  
+  def recompute_totals(level)
+    #Will increase at level 1
+    self.total_proficiency_points = 1
+    
+    #Will increase at level 1
+    self.total_skill_points = 1
+    
+    #Will NOT increase at level 1
+    self.total_attribute_points = 9
+    
+    level.times do |index|
+      if index % 3 == 0
+        self.total_attribute_points += 1
+      end
+      if index % 5 == 0
+        self.total_skill_points += 2
+      else
+        self.total_skill_points += 1
+      end
+      self.total_proficiency_points += 1
+    end
   end
   
 end

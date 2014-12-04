@@ -25,34 +25,68 @@ class HuntersController < ApplicationController
     
   end
 
-  def show
+  def edit
     if current_user == @vault_hunter.user
       respond_to do |format|
-        format.html { render :sheet }
-        format.json { render :view }
+        format.html
+        format.json
       end
     else
       redirect_to '/'
     end
   end
 
-  def share
-    render :share
-  end
-
-  def edit
-    if current_user == @vault_hunter.user
-      render :sheet
-    else
-      redirect_to '/'
-    end
+  def show
   end
   
   def update
     if current_user == @vault_hunter.user
+      
+      if params[:attribute_instances] != nil
+        params[:attribute_instances].each do |key, value|
+          AttributeInstance.find(key).update({value: value})
+        end
+      end
+      
+      if params[:proficiencies] != nil
+        params[:proficiencies].each do |key, value|
+          if not @vault_hunter.proficiencies.find(key).nil?
+            Proficiency.find(key).update(value)
+          end
+        end
+      end
+      
+      if params[:skills] != nil
+        params[:skills].each do |key, value|
+          if not @vault_hunter.skills.find(key).nil?
+            Skill.find(key).update(value)
+          end
+        end
+      end
+      
+      if params[:minions] != nil
+        params[:minions].each do |key, value|
+          if not @vault_hunter.skills.find(key).nil?
+            Minion.find(key).update(value)
+          end
+        end
+      end
+      
+      if params[:attacks] != nil
+        params[:attacks].each do |key, value|
+          if not @vault_hunter.attacks.find(key).nil?
+            Attack.find(key).update(value)
+          end
+        end
+      end
+
       update_set = vault_hunter_params
-      @vault_hunter.update(update_set)
-      if @vault_hunter.save
+      
+      if not update_set[:level].nil?
+        #Recompute totals
+        @vault_hunter.recompute_totals(update_set[:level])
+      end
+      if @vault_hunter.update(update_set)
         render inline: "ok", layout: false
       else
         render inline: "failed", layout: false
@@ -133,7 +167,7 @@ class HuntersController < ApplicationController
 
   def skills
     @skills = @vault_hunter.skills 
-    render layout: nil
+    render partial: :skill_list, locals: {skills: @skills, function: "add_skill"}
   end
 
   #All skills who's prerequsties are met

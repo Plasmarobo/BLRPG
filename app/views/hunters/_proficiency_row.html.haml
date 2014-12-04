@@ -1,5 +1,5 @@
 - style = index.nil? ? "" : (index % 2) == 0 ? "vh_alt" : ""
-.row{class: style}
+.row{class: style, onclick: "#{function_name}(#{skill.id});"}
   .col-sm-9.prof_name
     = proficiency.name
   .col-sm-3.prof_tier

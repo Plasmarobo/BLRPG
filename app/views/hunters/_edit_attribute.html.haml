@@ -1,0 +1,10 @@
+.vh_cell.col-sm-3
+  .row
+    .col-sm-12
+      = attribute.name.capitalize
+  .row
+    .col-sm-12
+      %input{id: "vh_attrib_" + attribute.id.to_s, class: "vh_bignum", value: attribute.value}
+  .row
+    .col-sm-12
+      = "[" + attribute.short.upper + "]"
