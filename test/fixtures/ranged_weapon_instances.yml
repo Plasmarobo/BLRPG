@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ranged_weapon_template_id: 1
+  ammunition: 1
+  notes: MyText
+  prefix: MyString
+  postfix: MyString
+  current_recoil: 1
+
+two:
+  ranged_weapon_template_id: 1
+  ammunition: 1
+  notes: MyText
+  prefix: MyString
+  postfix: MyString
+  current_recoil: 1

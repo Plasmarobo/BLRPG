@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vault_hunter_id: 1
+  current_capacity: 1
+  shield_template_id: 1
+  in_use: false
+
+two:
+  vault_hunter_id: 1
+  current_capacity: 1
+  shield_template_id: 1
+  in_use: false

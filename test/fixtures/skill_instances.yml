@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  skill_template_id: 1
+  vault_hunter_id: 1
+  level_acquired: 1
+
+two:
+  skill_template_id: 1
+  vault_hunter_id: 1
+  level_acquired: 1

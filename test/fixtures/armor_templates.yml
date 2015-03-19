@@ -2,16 +2,14 @@
 
 one:
   name: MyString
-  cooldown: 1
-  duration: 1
-  description: MyText
-  skill_type: MyString
+  weight: 1
+  deflect: 1
   cost: 1
+  description: MyText
 
 two:
   name: MyString
-  cooldown: 1
-  duration: 1
-  description: MyText
-  skill_type: MyString
+  weight: 1
+  deflect: 1
   cost: 1
+  description: MyText

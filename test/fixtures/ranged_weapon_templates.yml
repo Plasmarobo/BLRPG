@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  accuracy: 1
+  recoil: 1
+  range: 
+  fire_mode: 1
+  damage: 1
+  cost: 1
+  description: MyText
+
+two:
+  name: MyString
+  accuracy: 1
+  recoil: 1
+  range: 
+  fire_mode: 1
+  damage: 1
+  cost: 1
+  description: MyText

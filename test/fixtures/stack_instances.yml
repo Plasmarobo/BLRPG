@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stack_template_id: 1
+  current_pool: 1
+  max_pool: 1
+
+two:
+  stack_template_id: 1
+  current_pool: 1
+  max_pool: 1

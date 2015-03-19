@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  consumable_template_id: 1
+  vault_hunter_id: 1
+  modifier_id: 1
+  current_uses: 1
+
+two:
+  consumable_template_id: 1
+  vault_hunter_id: 1
+  modifier_id: 1
+  current_uses: 1

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  capacity: 1
+  recharge: 1
+  deflect: 1
+  cost: 1
+  description: MyString
+  vault_hunter_id: 1
+
+two:
+  name: MyString
+  capacity: 1
+  recharge: 1
+  deflect: 1
+  cost: 1
+  description: MyString
+  vault_hunter_id: 1

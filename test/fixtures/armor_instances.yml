@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vault_hunter_id: 1
+  armor_template_id: 1
+  modifier_id: 1
+
+two:
+  vault_hunter_id: 1
+  armor_template_id: 1
+  modifier_id: 1
