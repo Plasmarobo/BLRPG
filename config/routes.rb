@@ -26,17 +26,17 @@ Rails.application.routes.draw do
   
   targets = ["skills", "proficiencies", "attributes"]
   targets.each do |target|
-    get "hunters/:id/#{target}/drop" => "hunters\#drop#{target}"
-    post "hunters/:id/#{target}/drop" => "hunters\#drop#{target}"
+    get "hunters/:id/#{target}/drop" => "hunters\#drop_#{target}"
+    post "hunters/:id/#{target}/drop" => "hunters\#drop_#{target}"
     
-    get "hunters/:id/#{target}/add" => "hunters\#add#{target}"
-    post "hunters/:id/#{target}/add" => "hunters\#add#{target}"
+    get "hunters/:id/#{target}/add" => "hunters\#add_#{target}"
+    post "hunters/:id/#{target}/add" => "hunters\#add_#{target}"
     
-    get "hunters/:id/#{target}/buy" => "hunters\#buy#{target}"
-    post "hunters/:id/#{target}/buy" => "hunters\#buy#{target}"
+    get "hunters/:id/#{target}/buy" => "hunters\#buy_#{target}"
+    post "hunters/:id/#{target}/buy" => "hunters\#buy_#{target}"
     
-    get "hunters/:id/#{target}/sell" => "hunters\#sell#{target}"
-    post "hunters/:id/#{target}/sell" => "hunters\#sell#{target}"
+    get "hunters/:id/#{target}/sell" => "hunters\#sell_#{target}"
+    post "hunters/:id/#{target}/sell" => "hunters\#sell_#{target}"
   end
 
   get 'hunters/:id/potentialskills' => 'hunters#potentialskills'

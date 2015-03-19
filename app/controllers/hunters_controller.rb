@@ -159,6 +159,41 @@ class HuntersController < ApplicationController
     end
   end
   
+  def add_skill(template_id)
+  end
+  
+  def drop_skill(skill_id)
+  end
+  
+  def buy_skill(template_id)
+  end
+  
+  def sell_skill(skill_id)
+  end
+  
+  def add_attribute(attribute_id)
+  end
+  
+  def drop_attribute(attribute_id)
+  end
+  
+  def buy_attribute(attribute_id)
+  end
+  
+  def sell_attribute(attribute_id)
+  end
+  
+  def add_proficiency(template_id)
+  end
+  
+  def drop_proficiency(proficiency_id)
+  end
+  
+  def buy_proficiency(template_id)
+  end
+  
+  def sell_proficiency(proficiency_id)
+  end
 
   def list
     @vault_hunters = current_user.vault_hunters
