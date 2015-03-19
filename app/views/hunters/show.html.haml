@@ -32,22 +32,6 @@
           = (@vault_hunter.race.nil?) ? "Not set" :  @vault_hunter.race.name
   .row.vh_spacer
   .row
-    .vh_region_title Attributes
-    .row.vh_hardbox
-      -@vault_hunter.attribute_instances.order('id').each do |attribute|
-        .vh_cell.col-sm-3
-          .row
-            .col-sm-12
-              = attribute.name.capitalize
-          .row
-            .col-sm-12
-              .vh_bignum.vh_auto
-                = attribute.value
-          .row
-            .col-sm-12
-              = "[" + attribute.short + "]"
-  .row.vh_spacer
-  .row
     .col-sm-6
       .row.vh_softbox
         .col-sm-6
@@ -69,18 +53,18 @@
               Shield
             .col-sm-12
               .vh_bignum.vh_auto
-                = @vault_hunter.shield
+                = @vault_hunter.current_shield.nil? ? 0 : @vault_hunter.current_shield.max_capacity
           .row
             .col-sm-12
               Current Shield
             .col-sm-12
               .vh_bignum.vh_auto
-                = @vault_hunter.current_shield
-      .row
-        .vh_region_title Attack Actions
-        .vh_attacks
-          -@vault_hunter.attacks.each do |attack|
-            = render template: 'attacks/show', layout: false, locals: {attack: attack}
+                = @vault_hunter.current_shield.nil? ? 0 : @vault_hunter.current_shield.current_capacity
+      #.row
+      #  .vh_region_title Attack Actions
+      #  .vh_attacks
+      #    -@vault_hunter.attacks.each do |attack|
+      #      = render template: 'attacks/show', layout: false, locals: {attack: attack}
       .row.vh_spacer
       .row
         .vh_region_title Loot and Equipment

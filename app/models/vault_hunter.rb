@@ -1,20 +1,24 @@
 class VaultHunter < ActiveRecord::Base
     belongs_to :user
-    has_many :skills, dependent: :destroy
-    has_many :skill_templates, through: :skills
+    has_many :skill_instances, dependent: :destroy
     has_many :proficiencies, dependent: :destroy
-    has_many :attacks, dependent: :destroy
-    has_many :attribute_instances, dependent: :destroy
+    has_many :ranged_weapon_instances
+    has_many :melee_weapon_instances
+    has_many :modifiers
+    has_many :shield_instances
+    has_many :stack_instances
+    has_many :armor_instances
+    has_many :consumable_instances
+    has_many :gear_instances
+    
     has_many :minions, dependent: :destroy
     belongs_to :race
+    has_many :perks, through: :race
+    
     
   def meets_prereq?(skill_template)
     skill_template.prerequsites.each do |prereq|
       case(prereq.prereq_type)
-      when 'attribute'
-        if not self.has_attribute_inst?(prereq.prereq_name, prereq.value) then
-          return false
-        end
       when 'level'
         if not self.has_level?(prereq.value)
           return false
@@ -28,12 +32,6 @@ class VaultHunter < ActiveRecord::Base
       end
     end
     return true
-  end
-  
-  def has_attribute_inst?(name, value)
-    attribute_instance = self.find_attribute_inst_by_name(name)
-    #Do not check for nil, a non-existant attribute is an error condition
-    attribute_instance.value >= value
   end
   
   def has_skill?(name)
@@ -66,52 +64,33 @@ class VaultHunter < ActiveRecord::Base
     not self.race_id.nil?
   end
 
-  def find_attribute_inst_by_name(name)
-    self.attribute_instances.each do | attribute_inst |
-      if attribute_inst.name == name
-        return attribute_inst
+  
+  def set_default_values
+    self.level = 1
+    self.toughness = 0
+    self.wounds = 0
+    self.money = 150
+  end
+  
+  def current_skill_points
+  end
+
+  def current_shield
+    self.shield_instances.each do |shield|
+      if shield.in_use
+        return shield
       end
     end
     return nil
   end
   
-  def create_default_attributes
-    AttributeTemplate.find_each do |template|
-      template.instance(self, 0)
-    end
-  end
-  
-  def set_default_values
-    self.level = 1
-    self.create_default_attributes()
-    self.current_attribute_points = self.total_attribute_points = 9
-    self.current_proficiency_points = self.total_proficiency_points = 2
-    self.current_skill_points = self.total_skill_points = 2
-    self.toughness = 0
-    self.wounds = 0
-    self.current_shield = 0
-    self.shield = 0
-    self.money = 150
-  end
-  
-  def set_attribute(id, value)
-    attribute_inst = self.attribute_instances.find(id)
-    if attribute_inst.nil? then
-        return false
-    else
-      delta = value - attribute_inst.value
-      if self.current_attribute_points >= delta
-        self.current_attribute_points -= delta
-        attribute_inst.value = value
-        if self.save() then
-          attribute_inst.save()
-          return true
-        else
-          return false
-        end
+  def current_armor
+    self.armor_instances.each do |armor|
+      if armor.in_use
+        return armor
       end
     end
-    return false
+    return nil
   end
   
   def add_skill(candidate)
@@ -166,27 +145,6 @@ class VaultHunter < ActiveRecord::Base
     return false
   end
   
-  def recompute_totals(level)
-    #Will increase at level 1
-    self.total_proficiency_points = 1
-    
-    #Will increase at level 1
-    self.total_skill_points = 1
-    
-    #Will NOT increase at level 1
-    self.total_attribute_points = 9
-    
-    level.times do |index|
-      if index % 3 == 0
-        self.total_attribute_points += 1
-      end
-      if index % 5 == 0
-        self.total_skill_points += 2
-      else
-        self.total_skill_points += 1
-      end
-      self.total_proficiency_points += 1
-    end
-  end
+  
   
 end

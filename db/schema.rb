@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319175821) do
+ActiveRecord::Schema.define(version: 20150319213402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,9 +19,9 @@ ActiveRecord::Schema.define(version: 20150319175821) do
   create_table "armor_instances", force: true do |t|
     t.integer  "vault_hunter_id"
     t.integer  "armor_template_id"
-    t.integer  "modifier_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "in_use"
   end
 
   create_table "armor_templates", force: true do |t|
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20150319175821) do
   create_table "consumable_instances", force: true do |t|
     t.integer  "consumable_template_id"
     t.integer  "vault_hunter_id"
-    t.integer  "modifier_id"
     t.integer  "current_uses"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -48,7 +47,6 @@ ActiveRecord::Schema.define(version: 20150319175821) do
     t.integer  "cost"
     t.integer  "max_uses"
     t.text     "description"
-    t.integer  "modifier_id"
     t.integer  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -57,15 +55,15 @@ ActiveRecord::Schema.define(version: 20150319175821) do
   create_table "durations", force: true do |t|
     t.integer  "max_time"
     t.integer  "current_time"
-    t.integer  "skill_id"
+    t.integer  "skill_instance_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "effect_id"
   end
 
   create_table "effects", force: true do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "modifier_id"
     t.integer  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -73,7 +71,6 @@ ActiveRecord::Schema.define(version: 20150319175821) do
 
   create_table "gear_instances", force: true do |t|
     t.integer  "vault_hunter_id"
-    t.integer  "modifier_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -82,7 +79,6 @@ ActiveRecord::Schema.define(version: 20150319175821) do
     t.string   "name"
     t.integer  "cost"
     t.text     "description"
-    t.integer  "modifier_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -123,8 +119,27 @@ ActiveRecord::Schema.define(version: 20150319175821) do
     t.integer  "max_shield"
   end
 
+  create_table "modifier_templates", force: true do |t|
+    t.integer  "skill_template_id"
+    t.integer  "perk_id"
+    t.integer  "gear_template_id"
+    t.integer  "consumable_template_id"
+    t.integer  "ranged_weapon_template_id"
+    t.integer  "melee_weapon_template_id"
+    t.integer  "duration"
+    t.integer  "name"
+    t.string   "target"
+    t.integer  "amount"
+    t.integer  "effect_id"
+    t.integer  "armor_template_id"
+    t.integer  "shield_template_id"
+    t.integer  "stack_template_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "modifiers", force: true do |t|
-    t.integer  "skill_id"
+    t.integer  "skill_instance_id"
     t.integer  "perk_id"
     t.integer  "gear_instance_id"
     t.integer  "consumable_instance_id"
@@ -136,6 +151,10 @@ ActiveRecord::Schema.define(version: 20150319175821) do
     t.integer  "duration_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "effect_id"
+    t.integer  "armor_instance_id"
+    t.integer  "shield_instance_id"
+    t.integer  "stack_instance_id"
   end
 
   create_table "perks", force: true do |t|
@@ -244,13 +263,6 @@ ActiveRecord::Schema.define(version: 20150319175821) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "cost"
-  end
-
-  create_table "skills", force: true do |t|
-    t.integer  "skill_template_id"
-    t.integer  "vault_hunter_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "stack_instances", force: true do |t|

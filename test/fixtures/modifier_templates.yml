@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  skill_template_id: 1
+  perk_id: 1
+  gear_template_id: 1
+  consumable_template_id: 1
+  ranged_weapon_template_id: 1
+  melee_weapon_template_id: 1
+  duration: 1
+  name: 1
+  target: MyString
+  amount: 1
+  effect_id: 1
+  armor_template_id: 1
+  shield_template_id: 1
+  stack_template_id: 1
+
+two:
+  skill_template_id: 1
+  perk_id: 1
+  gear_template_id: 1
+  consumable_template_id: 1
+  ranged_weapon_template_id: 1
+  melee_weapon_template_id: 1
+  duration: 1
+  name: 1
+  target: MyString
+  amount: 1
+  effect_id: 1
+  armor_template_id: 1
+  shield_template_id: 1
+  stack_template_id: 1
