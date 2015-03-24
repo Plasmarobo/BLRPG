@@ -1,0 +1,11 @@
+.col-sm-3
+  = armor.name
+.col-sm-2
+  = armor.weight
+.col-sm-2
+  = armor.deflect
+.col-sm-2
+  = armor.cost
+.col-sm-3
+  %a{href: '#', onclick: "cardModal('armor/card?id=#{armor.id}')"}
+    Card

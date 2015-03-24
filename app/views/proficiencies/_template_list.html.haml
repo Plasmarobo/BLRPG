@@ -7,5 +7,5 @@
       Description
     .vh_proficiencies
       -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
-        .row{class: "#{listRowClass(index)}"}
+        .row{class: listRowClass(index)}
           = render '_template_row', locals: {proficiency: proficiency}

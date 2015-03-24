@@ -1,0 +1,8 @@
+.row
+  .col-sm-6
+    Name
+  .col-sm-6
+    Description
+- gears.each_with_index do |gear, index|
+  .row{class: listRowClass(index)}
+    = render 'instance_row', locals: {gear: gear}

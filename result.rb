@@ -1,12 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-#user = User.new(username: 'plasmarobo', email: 'plasmarobo@gmail.com', password: 'password', password_confirmation: 'password')
-#user.skip_confirmation!
-#user.save!
-
-
-#Skills
 SkillTemplate.create(name: "Careful Aim", type: "Basic", duration: 0, cooldown: 3, description: "Increase the accuracy of ranged attacks by 3", prerequisites: "Finesse")
 SkillTemplate.create(name: "Steady Aim", type: "Upgrade", duration: nil, cooldown: nil, description: "If a character takes no movement in a turn, the accuracy of ranged attacks is increased by 2, this bonus stacks with other bonuses from skills", prerequisites: "Careful Aim")
 SkillTemplate.create(name: "Sniper", type: "Upgrade", duration: nil, cooldown: nil, description: "Improves the accuracy bonus granted by Steady Aim to 4", prerequisites: "Steady Aim")
@@ -180,53 +171,3 @@ SkillTemplate.create(name: "Shield Nexus", type: "Upgrade", duration: nil, coold
 SkillTemplate.create(name: "Shield Control Virus", type: "Upgrade", duration: nil, cooldown: nil, description: "When using Shield Node, you may convert Shield Capacity into stacks of shielding when shifting. This does NOT trigger shield depletion effects if you reduce current capacity to zero, but does trigger recharge delay.", prerequisites: "Shield Node, Level 5")
 SkillTemplate.create(name: "Shield Coprocessor", type: "Upgrade", duration: nil, cooldown: nil, description: "When using Shield Node, you may shift stacks twice per action.", prerequisites: "Shield Node")
 SkillTemplate.create(name: "Shield Watercooling", type: "Upgrade", duration: nil, cooldown: nil, description: "Shield Node's Duration increases to 6.", prerequisites: "Shield Node")
-
-#Production Proficiencies
-ProficiencyTemplate.create(name:'First Aid', description:'You know how to patch folks up, regardless of whether or not you have a medical license.')
-ProficiencyTemplate.create(name:'Athletics', description:'You can run, jump, swim, climb and wrestle a skag with your bare hands (assuming you and the skag were competing in a wresting match).')
-ProficiencyTemplate.create(name:'Corporate Lore', description:'You know about the various corporations and manufacturers in the world, from Atlas to Tediore and everything in between.')
-ProficiencyTemplate.create(name:'Nerd Lore', description:'You know about various aspects of nerd culture, whether your consider yourself a diehard or someone who just enjoys nerdy things.')
-ProficiencyTemplate.create(name:'Eridian Lore', description:'You are an expert on Eridian Tech and History')
-ProficiencyTemplate.create(name:'Investigation', description:'You can find the needle in the haystack. Every time.')
-ProficiencyTemplate.create(name:'Spotting', description:'You can tell a bat from a bird at 1200 ft. Nothing escapes your eyes.')
-ProficiencyTemplate.create(name:'Swift Hands', description:'Pulling objects out of pockets, or putting them back in, you\'re great at both.')
-ProficiencyTemplate.create(name:'Acrobatics', description:'Flips, jumps, tumbles, you\'re a regular gymnast')
-ProficiencyTemplate.create(name:'Medical Lore', description:'Disease, surgical equipment, toxins, you\'re all about it. (You most likely have a medical license, or had one at some point).')
-ProficiencyTemplate.create(name:'Intimidation', description:'You just look imposing.')
-ProficiencyTemplate.create(name:'Persuasion', description:'People just tend to do what you say.')
-ProficiencyTemplate.create(name:'Naturalism', description:'You can survive in artic cold, fevered jungle, and burning desert')
-ProficiencyTemplate.create(name:'Spacer', description:'You know about interplanetary craft and the hazards of space-travel')
-ProficiencyTemplate.create(name:'Siren Lore', description:'You\'ve made special study of Sirens')
-ProficiencyTemplate.create(name:'Biotech', description:'Bioengineering, biochemistry, you\'re great at using biology in place to technology')
-ProficiencyTemplate.create(name:'Cybernetics', description:'You like to replace squishy things with hardware.')
-ProficiencyTemplate.create(name:'Robotics', description:'Servos, sensors, and processors. You love all-metal monstrosities.')
-ProficiencyTemplate.create(name:'Hardware Lore', description:'You\'re knowledgable about mechanical, electrical, and electronic devices.')
-ProficiencyTemplate.create(name:'Hacking', description:'You can make computers do all sorts of things, most of them counter to their programming.')
-ProficiencyTemplate.create(name:'Stealth', description:'You\'re an expert at misdirection, concealment, and silence.')
-ProficiencyTemplate.create(name:'Biological Lore', description:'You know the natural. Animals, plants, etc.')
-ProficiencyTemplate.create(name:'Endurance', description:'You\'re adept at powering through pain and discomfort')
-
-#vh = VaultHunter.create(name: 'Angel', 
-#                        user_id: user.id, 
-#                        age: 23, 
-#                        race: 'Human', 
-#                        height:"5'2\"", 
-#                        weight:"120lbs", 
-#                        toughness:5, 
-#                        wounds:2, 
-#                        shield: 2, 
-#                        current_shield: 1, 
-#                        loot:'None to speak of', 
-#                        money: 100, 
-#                        level:1,
-#                        current_skill_points: 0,
-#                        current_proficiency_points: 0)
-#blk.instance(vh, 1)
-#fin.instance(vh, 2)
-#sir.instance(vh, 5)
-#tec.instance(vh, 3)
-
-#atk_skill = ps.instance(vh)
-#hack.instance(vh, 2)
-
-#atk = Attack.create(vault_hunter_id:vh.id, name: 'Aim', pool: vh.attribute_instances.find_by_name('finesse').value + 2, dmg: 2, misc: 'Fire 1', skill_id: atk_skill.id)

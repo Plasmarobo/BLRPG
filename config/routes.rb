@@ -1,5 +1,23 @@
 Rails.application.routes.draw do
   
+  get 'gear/new'
+
+  get 'gear/create'
+
+  get 'gear/edit'
+
+  get 'gear/index'
+
+  get 'gear/_card'
+
+  get 'gear/_instance_list'
+
+  get 'gear/_instance_row'
+
+  get 'gear/_template_list'
+
+  get 'gear/_template_row'
+
   get 'consumables/new'
 
   get 'consumables/create'

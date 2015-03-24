@@ -1,0 +1,13 @@
+.col-sm-2
+  = shield.name
+.col-sm-2
+  = shield.capacity
+.col-sm-2
+  = shield.recharge
+.col-sm-2
+  = shield.deflect
+.col-sm-2
+  = shield.cost
+.col-sm-2
+  %a{href: '#', onclick: "cardModal('shields/card?id=#{shield.id}');"}
+    Card

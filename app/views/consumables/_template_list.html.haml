@@ -1,0 +1,14 @@
+.row
+  .col-sm-3.vh_hint
+    Name
+  .col-sm-2.vh_hint
+    Cost
+  .col-sm-2.vh_hint
+    Uses
+  .col-sm-2.vh_hint
+    Duration
+  .col-sm-3.vh_hint
+    Description
+- consumables.each_with_index do |consumable, index|
+  .row{class: listRowClass(index)}
+    = render 'consumables/template_row', locals: {consumable: consumable}

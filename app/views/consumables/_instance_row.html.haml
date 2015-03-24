@@ -1,0 +1,7 @@
+.col-md-3
+  = consumable.consumable_template.name
+.col-md-2
+  = consumable.current_uses
+.col-md-7
+  %a{href: '#', onclick: "cardModal('consumables/card?id=#{consumable.id}')"}
+    Card

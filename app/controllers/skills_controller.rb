@@ -16,4 +16,16 @@ class SkillsController < ApplicationController
   
   def instance
   end
+  
+  def prerequsites
+  end
+  
+  def upgrades
+  end
+  
+  private
+  
+  def meets_prereq?
+  end
+  
 end

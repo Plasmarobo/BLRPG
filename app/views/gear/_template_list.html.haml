@@ -1,0 +1,10 @@
+.row
+  .col-sm-3.vh_hint
+    Name
+  .col-sm-3.vh_hint
+    Cost
+  .col-sm-6
+    Description
+- gears.each_with_index do |gear, index|
+  .row{class: listRowClass(index)}
+    = render 'gear/template_row', locals: {gear: gear}

@@ -1,0 +1,6 @@
+.row
+  .col-sm-12.vh_hint
+    Name
+- armors.each_with_index do |armor, index|
+  .row{class: listRowClass(index)}
+    = render 'instance_row', locals: {armor: armor}

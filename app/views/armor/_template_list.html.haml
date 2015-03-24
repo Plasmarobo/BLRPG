@@ -1,0 +1,14 @@
+.row
+  .col-sm-3.vh_hint
+    Name
+  .col-sm-2.vh_hint
+    Weight
+  .col-sm-2.vh_hint
+    Deflect
+  .col-sm-2.vh_hint
+    Cost
+  .col-sm-3
+    Description
+- armors.each_with_index do |armor, index|
+  .row{class: listRowClass(index)}
+    = render 'template_row', locals: {armor: armor}

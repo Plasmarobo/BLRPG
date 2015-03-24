@@ -1,0 +1,11 @@
+.row
+  .col-md-3.vh_hint
+    Name
+  .col-md-2.vh_hint
+    Uses consumed
+  .col-md-7.vh_hint
+    Description
+- consumables.each_with_index do |consumable, index|
+  .row{class: listRowClass(index)}
+    = render 'instance_row', locals: {consumable: consumable}
+    

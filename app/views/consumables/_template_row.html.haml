@@ -1,0 +1,11 @@
+.col-sm-3
+  = consumable.name
+.col-sm-2
+  = consumable.cost
+.col-sm-2
+  = consumable.max_uses
+.col-sm-2
+  = consumable.duration
+.col-sm-3
+  %a{href: '#', onclick: "cardModal('consumables/card?id=#{consumable.id}')"}
+    Card
