@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319213402) do
+ActiveRecord::Schema.define(version: 20150324181111) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20150319213402) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "effect_id"
+    t.boolean  "is_cooldown"
   end
 
   create_table "effects", force: true do |t|
@@ -83,40 +84,60 @@ ActiveRecord::Schema.define(version: 20150319213402) do
     t.datetime "updated_at"
   end
 
-  create_table "melee_weapon_instances", force: true do |t|
-    t.integer  "melee_weapon_template_id"
-    t.string   "prefix"
-    t.string   "postfix"
-    t.integer  "current_recoil"
-    t.text     "notes"
+  create_table "minion_instances", force: true do |t|
     t.integer  "vault_hunter_id"
+    t.integer  "minion_template_id"
+    t.integer  "hp"
+    t.integer  "shield"
+    t.integer  "armor"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "melee_weapon_templates", force: true do |t|
+  create_table "minion_skill_instances", force: true do |t|
+    t.integer "minion_skill_template_id"
+    t.integer "minion_instance_id"
+    t.integer "duration_id"
+  end
+
+  create_table "minion_skill_templates", force: true do |t|
     t.string   "name"
-    t.integer  "accuracy"
-    t.integer  "recoil"
-    t.integer  "damage"
     t.integer  "cost"
     t.text     "description"
+    t.integer  "minion_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "minions", force: true do |t|
-    t.integer  "vault_hunter_id"
+  create_table "minion_templates", force: true do |t|
     t.string   "name"
+    t.integer  "max_hp"
+    t.integer  "max_shield"
+    t.integer  "max_armor"
     t.text     "description"
+    t.integer  "size"
+    t.boolean  "is_beast"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "hp"
-    t.integer  "max_hp"
-    t.integer  "armor"
-    t.integer  "max_armor"
-    t.integer  "shield"
-    t.integer  "max_shield"
+  end
+
+  create_table "modifier_instances", force: true do |t|
+    t.integer  "skill_instance_id"
+    t.integer  "perk_id"
+    t.integer  "gear_instance_id"
+    t.integer  "consumable_instance_id"
+    t.integer  "ranged_weapon_instance_id"
+    t.integer  "melee_weapon_instance_id"
+    t.string   "name"
+    t.string   "target"
+    t.integer  "amount"
+    t.integer  "duration_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "effect_id"
+    t.integer  "armor_instance_id"
+    t.integer  "shield_instance_id"
+    t.integer  "stack_instance_id"
   end
 
   create_table "modifier_templates", force: true do |t|
@@ -138,25 +159,6 @@ ActiveRecord::Schema.define(version: 20150319213402) do
     t.datetime "updated_at"
   end
 
-  create_table "modifiers", force: true do |t|
-    t.integer  "skill_instance_id"
-    t.integer  "perk_id"
-    t.integer  "gear_instance_id"
-    t.integer  "consumable_instance_id"
-    t.integer  "ranged_weapon_instance_id"
-    t.integer  "melee_weapon_instance_id"
-    t.string   "name"
-    t.string   "target"
-    t.integer  "amount"
-    t.integer  "duration_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "effect_id"
-    t.integer  "armor_instance_id"
-    t.integer  "shield_instance_id"
-    t.integer  "stack_instance_id"
-  end
-
   create_table "perks", force: true do |t|
     t.integer  "race_id"
     t.text     "description"
@@ -176,13 +178,14 @@ ActiveRecord::Schema.define(version: 20150319213402) do
     t.datetime "updated_at"
   end
 
-  create_table "proficiencies", force: true do |t|
+  create_table "proficiency_instances", force: true do |t|
     t.string   "name"
     t.integer  "vault_hunter_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tier"
     t.integer  "proficiency_template_id"
+    t.integer  "value"
   end
 
   create_table "proficiency_templates", force: true do |t|
@@ -194,31 +197,6 @@ ActiveRecord::Schema.define(version: 20150319213402) do
 
   create_table "races", force: true do |t|
     t.string   "name"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "ranged_weapon_instances", force: true do |t|
-    t.integer  "ranged_weapon_template_id"
-    t.integer  "ammunition"
-    t.text     "notes"
-    t.string   "prefix"
-    t.string   "postfix"
-    t.integer  "current_recoil"
-    t.integer  "vault_hunter_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "ranged_weapon_templates", force: true do |t|
-    t.string   "name"
-    t.integer  "accuracy"
-    t.integer  "recoil"
-    t.integer  "range"
-    t.integer  "fire_mode"
-    t.integer  "damage"
-    t.integer  "cost"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -334,6 +312,34 @@ ActiveRecord::Schema.define(version: 20150319213402) do
     t.integer  "misc_ranged_dmg_bonus"
     t.integer  "misc_melee_dmg_bonus"
     t.integer  "current_initiative"
+    t.string   "eyes"
+    t.string   "hair"
+    t.string   "skin"
+  end
+
+  create_table "weapon_instances", force: true do |t|
+    t.integer  "weapon_template_id"
+    t.integer  "ammunition"
+    t.text     "notes"
+    t.string   "prefix"
+    t.string   "postfix"
+    t.integer  "current_recoil"
+    t.integer  "vault_hunter_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "weapon_templates", force: true do |t|
+    t.string   "name"
+    t.integer  "accuracy"
+    t.integer  "recoil"
+    t.integer  "range"
+    t.integer  "fire_mode"
+    t.integer  "damage"
+    t.integer  "cost"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

@@ -1,9 +1,0 @@
-.row{id: "minion_" + minion.id.to_s, oncontextmenu: "delete_minion(" + minion.id.to_s + ");return false;"}
-  .col-sm-3.vh_hint
-    Name
-  .col-sm-9
-    %input{id: "vh_minion_name_" + minion.id.to_s, class: "vh_txt", value: minion.name}
-  .col-sm-3.vh_hint Description
-  .col-sm-12
-    %textarea{id: "vh_minion_description_" + minion.id.to_s, class: "vh_txt_box vh_smalltext form-control"}
-      = minion.description

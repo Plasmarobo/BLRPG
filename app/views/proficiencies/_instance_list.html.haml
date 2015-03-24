@@ -1,0 +1,15 @@
+.row.vh_profs
+    .vh_region_title 
+      Proficiencies
+    .col-sm-5.vh_prof_name.vh_hint
+      Name
+    .col-sm-2.vh_prof_name.vh_hint
+      Rating
+    .col-sm-2.vh_prof_name.vh_hint
+      Tier
+    .col-sm-1.vh_prof_name.vh_hint
+      Description
+    .vh_proficiencies
+      -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
+        .row{class: "#{listRowClass(index)}"}
+          = render '_instance_row', locals: {proficiency: proficiency}

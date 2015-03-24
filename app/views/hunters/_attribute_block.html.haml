@@ -1,0 +1,42 @@
+.row.vh_single
+  .vh_field.col-sm-3
+    .vh_hint Name
+    .vh_txt
+      = vault_hunter.name
+  .vh_field.col-sm-1
+    .vh_hint Level
+    .vh_num
+      = vault_hunter.level
+  .vh_field.col-sm-3
+    .vh_hint Player
+    .vh_txt
+      = vault_hunter.user.username
+  .vh_field.col-sm-3
+    .vh_hint Age
+      .vh_num
+        = vault_hunter.age
+  .vh_field.col-sm-1
+    .vh_hint Height
+    .vh_txt 
+      = vault_hunter.height
+  .vh_field.col-sm-1
+    .vh_hint Weight
+    .vh_txt
+      = vault_hunter.weight
+.row.vh_single
+  .vh_field.col-sm-3
+    .vh_hint Race
+      .vh_txt
+        = (vault_hunter.race.nil?) ? "Not set" :  vault_hunter.race.name
+  .vh_field.col-sm-2
+    .vh_hint Eyes
+      .vh_txt
+        = vault_hunter.eyes
+  .vh_field.col-sm-2
+    .vh_hint Hair
+      .vh_txt
+        = vault_hunter.hair
+  .vh_field.col-sm-2
+    .vh_hint Skin
+      .vh_txt
+        = vault_hunter.skin

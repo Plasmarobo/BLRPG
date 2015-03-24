@@ -1,0 +1,20 @@
+.row
+  .col-sm-3.vh_hint
+    Name
+  .col-sm-1.vh_hint
+    Accuracy
+  .col-sm-1.vh_hint
+    Recoil
+  .col-sm-1.vh_hint
+    Range
+  .col-sm-2.vh_hint
+    Fire Mode
+  .col-sm-1.vh_hint
+    Damage
+  .col-sm-1.vh_hint
+    Cost
+  .col-sm-2.vh_hint
+    Description
+- weapons.each_with_index do |weapon, index|
+  .row{class: "#{listRowClass(index)}"}
+    = render 'weapons/weapon_template_row', locals: {weapon: weapon}

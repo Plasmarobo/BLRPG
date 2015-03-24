@@ -1,0 +1,9 @@
+.col-sm-2
+  %a{href: '#', onclick: "cardModal('weapons/card?id=#{weapon.weapon_template_id},template=true')"}
+    Weapon
+.col-sm-2
+  = weapon.ammunition
+.col-sm-2
+  = weapon.current_recoil
+.col-sm-6
+  = weapon.notes

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vault_hunter_id: 1
+  minion_template_id: 1
+  hp: 1
+  shield: 1
+  armor: 1
+
+two:
+  vault_hunter_id: 1
+  minion_template_id: 1
+  hp: 1
+  shield: 1
+  armor: 1

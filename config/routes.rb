@@ -1,5 +1,103 @@
 Rails.application.routes.draw do
   
+  get 'consumables/new'
+
+  get 'consumables/create'
+
+  get 'consumables/edit'
+
+  get 'consumables/index'
+
+  get 'consumables/card'
+
+  get 'minion/new'
+
+  get 'minion/create'
+
+  get 'minion/edit'
+
+  get 'minion/index'
+
+  get 'minion/card'
+
+  get 'modifiers/new'
+
+  get 'modifiers/create'
+
+  get 'modifiers/edt'
+
+  get 'modifiers/index'
+
+  get 'proficiencies/new'
+
+  get 'proficiencies/create'
+
+  get 'proficiencies/edit'
+
+  get 'proficiencies/index'
+
+  get 'proficiencies/card'
+
+  get 'races/new'
+
+  get 'races/create'
+
+  get 'races/edit'
+
+  get 'races/index'
+
+  get 'races/card'
+
+  get 'weapons/new'
+
+  get 'weapons/create'
+
+  get 'weapons/index'
+
+  get 'weapons/edit'
+
+  get 'weapons/card'
+
+  get 'skills/new'
+
+  get 'skills/create'
+
+  get 'skills/edit'
+
+  get 'skills/index'
+
+  get 'skills/card'
+
+  get 'stacks/new'
+
+  get 'stacks/create'
+
+  get 'stacks/edit'
+
+  get 'stacks/index'
+
+  get 'stacks/card'
+
+  get 'armor/new'
+
+  get 'armor/create'
+
+  get 'armor/edit'
+
+  get 'armor/index'
+
+  get 'armor/card'
+
+  get 'shields/new'
+
+  get 'shields/create'
+
+  get 'shields/edit'
+
+  get 'shields/index'
+
+  get 'shields/card'
+
   get 'proficiency_templates/list'
   post 'proficiency_templates/list'
   

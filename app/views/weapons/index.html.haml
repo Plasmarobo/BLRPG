@@ -1,0 +1,9 @@
+.row
+  .vh_region_title
+    Ranged Weapons
+  .row
+    = render '_weapon_template_list', {weapons: WeaponTemplates.where('range > 0')}
+  .vh_region_title
+    Melee Weapons
+  .row
+    = render '_weapon_template_list', {weapons: WeaponTemplates.where('range = 0')} 

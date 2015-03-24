@@ -1,125 +1,55 @@
 .container.vh_page
   .row
-    .row.vh_single
-      .vh_field.col-sm-3
-        .vh_hint Name
-        .vh_txt
-          = @vault_hunter.name
-      .vh_field.col-sm-1
-        .vh_hint Level
-        .vh_num
-          = @vault_hunter.level
-      .vh_field.col-sm-3
-        .vh_hint Player
-        .vh_txt
-          = @vault_hunter.user.username
-      .vh_field.col-sm-1
-        .vh_hint Age
-        .vh_num
-          = @vault_hunter.age
-      .vh_field.col-sm-1
-        .vh_hint Height
-        .vh_txt 
-          = @vault_hunter.height
-      .vh_field.col-sm-1
-        .vh_hint Weight
-        .vh_txt
-          = @vault_hunter.weight
-    .row.vh_single
-      .vh_field.col-sm-3
-        .vh_hint Race
-        .vh_txt
-          = (@vault_hunter.race.nil?) ? "Not set" :  @vault_hunter.race.name
-  .row.vh_spacer
+    = render 'attribute_block', locals: {vault_hunter: @vault_hunter}
+    .row.vh_spacer
   .row
+    = render 'stat_block', locals: {vault_hunter: @vault_hunter}
+    .row.vh_spacer
+
+  .row
+    .vh_region_title Loot and Equipment
+      .col-sm-12
+        .vh_txt_box
+          = (@vault_hunter.loot.nil?) ? ("") : (find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe)
+
+    .vh_region_title Money
+      .col-sm-12
+        .vh_longnum
+          = @vault_hunter.money
+      .vh_spacer
+
+    .vh_region_title Minions
+      = render template: 'minions/instance_list', locals: {minion: vault_hunter.minions}
+      .vh_spacer
     .col-sm-6
-      .row.vh_softbox
-        .col-sm-6
-          .row
-            .col-sm-12
-              Toughness
-            .col-sm-12
-              .vh_bignum.vh_auto
-                = @vault_hunter.toughness
-          .row
-            .col-sm-12
-              Current Wounds
-            .col-sm-12
-              .vh_bignum.vh_auto
-                = @vault_hunter.wounds
-        .col-sm-6
-          .row
-            .col-sm-12
-              Shield
-            .col-sm-12
-              .vh_bignum.vh_auto
-                = @vault_hunter.current_shield.nil? ? 0 : @vault_hunter.current_shield.max_capacity
-          .row
-            .col-sm-12
-              Current Shield
-            .col-sm-12
-              .vh_bignum.vh_auto
-                = @vault_hunter.current_shield.nil? ? 0 : @vault_hunter.current_shield.current_capacity
-      #.row
-      #  .vh_region_title Attack Actions
-      #  .vh_attacks
-      #    -@vault_hunter.attacks.each do |attack|
-      #      = render template: 'attacks/show', layout: false, locals: {attack: attack}
-      .row.vh_spacer
-      .row
-        .vh_region_title Loot and Equipment
-        .col-sm-12
-          .vh_txt_box
-            = (@vault_hunter.loot.nil?) ? ("") : (find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe)
-        .region_title Money
-        .col-sm-12
-          .vh_longnum
-            = @vault_hunter.money
-        .vh_spacer
-        .vh_region_title Minions
-        .col-sm-12
-          .vh_minions
-            - @vault_hunter.minions.each do |minion|
-              = render template: 'minions/show', layout: false, locals: {minion: minion}
-    .col-sm-6
-      .row.vh_profs
-        .vh_region_title 
+      .row.vh_proficiencies
+        .vh_region_title
           Proficiencies
-        .col-sm-9.vh_prof_name.vh_hint
-          Name
-        .col-sm-3.vh_prof_tier.vh_hint
-          Tier
-        .vh_proficiencies
-          -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
-            = render template: "proficiencies/show", layout: false, locals: {proficiency: proficiency, index: index}
-      .row.vh_spacer
+        = render 'proficiencies/instance_list', locals: {proficiencies: vault_hunter.proficiencies}
+        .row.vh_spacer
+
       .row.vh_skills
         .vh_region_title 
-          Action Skills
-        .col-sm-3.vh_hint
-          Name
-        .col-sm-9.vh_hint
-          Description
-        .vh_actions
-          -@vault_hunter.skills.each_with_index do |action, index|
-            = render template: "skills/show", layout: false, locals: {skill: action, index: index}
+          Skills
+        = render 'skills/instance_list', locals: {skills: vault_hunter.skills}
         .row.vh_spacer
-      .row.vh_rp
-        .col-sm-12
-          .region_title Description
-          .vh_txt_box.vh_smalltext
-            = (@vault_hunter.description.nil?) ? ("") : (find_and_preserve @vault_hunter.description.split("\n").join('<br>').html_safe)
-        .col-sm-12
-          .region_title Background
-          .vh_txt_box.vh_smalltext
-            = (@vault_hunter.background.nil?) ? ("") : (find_and_preserve @vault_hunter.background.split("\n").join('<br>').html_safe)
-        .col-sm-12
-          .region_title Traits
-          .vh_txt_box.vh_smalltext
-            = (@vault_hunter.traits.nil?) ? ("") : (find_and_preserve @vault_hunter.traits.split("\n").join('<br>').html_safe)
-        .col-sm-12
-          .region_title Flaws
-          .vh_txt_box.vh_smalltext
-            = (@vault_hunter.flaws.nil?) ? ("") : (find_and_preserve @vault_hunter.flaws.split("\n").join('<br>').html_safe)
+
+  .row.vh_rp
+    .col-sm-12
+      .region_title Description
+      .vh_txt_box.vh_smalltext
+        = (@vault_hunter.description.nil?) ? ("") : (find_and_preserve @vault_hunter.description.split("\n").join('<br>').html_safe)
+    .col-sm-12
+      .region_title Background
+      .vh_txt_box.vh_smalltext
+        = (@vault_hunter.background.nil?) ? ("") : (find_and_preserve @vault_hunter.background.split("\n").join('<br>').html_safe)
+    .col-sm-12
+      .region_title Traits
+      .vh_txt_box.vh_smalltext
+        = (@vault_hunter.traits.nil?) ? ("") : (find_and_preserve @vault_hunter.traits.split("\n").join('<br>').html_safe)
+    .col-sm-12
+      .region_title Flaws
+      .vh_txt_box.vh_smalltext
+        = (@vault_hunter.flaws.nil?) ? ("") : (find_and_preserve @vault_hunter.flaws.split("\n").join('<br>').html_safe)
   .row.vh_spacer
 .vh_spacer

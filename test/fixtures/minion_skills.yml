@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  cost: 1
+  description: MyText
+  minion_template_id: 1
+
+two:
+  name: MyString
+  cost: 1
+  description: MyText
+  minion_template_id: 1

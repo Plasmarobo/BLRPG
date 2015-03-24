@@ -1,0 +1,19 @@
+.row.vh_softbox
+  .col-sm-4
+    .row
+      .col-sm-12
+        Toughness
+      .col-sm-12
+        .vh_bignum.vh_auto
+          = vault_hunter.toughness
+    .row
+      .col-sm-12
+        Current Wounds
+      .col-sm-12
+        .vh_bignum.vh_auto
+          = vault_hunter.wounds
+  .col-sm-4
+    = render 'shields/shield_cell', locals: {shield: vault_hunter.current_shield.is_nil? ? Shield.new : vault_hunter.current_shield}
+  .col-sm-4
+    = render 'armor/armor_cell', locals: {armor: vault_hunter.current_armor.is_nil? Armor.new : vault_hunter.current_armor}
+  

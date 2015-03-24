@@ -1,0 +1,11 @@
+.col-sm-3
+  = skill.name
+.col-sm-2
+  = skill.skill_type
+.col-sm-2
+  = skill.duration
+.col-sm-2
+  = skill.cooldown
+.col-sm-3
+  %a{href: '#', onclick: "cardModal('skills/card?id=#{skill.id},template=true')"}
+    Card

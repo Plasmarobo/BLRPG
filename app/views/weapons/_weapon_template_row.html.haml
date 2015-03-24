@@ -1,0 +1,18 @@
+.col-sm-1
+.col-sm-2
+  = weapon.name
+.col-sm-1
+  = weapon.accuracy
+.col-sm-1
+  = weapon.recoil
+.col-sm-1
+  = weapon.range
+.col-sm-2
+  = weapon.fire_mode
+.col-sm-1
+  = weapon.damage
+.col-sm-1
+  = weapon.cost
+.col-sm-2
+  %a{href: '#', onclick: "cardModal('weapons/card?id=#{weapon.id},template=true')"}
+    Card

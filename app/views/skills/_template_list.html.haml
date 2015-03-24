@@ -1,0 +1,14 @@
+.row
+  .col-sm-3.vh_hint
+    Name
+  .col-sm-2.vh_hint
+    Type
+  .col-sm-2.vh_hint
+    Duration
+  .col-sm-2.vh_hint
+    Cooldown
+  .col-sm-3.vh_hint
+    Description
+- skills.each_with_index do |skill, index|
+  .row{class: listRowClass(index)}
+    = render 'skill/template_row', locals: {skill: skill}
