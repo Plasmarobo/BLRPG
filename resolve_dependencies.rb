@@ -37,6 +37,7 @@ File.foreach("db/seeds.rb") do |line|
             put_req(append_preqs, id, "level", "level", level[1].to_i)
           else
             if reference != nil and reference != "nil"
+              # This could be improved by setting value to the ID of the target
               put_req(append_preqs, id, "skill", reference, "'#{reference}'")
             end
           end

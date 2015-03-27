@@ -1,3 +1,10 @@
+
+if Rails.env == "development"
+  user = User.new(username: 'plasmarobo', email: 'plasmarobo@gmail.com', password: 'password', password_confirmation: 'password')
+  user.skip_confirmation!
+  user.save!
+end
+
 sk_aim = SkillTemplate.create(name: "Aim", skill_type: "Free", duration: 0, cooldown: nil, description: "Make a basic ranged attack with a weapon.", prerequisites: nil)
 sk_carefulaim = SkillTemplate.create(name: "Careful Aim", skill_type: "Basic", duration: 0, cooldown: 3, description: "Increase the accuracy of ranged attacks by 3", prerequisites: "Finesse")
 sk_steadyaim = SkillTemplate.create(name: "Steady Aim", skill_type: "Upgrade", duration: nil, cooldown: nil, description: "If a character takes no movement in a turn, the accuracy of ranged attacks is increased by 2, this bonus stacks with other bonuses from skills", prerequisites: "Careful Aim")
@@ -270,7 +277,7 @@ Preqrequisite.create(skill_template_id: sk_deadlyminion, prereq_type: 'level', p
 Preqrequisite.create(skill_template_id: sk_beastmaster, prereq_type: 'skill', prereq_name: 'Summon Minion', value: 'Summon Minion')
 Preqrequisite.create(skill_template_id: sk_beastmaster, prereq_type: 'level', prereq_name: 'level', value: 5)
 Preqrequisite.create(skill_template_id: sk_menagerie, prereq_type: 'skill', prereq_name: 'Summon Minion', value: 'Summon Minion')
-Preqrequisite.create(skill_template_id: sk_menagerie, prereq_type: 'skill', prereq_name: ' Leve 5', value: ' Leve 5')
+Preqrequisite.create(skill_template_id: sk_menagerie, prereq_type: 'level', prereq_name: 'level', value: 5)
 Preqrequisite.create(skill_template_id: sk_synergisticlink, prereq_type: 'skill', prereq_name: 'Summon Minion', value: 'Summon Minion')
 Preqrequisite.create(skill_template_id: sk_synergisticlink, prereq_type: 'level', prereq_name: 'level', value: 3)
 Preqrequisite.create(skill_template_id: sk_toughness, prereq_type: 'skill', prereq_name: 'Bulk', value: 'Bulk')
@@ -417,3 +424,6 @@ Preqrequisite.create(skill_template_id: sk_shieldcontrolvirus, prereq_type: 'ski
 Preqrequisite.create(skill_template_id: sk_shieldcontrolvirus, prereq_type: 'level', prereq_name: 'level', value: 5)
 Preqrequisite.create(skill_template_id: sk_shieldcoprocessor, prereq_type: 'skill', prereq_name: 'Shield Node', value: 'Shield Node')
 Preqrequisite.create(skill_template_id: sk_shieldwatercooling, prereq_type: 'skill', prereq_name: 'Shield Node', value: 'Shield Node')
+
+#Overrides
+Preqrequisite.create(skill_template_id: sk_sirenity, prereq_type: 'race', prereq_name: 'Siren', value: 'Siren')
