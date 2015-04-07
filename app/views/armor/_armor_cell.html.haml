@@ -1,0 +1,15 @@
+.col-sm-12
+  Armor
+  .row
+    .col-sm-12
+      .vh_bignum.vh_auto
+        = armor.current_deflect != nil ? armor.current_deflect : 0
+  .row
+    .col-sm-12
+      .vh_region_title Max
+    .col-sm-12
+      .vh_bignum.vh_auto
+        - if armor.armor_template != nil
+          = armor.armor_template.deflect
+        -else
+          = "0"

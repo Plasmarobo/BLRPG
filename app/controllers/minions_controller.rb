@@ -1,4 +1,4 @@
-class MinionController < ApplicationController
+class MinionsController < ApplicationController
   def new
   end
 

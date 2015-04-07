@@ -1,23 +1,39 @@
 class VaultHunter < ActiveRecord::Base
     belongs_to :user
     has_many :skill_instances, dependent: :destroy
-    has_many :proficiencies, dependent: :destroy
-    has_many :ranged_weapon_instances
-    has_many :melee_weapon_instances
-    has_many :modifiers
-    has_many :shield_instances
-    has_many :stack_instances
-    has_many :armor_instances
-    has_many :consumable_instances
-    has_many :gear_instances
+    has_many :skill_templates, through: :skill_instances
     
-    has_many :minions, dependent: :destroy
+    has_many :proficiency_instances, dependent: :destroy
+    has_many :proficiency_templates, through: :proficiency_instances
+    
+    has_many :weapon_instances, dependent: :destroy
+    has_many :weapon_templates, through: :weapon_instances
+    
+    has_many :modifier_instances, dependent: :destroy
+    has_many :modifier_templates, through: :modifier_instances
+    
+    has_many :shield_instances, dependent: :destroy
+    has_many :shield_templates, through: :shield_instances
+    
+    has_many :stack_instances, dependent: :destroy
+    has_many :stack_templates, through: :stack_instances
+    
+    has_many :armor_instances, dependent: :destroy
+    
+    has_many :consumable_instances, dependent: :destroy
+    has_many :consumable_templates, through: :consumable_instances
+    
+    has_many :gear_instances, dependent: :destroy
+    has_many :gear_templates, through: :gear_instances
+    
+    has_many :minion_instances, dependent: :destroy
+    has_many :minion_templates, through: :minion_instances
+    
     belongs_to :race
     has_many :perks, through: :race
     
-    
   def meets_prereq?(skill_template)
-    skill_template.prerequsites.each do |prereq|
+    self.skill_templates.prerequsites.each do |prereq|
       case(prereq.prereq_type)
       when 'level'
         if not self.has_level?(prereq.value)
@@ -26,6 +42,10 @@ class VaultHunter < ActiveRecord::Base
       when 'skill'
         if not self.has_skill?(prereq.prereq_name)
           return false
+        end
+      when 'race'
+        if not self.race.nil?
+          return (self.race.name == prereq.prereq_name)
         end
       else
         return false
@@ -44,7 +64,7 @@ class VaultHunter < ActiveRecord::Base
   end
   
   def has_proficiency?(name)
-    self.proficiencies.each do |prof|
+    self.proficiency_templates.each do |prof|
       if prof.name == name
         return true
       end
@@ -72,8 +92,18 @@ class VaultHunter < ActiveRecord::Base
     self.money = 150
   end
   
-  def current_skill_points
+  def spent_skill_points
+    self.skill_templates.where("skill_type != ?", "free").count
   end
+  
+  def spent_proficiency_points
+    points = 0
+    self.proficiency_instances.each do |prof|
+      points += prof.value
+    end
+    points
+  end
+
 
   def current_shield
     self.shield_instances.each do |shield|
@@ -81,7 +111,7 @@ class VaultHunter < ActiveRecord::Base
         return shield
       end
     end
-    return nil
+    return ShieldInstance.new
   end
   
   def current_armor
@@ -90,59 +120,32 @@ class VaultHunter < ActiveRecord::Base
         return armor
       end
     end
-    return nil
+    return ArmorInstance.new
+  end
+  
+  def current_skill_points
+    points = level + 1 + Math.floor(level/5)
+    points -= self.spent_skill_points
+    points
+  end
+  
+  def current_proficiency_points
+    2 * level
   end
   
   def add_skill(candidate)
-    if self.current_skill_points > 0 then
-      if self.meets_prereq?(candiate) then
-        self.current_skill_points -= 1
-        if self.save() then
-          candiate.instance(self)
-          return true
-        end
-      end
-    end
-    return false
+    
   end
   
   def drop_skill(id)
   end
   
   def add_proficiency(id)
-    if self.current_proficiency_points > 0 then
-      candidate = ProficiencyTemplate.find(id)
-      if candidate.nil?
-        return false
-      else
-        self.current_proficiency_points -= 1
-        if self.save() then
-          candidate.instance(self, 1)
-          return true
-        end
-      end
-    end
-    return false
+    
   end
   
   def set_proficiency(id, tier)
-    candiate = self.proficiencies.find(id)
-    if candiate.nil? then
-      return false
-    else
-      delta = tier - candiate.tier
-      if self.current_proficiency_points >= delta then
-        if self.level <= tier
-          candidate.tier = tier
-          self.current_proficiency_points -= delta
-          if self.save() then
-            candiate.save()
-            return true
-          end
-        end
-      end
-    end
-    return false
+    
   end
   
   

@@ -1,55 +1,57 @@
 .container.vh_page
   .row
-    = render 'attribute_block', locals: {vault_hunter: @vault_hunter}
-    .row.vh_spacer
+    = render partial: 'attribute_block', locals: {vault_hunter: @vault_hunter}
+  .vh_spacer
   .row
-    = render 'stat_block', locals: {vault_hunter: @vault_hunter}
-    .row.vh_spacer
-
+    = render partial: 'stat_block', locals: {vault_hunter: @vault_hunter}
+  .vh_spacer
   .row
     .vh_region_title Loot and Equipment
-      .col-sm-12
-        .vh_txt_box
-          = (@vault_hunter.loot.nil?) ? ("") : (find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe)
+    .col-sm-12
+      .vh_txt_box
+        = (@vault_hunter.loot.nil?) ? ("") : (find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe)
 
     .vh_region_title Money
-      .col-sm-12
-        .vh_longnum
-          = @vault_hunter.money
-      .vh_spacer
-
-    .vh_region_title Minions
-      = render template: 'minions/instance_list', locals: {minion: vault_hunter.minions}
-      .vh_spacer
+    .col-sm-4
+      .vh_longnum
+        = @vault_hunter.money
+    .col-sm-8
+  .vh_spacer
+  .row
     .col-sm-6
-      .row.vh_proficiencies
-        .vh_region_title
-          Proficiencies
-        = render 'proficiencies/instance_list', locals: {proficiencies: vault_hunter.proficiencies}
-        .row.vh_spacer
-
-      .row.vh_skills
-        .vh_region_title 
-          Skills
-        = render 'skills/instance_list', locals: {skills: vault_hunter.skills}
-        .row.vh_spacer
-
+      .vh_region_title 
+        Skills
+      .vh_actions  
+        = render partial: 'skills/instance_list', locals: {skills: @vault_hunter.skill_instances}
+      .row.vh_spacer
+    .col-sm-6
+      .vh_region_title 
+        Proficiencies
+      .vh_proficiencies  
+        = render partial: 'proficiencies/instance_list', locals: {proficiencies: @vault_hunter.proficiency_instances}
+      .row.vh_spacer
   .row.vh_rp
-    .col-sm-12
+    .col-sm-6
       .region_title Description
       .vh_txt_box.vh_smalltext
         = (@vault_hunter.description.nil?) ? ("") : (find_and_preserve @vault_hunter.description.split("\n").join('<br>').html_safe)
-    .col-sm-12
+    .col-sm-6
       .region_title Background
       .vh_txt_box.vh_smalltext
         = (@vault_hunter.background.nil?) ? ("") : (find_and_preserve @vault_hunter.background.split("\n").join('<br>').html_safe)
-    .col-sm-12
+  .row.vh_rp
+    .col-sm-6
       .region_title Traits
       .vh_txt_box.vh_smalltext
         = (@vault_hunter.traits.nil?) ? ("") : (find_and_preserve @vault_hunter.traits.split("\n").join('<br>').html_safe)
-    .col-sm-12
+    .col-sm-6
       .region_title Flaws
       .vh_txt_box.vh_smalltext
         = (@vault_hunter.flaws.nil?) ? ("") : (find_and_preserve @vault_hunter.flaws.split("\n").join('<br>').html_safe)
   .row.vh_spacer
+  .row
+    .vh_region_title 
+      Minions
+    = render partial: 'minions/instance_list', locals: {minions: @vault_hunter.minion_instances}
+    .vh_spacer
 .vh_spacer

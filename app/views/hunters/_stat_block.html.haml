@@ -1,19 +1,9 @@
-.row.vh_softbox
+.row
   .col-sm-4
-    .row
-      .col-sm-12
-        Toughness
-      .col-sm-12
-        .vh_bignum.vh_auto
-          = vault_hunter.toughness
-    .row
-      .col-sm-12
-        Current Wounds
-      .col-sm-12
-        .vh_bignum.vh_auto
-          = vault_hunter.wounds
+    - stats = {current: {title: "Wounds", value: vault_hunter.wounds}, max: {title: "Toughness", value: vault_hunter.toughness}}
+    = render partial: 'shared/cell', locals: stats
   .col-sm-4
-    = render 'shields/shield_cell', locals: {shield: vault_hunter.current_shield.is_nil? ? Shield.new : vault_hunter.current_shield}
+    = render partial: 'shared/cell', locals: vault_hunter.current_shield.cell_data
   .col-sm-4
-    = render 'armor/armor_cell', locals: {armor: vault_hunter.current_armor.is_nil? Armor.new : vault_hunter.current_armor}
+    = render partial: 'shared/cell', locals: vault_hunter.current_armor.cell_data
   

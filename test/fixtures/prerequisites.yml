@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  skill_template_id: 1
+  prereq_type: MyString
+  prereq_name: MyString
+  value: 1
+
+two:
+  skill_template_id: 1
+  prereq_type: MyString
+  prereq_name: MyString
+  value: 1

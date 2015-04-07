@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150325181610) do
+ActiveRecord::Schema.define(version: 20150403170316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20150325181610) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "in_use"
+    t.integer  "current_deflect"
   end
 
   create_table "armor_templates", force: true do |t|
@@ -119,6 +120,8 @@ ActiveRecord::Schema.define(version: 20150325181610) do
     t.boolean  "is_beast"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "speed"
+    t.string   "actions"
   end
 
   create_table "modifier_instances", force: true do |t|
@@ -169,7 +172,7 @@ ActiveRecord::Schema.define(version: 20150325181610) do
     t.datetime "updated_at"
   end
 
-  create_table "prerequsites", force: true do |t|
+  create_table "prerequisites", force: true do |t|
     t.integer  "skill_template_id"
     t.string   "prereq_type"
     t.string   "prereq_name"
@@ -194,6 +197,7 @@ ActiveRecord::Schema.define(version: 20150325181610) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "category"
   end
 
   create_table "races", force: true do |t|
@@ -242,6 +246,7 @@ ActiveRecord::Schema.define(version: 20150325181610) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "cost"
+    t.string   "prerequisites"
   end
 
   create_table "stack_instances", force: true do |t|

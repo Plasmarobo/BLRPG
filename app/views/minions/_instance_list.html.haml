@@ -1,0 +1,15 @@
+.row
+  .col-sm-4.vh_hint
+    Name
+  .col-sm-2.vh_hint
+    HP
+  .col-sm-2.vh_hint
+    Shield
+  .col-sm-2.vh_hint
+    Armor
+  .col-sm-2.vh_hint
+    Description
+  .vh_minions
+    -minions.each_with_index do |minion,index|
+      .row{class: listRowClass(index)}
+        = render '_instance_row', locals: {minion: minion}

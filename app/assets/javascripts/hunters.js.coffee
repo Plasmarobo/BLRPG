@@ -4,7 +4,7 @@
 vh_id = -1
 
 $ ->
-  vh_id = parseInt($('#vh_id').val()
+  vh_id = parseInt($('#vh_id').val())
   
 @select_race = (race_id, name) ->
   $("#vh_race_id").val(race_id)
@@ -34,7 +34,7 @@ $ ->
   para = {vh: vh_id, parent: template_id, points: 0}
   @transact_into('/proficiencies/create', para, target)
   @clean_modals(false)
-  
+
 @delete_proficiency = (proficiency_id) ->
   del_callback = () ->
     @json_post '/proficiencies/destroy', 

@@ -28,15 +28,15 @@ Rails.application.routes.draw do
 
   get 'consumables/card'
 
-  get 'minion/new'
+  get 'minions/new'
 
-  get 'minion/create'
+  get 'minions/create'
 
-  get 'minion/edit'
+  get 'minions/edit'
 
-  get 'minion/index'
+  get 'minions/index'
 
-  get 'minion/card'
+  get 'minions/card'
 
   get 'modifiers/new'
 

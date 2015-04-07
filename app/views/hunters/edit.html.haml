@@ -14,84 +14,18 @@
   .row.vh_page
     %input{type: "hidden", id: "vh_spent_skill_points", value: @vault_hunter.spent_skill_points}
     %input{type: "hidden", id: "vh_spent_proficiency_points", value: @vault_hunter.spent_proficiency_points}
-    %input{type: "hidden", id: "vh_spent_attribute_points", value: @vault_hunter.spent_attribute_points}
     %input{type: "hidden", id: "vh_id", value: @vault_hunter.id}
     %input{type: "hidden", id: "vh_race_id", value: @vault_hunter.race_id}
     -if user_signed_in?
       %input{type: "hidden", id: "current_user", value: current_user.id}
     .row
-      .row.vh_single
-        .vh_field.col-sm-3
-          .vh_hint Name
-          %input{id: "vh_name", class: "vh_txt", value: @vault_hunter.name}
-        .vh_field.col-sm-1
-          .vh_hint Level
-          %input{id: "vh_level", class: "vh_num", value: @vault_hunter.level}
-        .vh_field.col-sm-3
-          .vh_hint Player
-          %input{id: "dontparse_player", class: "vh_txt", value: @vault_hunter.user.username, readonly: "true"}
-        .vh_field.col-sm-1
-          .vh_hint Age
-          %input{id: "vh_age", class: "vh_num", value: @vault_hunter.age}
-        .vh_field.col-sm-1
-          .vh_hint Height
-          %input{id: "vh_height", class: "vh_txt", value: @vault_hunter.height }
-        .vh_field.col-sm-1
-          .vh_hint Weight
-          %input{id: "vh_weight", class: "vh_txt", value: @vault_hunter.weight}
-      .row.vh_single
-        .vh_field.col-sm-3
-          .vh_hint Race
-          -if @vault_hunter.has_race?
-            %input{id: "vh_race_name", class: "vh_txt", value: @vault_hunter.race.name.capitalize, readonly: "true", onclick: 'build_modal("race-window");set_modal_list("race-window", "/races/list");$("#race-window").modal("show");'}
-          -else
-            %input{id: "vh_race_name", class: "vh_txt", placeholder: "Select Race", readonly: "true", onclick: 'build_modal("race-window");set_modal_list("race-window", "/races/list");$("#race-window").modal("show");'}
-    .row.vh_spacer
+      = render partial: 'edit_attribute_block', locals: {vault_hunter: @vault_hunter}
+    .vh_spacer
+    .row
+      = render partial: 'edit_stat_block', locals: {vault_hunter: @vault_hunter}
+    .vh_spacer
     .row
       .col-sm-12
-        .vh_region_title Attributes
-      .col-sm-12
-        .row.vh_hardbox
-          -@vault_hunter.attribute_instances.order('id').each do |attribute|
-            = render partial: :edit_attribute, locals: {attribute: attribute}
-    .row.vh_spacer
-    .row
-      .col-sm-6
-        .row
-          .vh_softbox
-            .col-sm-6
-              .row
-                .col-sm-12
-                  Toughness
-                .col-sm-12
-                  %input{id: "vh_toughness", class: "vh_bignum", value: @vault_hunter.toughness}
-              .row
-                .col-sm-12
-                  Current Wounds
-                .col-sm-12
-                  %input{id: "vh_wounds", class: "vh_bignum", value: @vault_hunter.wounds}
-            .col-sm-6
-              .row
-                .col-sm-12
-                  Shield
-                .col-sm-12
-                  %input{id: "vh_shield", class: "vh_bignum", value: @vault_hunter.shield}
-              .row
-                .col-sm-12
-                  Current Shield
-                .col-sm-12
-                  %input{id: "vh_current_shield", class: "vh_bignum", value: @vault_hunter.current_shield}
-        .row.vh_spacer
-        .row
-          .vh_region_title Attack Actions
-          .vh_attacks{id: :attacks}
-            -@vault_hunter.attacks.each_with_index do |attack, index|
-              = render partial: :edit_attack, layout: false, locals: {attack: attack, index: index}
-          .col-sm-12
-            %a{href: '#attack-window', 'data-toggle' => 'modal', 'data-target' => '#attack-window', onclick: 'build_modal("attack-window");set_modal_list("attack-window", "/hunters/' + @vault_hunter.id.to_s + '/skills");'}
-              %img{src: "/images/plus.png"}
-              Add Attack
-        .row.vh_spacer
         .row
           .vh_region_title Loot and Equipment
           .col-sm-12
@@ -101,64 +35,70 @@
           .col-sm-12
             $
             %input{id: "vh_money", class: "vh_longnum", value: @vault_hunter.money}
-          .vh_spacer
-          .vh_region_title Minions
-          .vh_minions{id: :minions}
-            - @vault_hunter.minions.each_with_index do |minion,index|
-              = render partial: :edit_minion, layout: false, locals: {minion: minion, index: index}
-          .col-sm-12
-            %a{href: '#minion-window', 'data-toggle' => 'modal', 'data-target' => '#minion-window', onclick: 'add_minion()'}
-              %img{src: "/images/plus.png"}
-              New Minion
+    .vh_spacer
+    .row
       .col-sm-6
-        .row.vh_profs
-          .vh_region_title 
-            Proficiencies
-          .col-sm-9.vh_prof_name.vh_hint
-            Name
-          .col-sm-3.vh_prof_tier.vh_hint
-            Tier
-          .vh_proficiencies{id: :proficiencies}
-            -@vault_hunter.proficiencies.each_with_index do |proficiency,index|
-              = render parital: :edit_proficiency, layout: false, locals: {proficiency: proficiency, index: index}
-          .col-sm-12
-            %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'build_modal("prof-window");set_modal_list("prof-window", "/hunters/' + @vault_hunter.id.to_s + '/potentialproficiencies");'}
-              %img{src: "/images/plus.png"}
-              Add Proficiency
-        .row.vh_spacer
-        .row.vh_skills
-          .vh_region_title 
-            Action Skills
-          .col-sm-3.vh_hint
-            Name
-          .col-sm-9.vh_hint
-            Description
-          .vh_actions{id: :actions}
-            -@vault_hunter.skills.each_with_index do |action,index|
-              = render partial: :edit_skill, layout: false, locals: {skill: action, index: index}
-          .col-sm-12
-            %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'build_modal("action-window");set_modal_list("action-window","/hunters/' + @vault_hunter.id.to_s + '/potentialskills");'}
-              %img{src: "/images/plus.png"}
-              Add Action-Skill
-        .row.vh_spacer
-        .row.vh_rp
-          .col-sm-12
-            .vh_region_title Description
-            %textarea{id: "vh_description", class: "vh_txt_box vh_smalltext form-control"}
-              = @vault_hunter.description
-          .col-sm-12
-            .vh_region_title Background
-            %textarea{id: "vh_background", class: "vh_txt_box vh_smalltext form-control"}
-              = @vault_hunter.background
-          .col-sm-12
-            .vh_region_title Traits
-            %textarea{id: "vh_traits", class: "vh_txt_box vh_smalltext form-control"}
-              = @vault_hunter.traits
-          .col-sm-12
-            .vh_region_title Flaws
-            %textarea{id: "vh_flaws", class: "vh_txt_box vh_smalltext form-control"}
-              = @vault_hunter.flaws
+        .vh_region_title 
+          Proficiencies
+        .col-sm-1
+        .col-sm-4.vh_hint
+          Name
+        .col-sm-2.vh_hint
+          Points
+        .col-sm-2.vh_hint
+          Tier
+        .col-sm-3
+        .vh_proficiencies{id: :proficiencies}
+          -@vault_hunter.proficiency_instances.each_with_index do |proficiency,index|
+            = render parital: 'proficiencies/edit', locals: {proficiency: proficiency, index: index}
+        .col-sm-6
+          %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'build_modal("prof-window");set_modal_list("prof-window", "/hunters/' + @vault_hunter.id.to_s + '/potentialproficiencies");'}
+            %img{src: "/images/plus.png"}
+            Add Proficiency
+        .vh_spacer
+      .col-sm-6
+        .vh_region_title 
+          Skills
+        .col-sm-3.vh_hint
+          Name
+        .col-sm-9.vh_hint
+          Description
+        .vh_actions{id: :actions}
+          -@vault_hunter.skill_instances.each_with_index do |action,index|
+            = render partial: 'skills/edit', locals: {skill: action, index: index}
+        .col-sm-12
+          %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'build_modal("action-window");set_modal_list("action-window","/hunters/' + @vault_hunter.id.to_s + '/potentialskills");'}
+            %img{src: "/images/plus.png"}
+            Add Skill
+        .vh_spacer
+    .row.vh_rp
+      .col-sm-6
+        .vh_region_title Description
+        %textarea{id: "vh_description", class: "vh_txt_box vh_smalltext form-control"}
+          = @vault_hunter.description
+      .col-sm-6
+        .vh_region_title Background
+        %textarea{id: "vh_background", class: "vh_txt_box vh_smalltext form-control"}
+          = @vault_hunter.background
+    .row.vh_rp
+      .col-sm-6
+        .vh_region_title Traits
+        %textarea{id: "vh_traits", class: "vh_txt_box vh_smalltext form-control"}
+          = @vault_hunter.traits
+      .col-sm-6
+        .vh_region_title Flaws
+        %textarea{id: "vh_flaws", class: "vh_txt_box vh_smalltext form-control"}
+          = @vault_hunter.flaws
     .row.vh_spacer
+    .vh_region_title Minions
+    .vh_minions{id: :minions}
+      - @vault_hunter.minion_instances.each_with_index do |minion,index|
+        = render partial: 'minions/edit', locals: {minion: minion, index: index}
+    .col-sm-12
+      %a{href: '#minion-window', 'data-toggle' => 'modal', 'data-target' => '#minion-window', onclick: 'add_minion()'}
+        %img{src: "/images/plus.png"}
+        New Minion
+    .vh_spacer
     .row
       .col-sm-12
         %button.btn.btn-success{type: "submit", onclick:'save_vault_hunter(' + @vault_hunter.id.to_s + ');'} 
