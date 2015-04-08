@@ -1,0 +1,10 @@
+- inventory.each_with_index do |item, index|
+  .row{class: listClass(index)}
+    .col-sm-4
+      item.name
+    .col-sm-2
+      item.qty
+    .col.sm-3
+      item.kind
+    .col.sm-3
+      %a{href: "#", onclick: "buildModal('item');populateModal('item', '/#{item.kind}/#{item.id}');"}

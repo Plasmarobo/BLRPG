@@ -10,7 +10,6 @@
     .col-sm-12
       .vh_txt_box
         = (@vault_hunter.loot.nil?) ? ("") : (find_and_preserve @vault_hunter.loot.split("\n").join('<br>').html_safe)
-
     .vh_region_title Money
     .col-sm-4
       .vh_longnum
@@ -30,6 +29,11 @@
       .vh_proficiencies  
         = render partial: 'proficiencies/instance_list', locals: {proficiencies: @vault_hunter.proficiency_instances}
       .row.vh_spacer
+  .row.vh_inventory
+    .vh_region_title
+      Inventory
+    .col-sm-12
+      = render partial: 'inventory_block', locals: {inventory: @vault_hunter.inventory}
   .row.vh_rp
     .col-sm-6
       .region_title Description

@@ -148,6 +148,28 @@ class VaultHunter < ActiveRecord::Base
     
   end
   
+  def inventory
+    # Common item properties
+    inventory = []
+    # Name Qty Card Use/Equip
+    self.armor_instances.each do |item|
+      inventory << {id: item.id, name: item.armor_template.name, qty: 1, kind: "armor"}
+    end
+    self.consumable_instances.each do |item|
+      inventory << {id: item.id, name: item.consumable_template.name, qty: item.current_uses, kind: "consumables"}
+    end
+    self.gear_instances.each do |item|
+      inventory << {id: item.id, name: item.gear_template.name, qty: 1, kind: "gear"}
+    end
+    self.shield_instances.each do |item|
+      inventory << {id: item.id, name: item.shield_template.name, qty: 1, kind: "shields"}
+    end
+    self.weapon_instances.each do |item|
+      inventory << {id: item.id, name: item.weapon_template.name, qty: 1, kind: "weapons"}
+    end
+    inventory
+  end
+  
   
   
 end

@@ -71,6 +71,11 @@
             %img{src: "/images/plus.png"}
             Add Skill
         .vh_spacer
+    .row.vh_inventory
+      .vh_region_title
+        Inventory
+      .col-sm-12
+        = render partial: 'inventory_block', locals: {inventory: @vault_hunter.inventory}
     .row.vh_rp
       .col-sm-6
         .vh_region_title Description
