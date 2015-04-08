@@ -1,19 +1,30 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+# Invalid ID by default
 vh_id = -1
 
 $ ->
+  # Load the on-page vh_id into JS
   vh_id = parseInt($('#vh_id').val())
+  @changes[:id] = vh_id
+  recoverMode = false
+  # Inject an onchange handler to each input field
+  $.each $("[id^=vh_]").filter(':input'), (index, field) ->
+    if @load(field.id) != field.value
+      @confirmDialog "Found unsaved change for " + field.id + ". Use recovered value or server value?"
+        () ->
+          field.value = @load(field.id)
+          @store(field.id, field.value)
+    field.change(@store(field.id, field.value))
   
-@select_race = (race_id, name) ->
+@selectRace = (race_id, name) ->
   $("#vh_race_id").val(race_id)
   if name != undefined and $("#vh_race_name").length > 0
     $("#vh_race_name").val(name)
   $(".vh_races>.row").removeClass("vh_selected")
   $("#race_" + race_id).addClass("vh_selected")
-  @clean_modals(false)
-  
+  @store("vh_race_id", race_id)
+  @cleanModals(false)
+
+###  
 @add_attack = (skill_id) ->
   target = 'attacks'
   para = {vh: vh_id, parent: skill_id, mode: "edit"}
@@ -28,229 +39,60 @@ $ ->
         $("#attack_" + attack_id).remove()
   @confirm_dialog("You are about to delete this attack forever, continue?", del_callback)
   false
+###
 
-@add_proficiency = (template_id) ->
+#Request a proficiency, place in proficiency list
+@addProficiency = (template_id) ->
   target = 'proficiencies'
-  para = {vh: vh_id, parent: template_id, points: 0}
-  @transact_into('/proficiencies/create', para, target)
-  @clean_modals(false)
+  para = {vh: vh_id, parent: template_id, points: 1}
+  @requestBody('/proficiencies/create', para, target)
+  @cleanModals(false)
 
-@delete_proficiency = (proficiency_id) ->
+@deleteProficiency = (proficiency_id) ->
   del_callback = () ->
-    @json_post '/proficiencies/destroy', 
+    @sendPOST '/proficiencies/destroy', 
       {confirm: "yes", id: proficiency_id}
       () -> 
         $("#proficiency_" + proficiency_id).remove()
-  @confirm_dialog("You are about to delete this proficiency forever, continue?", del_callback)
+  @confirmDialog("You are about to delete this proficiency forever, continue?", del_callback)
   false
 
-@add_action = (template_id) ->
+@addSkill = (template_id) ->
   target = 'actions'
   para = {vh: vh_id, parent: template_id}
-  @transact_into('/skills/create', para, target)
-  @clean_modals(false)
+  @requestBody('/skills/create', para, target)
+  @cleanModals(false)
   
-@delete_action = (action_id) ->
+@deleteSkill = (action_id) ->
   del_callback = () ->
-    @json_post '/skills/destroy', 
+    @sendPOST '/skills/destroy', 
       {confirm: "yes", id: action_id}
       () -> 
-        $("#action_" + action_id).remove()
-  @confirm_dialog("You are about to delete this action forever, continue?", del_callback)
+        $("#skill_" + action_id).remove()
+  @confirmDialog("You are about to delete this action forever, continue?", del_callback)
   false
   
-@add_minion = () ->
+@addMinion = () ->
   target = 'minions'
   para = {vh: vh_id, mode: "edit"}
-  @transact_into('/minions/create',para, target)
+  @requestBody('/minions/create',para, target)
 
-@delete_minion = (minion_id) ->
+@deleteMinion = (minion_id) ->
   del_callback = () ->
-    @submit_post '/minions/destroy', 
+    @sendPOST '/minions/destroy', 
       {confirm: "yes", id: minion_id}
       () -> 
         $("#minion_" + minion_id).remove()
-  @confirm_dialog("You are about to delete this minion forever, continue?", del_callback)
+  @confirmDialog("You are about to delete this minion forever, continue?", del_callback)
   false
 
-@package_sheet_changes = () ->
-  namespace_inputs = $("[id^='vh_']");
-  prof_regex = /proficiency_([a-z]+)_([0-9]+)/
-  minion_regex = /minion_([a-z]+)_([0-9]+)/
-  attack_regex = /attack_([a-z]+)_([0-9]+)/
-  attrib_regex = /attrib_([0-9]+)/
-  hunter = {}
-  attacks = {}
-  minions = {}
-  proficiencies = {}
-  skills = {}
-  attribs = {}
-
-  $.each namespace_inputs, (index,field) ->
-    ns_name = field.id.substr(3)
-    if ns_name.substr(0,11) == "proficiency"
-      properties = ns_name.match(prof_regex)
-      id = properties[2]
-      key = properties[1]
-      if not (proficiencies.hasOwnProperty(id))
-        proficiencies[id] = {}
-      (proficiencies[id])[key] = field.value
-    else if ns_name.substr(0, 6) == "minion"
-      properties = ns_name.match(minion_regex)
-      id = properties[2]
-      key = properties[1]
-      if not (minions.hasOwnProperty(id))
-        minions[id] = {}
-      (minions[id])[key] = field.value
-    else if ns_name.substr(0, 6) == "attack"
-      properties = ns_name.match(attack_regex)
-      id = properties[2]
-      key = properties[1]
-      if not (attacks.hasOwnProperty(id))
-        attacks[id] = {}
-      (attacks[id])[key] = field.value
-    else if ns_name.substr(0, 6) == "attrib"
-      properties = ns_name.match(attrib_regex)
-      id = properties[1]
-      attribs[id] = field.value
-    else
-      hunter[ns_name] = field.value
-    
-  result = 
-  {
-    vault_hunter:  hunter,
-    proficiencies: proficiencies,
-    attacks:       attacks,
-    skills:        skills,
-    attributes:    attribs,
-    minions:       minions
-  }
-  return result;
-
-@json_post = (url, payload, success_callback) ->
-  $.ajax url,
-    type: 'POST'
-    dataType: 'json'
-    data: payload
-    beforeSend: (xhr) ->
-      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-    success: (data) ->
-      success_callback(data)
-    error: (jqXHR, status) ->
-      build_modal("error-window")
-      $("#error-window").append(status);
-      $("#error-window").modal("show");
-      
-@html_post = (url, payload, success_callback) ->
-  $.ajax url,
-    type: 'POST'
-    dataType: 'html'
-    data: payload
-    beforeSend: (xhr) ->
-      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-    dataType: 'html'
-    success: (data) ->
-      success_callback(data)
-    error: (jqXHR, status) ->
-      build_modal("error-window")
-      $("#error-window").append(status);
-      $("#error-window").modal("show");
-
-@submit_post = (url, payload, success_callback) ->
-  $.ajax url,
-    type: 'POST'
-    dataType: 'text'
-    data: payload
-    beforeSend: (xhr) ->
-      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-    success: (data) ->
-      success_callback(data)
-    error: (jqXHR, status) ->
-      build_modal("error-window")
-      $("#error-window").append(status);
-      $("#error-window").modal("show");
-
-@set_modal_list = (id, url) ->
-  div = $('<div>', {class: 'container mwin'});
-  $("#" + id).html("");
-  @query_into(url, id, div)
-
-@transact_into = (url, params, target, base = null) ->
-  $.ajax url,
-    type: 'POST'
-    beforeSend: (xhr) ->
-      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-    data: params
-    dataType: 'html'
-    success: (data) ->
-      if base != null
-        base.append(data)
-      else
-        base = data
-      $("#" + target).append(base);
-    error: (jqXHR, status) ->
-      if base != null
-        base.append(status)
-      else
-        base = status
-      $("#" + target).append(status);
-
-@query_into = (url, target, base = null) ->
-  $.ajax url,
-    type: 'GET'
-    beforeSend: (xhr) ->
-      xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
-    dataType: 'html'
-    success: (data) ->
-      if base != null
-        base.append(data)
-      else
-        base = data
-      $("#" + target).append(base);
-    error: (jqXHR, status) ->
-      if base != null
-        base.append(data)
-      else
-        base = data
-      $("#" + target).append(base);
-
-@clean_modals = (include_error) ->
-  set = $('.modal')
-  if include_error
-    set.remove()
-  else
-    set.not('#error-window').remove()
-  $('body').removeClass("modal-open")
-
-@build_modal = (id) ->
-  clean_modals()
-  div = $('<div class=\"modal fade\" id=\"' + id + '\" role=\"dialog\" aria-labelledby=\"ModalLabel\" aria-hidden=\"true\" >')
-  $('body').append(div)
-
-@upload_vault_hunter = (id, vault_objects, callback) ->
-  $("#target").html("6")
-  $("#count").html("0")
-  @submit_post '/hunters/' + id + '/update',
-    {vault_hunter: vault_objects}
-    () ->
-      callback()
-  
-@save_vault_hunter = (id) ->
-  build_modal("save_dialog")
+@saveVaultHunter = (id) ->
+  openModal("save_dialog")
   $("#save_dialog").modal('show');
   $("#save_dialog").append("<div class='container mwin'><h1>Saving, please wait</h1><br /><img src='/images/ajax-loader.gif'></img><span id='count'>0</span>/<span id='target'>0</span></div>");
-  vault_objects = package_sheet_changes()
-  close_save_dialog = () ->
-    $("#save_dialog").modal('hide');
-  upload_vault_hunter(id, vault_objects, close_save_dialog)
+  @sendPOST '/hunters/' + id + '/update',
+    @changes
+    () ->
+      $("#save_dialog").modal('hide');
   
-@confirm_dialog = (message, y_callback) ->
-  build_modal("confirm")
-  $("#confirm").modal('show')
-  $("#confirm").append("<div class='container mwin'><h1>Are you sure?</h1><p>"+message+"</p><button id='yes_btn' class='btn btn-default'>Yes</button><button id='cancel_btn' class='btn btn-default'>Cancel</button></div>")
-  $("#yes_btn").click () ->
-    y_callback()
-    clean_modals(false)
-  $("#cancel_btn").click () ->
-    clean_modals(false)
-  false
+
