@@ -12,10 +12,15 @@
       %a.btn.btn-info.btn-large{href: "/hunters/#{@vault_hunter.id}/share"}
         Share
   .row.vh_page
-    %input{type: "hidden", id: "vh_spent_skill_points", value: @vault_hunter.spent_skill_points}
-    %input{type: "hidden", id: "vh_spent_proficiency_points", value: @vault_hunter.spent_proficiency_points}
+    %input{type: "hidden", id: "vh_current_skill_points", value: @vault_hunter.current_skill_points}
+    %input{type: "hidden", id: "vh_current_proficiency_points", value: @vault_hunter.current_proficiency_points}
     %input{type: "hidden", id: "vh_id", value: @vault_hunter.id}
     %input{type: "hidden", id: "vh_race_id", value: @vault_hunter.race_id}
+    :javascript
+      $(document).ready(function(){
+        blrpgHunters.loadPage();
+      });
+    
     -if user_signed_in?
       %input{type: "hidden", id: "current_user", value: current_user.id}
     .row
@@ -52,22 +57,15 @@
           -@vault_hunter.proficiency_instances.each_with_index do |proficiency,index|
             = render parital: 'proficiencies/edit', locals: {proficiency: proficiency, index: index}
         .col-sm-6
-          %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'openModal("prof-window");populateModal("prof-window", "/hunters/' + @vault_hunter.id.to_s + '/potentialproficiencies");'}
+          %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'blrpgWindows.openModal("prof-window");blrpgWindows.populateModal("prof-window", "/hunters/' + @vault_hunter.id.to_s + '/potentialproficiencies", function(){blrpgListUtils.hookListRows("prof_template_row", blrpgHunters.confirmAddProf}););'}
             %img{src: "/images/plus.png"}
             Add Proficiency
         .vh_spacer
       .col-sm-6
-        .vh_region_title 
-          Skills
-        .col-sm-3.vh_hint
-          Name
-        .col-sm-9.vh_hint
-          Description
-        .vh_actions{id: :actions}
-          -@vault_hunter.skill_instances.each_with_index do |action,index|
-            = render partial: 'skills/edit', locals: {skill: action, index: index}
+        .vh_skills{id: "skills"}
+          = render partial: 'skills/edit_list', locals: {skills: @vault_hunter.skill_instances}
         .col-sm-12
-          %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'openModal("action-window");populateModal("action-window","/hunters/' + @vault_hunter.id.to_s + '/potentialskills");'}
+          %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'blrpgHunters.addSkill();'}
             %img{src: "/images/plus.png"}
             Add Skill
         .vh_spacer
@@ -100,13 +98,13 @@
       - @vault_hunter.minion_instances.each_with_index do |minion,index|
         = render partial: 'minions/edit', locals: {minion: minion, index: index}
     .col-sm-12
-      %a{href: '#minion-window', 'data-toggle' => 'modal', 'data-target' => '#minion-window', onclick: 'add_minion()'}
+      %a{href: '#minion-window', 'data-toggle' => 'modal', 'data-target' => '#minion-window', onclick: 'blrpgHunters.addMinion()'}
         %img{src: "/images/plus.png"}
         New Minion
     .vh_spacer
     .row
       .col-sm-12
-        %button.btn.btn-success{type: "submit", onclick:'saveVaultHunter(' + @vault_hunter.id.to_s + ');'} 
+        %button.btn.btn-success{type: "submit", onclick:'blrpgHunters.saveVaultHunter(' + @vault_hunter.id.to_s + ');'} 
           Save Changes
   .row.vh_spacer
 .vh_spacer

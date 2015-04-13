@@ -1,9 +1,9 @@
 .row{class: listRowClass(index)}
   .col-sm-3
     = skill.skill_template.name
-  .col-sm-3
-    = skill.current_duration
-  .col-sm-3
-    = skill.current_cooldown
-  .col-sm-3
-    = skill.current_modifiers
+  .col-sm-3.vh_field
+    %input{id: "sk_#{skill.id}_duration", class: "vh_txt", value: skill.current_duration}
+  .col-sm-3.vh_field
+    %input{id: "sk_#{skill.id}_cooldown", class: "vh_txt", value: skill.current_cooldown}
+  .col-sm-3.vh_field
+    %input{id: "sk_#{skill.id}_modifiers", class: "vh_txt", value: skill.current_modifiers}

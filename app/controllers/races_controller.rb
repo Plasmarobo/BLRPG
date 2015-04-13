@@ -10,6 +10,10 @@ class RacesController < ApplicationController
 
   def index
   end
+  
+  def list
+    render partial: 'list', locals: {races: Race.all}
+  end
 
   def card
   end

@@ -18,6 +18,9 @@ class VaultHunter < ActiveRecord::Base
     has_many :stack_instances, dependent: :destroy
     has_many :stack_templates, through: :stack_instances
     
+    has_many :skill_instances, dependent: :destroy
+    has_many :skill_templates, through: :skill_instances
+    
     has_many :armor_instances, dependent: :destroy
     
     has_many :consumable_instances, dependent: :destroy
@@ -33,29 +36,32 @@ class VaultHunter < ActiveRecord::Base
     has_many :perks, through: :race
     
   def meets_prereq?(skill_template)
-    self.skill_templates.prerequsites.each do |prereq|
+    Prerequisite.where(skill_template_id: skill_template.id).each do |prereq|
+      pp prereq.prereq_type
       case(prereq.prereq_type)
       when 'level'
         if not self.has_level?(prereq.value)
           return false
         end
       when 'skill'
-        if not self.has_skill?(prereq.prereq_name)
+        if not( self.has_skill?(prereq.prereq_name))
           return false
         end
       when 'race'
-        if not self.race.nil?
-          return (self.race.name == prereq.prereq_name)
+        if (not self.has_race?(prereq.prereq_name))
+          return false
         end
       else
+        pp "Prereq Error"
         return false
       end
     end
+    pp "True"
     return true
   end
   
   def has_skill?(name)
-    self.skill_templates.each do |skill|
+    self.skill_instances.each do |skill|
       if skill.name == name
         return true
       end
@@ -64,7 +70,7 @@ class VaultHunter < ActiveRecord::Base
   end
   
   def has_proficiency?(name)
-    self.proficiency_templates.each do |prof|
+    self.proficiency_instances.each do |prof|
       if prof.name == name
         return true
       end
@@ -80,8 +86,12 @@ class VaultHunter < ActiveRecord::Base
     self.level >= level
   end
   
-  def has_race?
-    not self.race_id.nil?
+  def has_race?(name)
+    if self.race.nil?
+      return false
+    else
+      return name == self.race.name
+    end
   end
 
   
@@ -124,13 +134,13 @@ class VaultHunter < ActiveRecord::Base
   end
   
   def current_skill_points
-    points = level + 1 + Math.floor(level/5)
+    points = self.level + 1 + (self.level/5).floor
     points -= self.spent_skill_points
     points
   end
   
   def current_proficiency_points
-    2 * level
+    2 * self.level
   end
   
   def add_skill(candidate)
@@ -170,6 +180,8 @@ class VaultHunter < ActiveRecord::Base
     inventory
   end
   
-  
-  
+  def recompute_totals(level)
+    self.level = level
+    #Update level-based properties
+  end
 end

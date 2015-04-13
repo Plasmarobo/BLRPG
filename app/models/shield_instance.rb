@@ -15,4 +15,8 @@ class ShieldInstance < ActiveRecord::Base
       }
     }
   end
+  
+  def name
+    self.shield_template.name
+  end
 end

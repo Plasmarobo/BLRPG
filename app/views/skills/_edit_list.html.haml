@@ -1,0 +1,13 @@
+.vh_region_title 
+  Skills
+.col-sm-3.vh_hint
+  Name
+.col-sm-3.vh_hint
+  Duration
+.col-sm-3.vh_hint
+  Cooldown
+.col-sm-3.vh_hint
+  Mod
+.vh_skill_list.col-sm-12{id: :skills}
+  -skills.each_with_index do |skill,index|
+    = render partial: 'skills/edit', locals: {skill: skill, index: index}

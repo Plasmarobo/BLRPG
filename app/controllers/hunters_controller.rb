@@ -1,5 +1,5 @@
 class HuntersController < ApplicationController
-  before_filter :set_vault_hunter, only: [:build, :show, :share, :edit, :update, :delete, :skills, :potentialskills, :potentialproficiencies, :verify]
+  before_filter :set_vault_hunter, only: [:build, :show, :share, :edit, :update, :delete, :skills, :addskill,  :potentialskills, :potentialproficiencies, :verify]
 
   def new
     @vault_hunter = VaultHunter.new  
@@ -41,12 +41,6 @@ class HuntersController < ApplicationController
   def update
     if current_user == @vault_hunter.user
       
-      if params[:attribute_instances] != nil
-        params[:attribute_instances].each do |key, value|
-          AttributeInstance.find(key).update({value: value})
-        end
-      end
-      
       if params[:proficiencies] != nil
         params[:proficiencies].each do |key, value|
           if not @vault_hunter.proficiencies.find(key).nil?
@@ -70,14 +64,6 @@ class HuntersController < ApplicationController
           end
         end
       end
-      
-      if params[:attacks] != nil
-        params[:attacks].each do |key, value|
-          if not @vault_hunter.attacks.find(key).nil?
-            Attack.find(key).update(value)
-          end
-        end
-      end
 
       update_set = vault_hunter_params
       
@@ -92,21 +78,6 @@ class HuntersController < ApplicationController
       end
     else
       render inline: "failed", layout: false
-    end
-  end
-  
-  def validate_attribute_changes
-    result = true
-    changed_attributes = params[:changed_attributes]
-    changed_attributes.each do |attrib_change|
-      if not @vault_hunter.set_attribute(attrib_change.id, attrib_change.value) then
-        result = false
-      end
-    end
-    if result == true then
-      render :inline, "success"
-    else
-      render :inline, "invalid"
     end
   end
   
@@ -158,40 +129,36 @@ class HuntersController < ApplicationController
     end
   end
   
-  def add_skill(template_id)
+  def addskill
+    skill = SkillTemplate.find(params[:skill_template_id])
+    if (skill != nil)
+      if @vault_hunter.meets_prereq?(skill)
+        if skill.instance(@vault_hunter)
+          render html: "Success", status: 201
+        else
+          render html: "Failure", status: 500
+        end
+      else
+        render html: "Prerequisite not met", status: 406
+      end
+    else
+      render html: "Unknown Skill", status: 400
+    end
   end
   
-  def drop_skill(skill_id)
+  def dropskill
   end
   
-  def buy_skill(template_id)
+  def addproficiency
   end
   
-  def sell_skill(skill_id)
+  def dropproficiency
   end
   
-  def add_attribute(attribute_id)
+  def buyproficiency
   end
   
-  def drop_attribute(attribute_id)
-  end
-  
-  def buy_attribute(attribute_id)
-  end
-  
-  def sell_attribute(attribute_id)
-  end
-  
-  def add_proficiency(template_id)
-  end
-  
-  def drop_proficiency(proficiency_id)
-  end
-  
-  def buy_proficiency(template_id)
-  end
-  
-  def sell_proficiency(proficiency_id)
+  def sellproficiency
   end
 
   def list
@@ -210,7 +177,7 @@ class HuntersController < ApplicationController
     @skills.select! do |skill|
       (!@vault_hunter.has_skill?(skill.name)) and @vault_hunter.meets_prereq?(skill)
     end
-    render 'skill_templates/list', layout: false, locals: {skills: @skills}
+    render partial: 'skills/template_list', layout: false, locals: {skills: @skills}
   end
   
   def potentialproficiencies
@@ -218,7 +185,7 @@ class HuntersController < ApplicationController
     @proficiencies.select! do |prof|
       (!@vault_hunter.has_proficiency?(prof.name))
     end
-    render 'proficiency_templates/list', layout: false, locals: {proficiencies: @proficiencies}
+    render partial: 'proficiencies/template_add', layout: false, locals: {proficiencies: @proficiencies}
   end
 
   private
@@ -227,22 +194,24 @@ class HuntersController < ApplicationController
                                           :level, 
                                           :user_id, 
                                           :age, 
+                                          :eyes,
+                                          :hair,
+                                          :skin,
                                           :race_id, 
                                           :height, 
                                           :weight, 
                                           :toughness, 
-                                          :wounds, 
-                                          :shield, 
-                                          :current_shield, 
+                                          :wounds,
                                           :loot, 
-                                          :money, 
-                                          :level,
-                                          :current_skill_points,
-                                          :current_proficiency_points,
+                                          :money,
                                           :description,
                                           :background,
                                           :traits,
                                           :flaws)
+    end
+    
+    def skill_params
+      params.require(:skill_template_id)
     end
     
     def set_vault_hunter

@@ -10,5 +10,5 @@
   .col-sm-3.vh_hint
     Description
 - skills.each_with_index do |skill, index|
-  .row{class: "skill_template_row " + listRowClass(index), id: "skill_template_#{skill.id}", name: skill.name, template_id: skill.id}
+  .row{class: "skill_template_row " + listRowClass(index), onclick: "blrpgHunters.addSkill(#{skill.id});"}
     = render partial: 'skills/template_row', locals: {skill: skill}

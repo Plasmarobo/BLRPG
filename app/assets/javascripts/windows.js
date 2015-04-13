@@ -1,9 +1,17 @@
 var blrpgWindows = {
   
-  populateModal: function(id, url){
+  populateModal: function(id, url, callback){
     var div = $('<div>', {class: 'container mwin'});
     $("#" + id).html("");
-    blrpgNetwork.requestBody(url, id, div);
+    blrpgNetwork.requestBody(url,{}, id, callback, div);
+    $("#" + id).modal("show");
+  },
+  
+  setModal: function(id, data){
+    $("#" + id).html("");
+    var div = $('<div>', {class: 'container mwin'});
+    blrpgWindows.wrap(data, id, div);
+    $("#" + id).modal("show");
   },
   
   cleanModals: function(include_error){
@@ -24,18 +32,43 @@ var blrpgWindows = {
     var div = $('<div class=\"modal fade\" id=\"' + id + '\" role=\"dialog\" aria-labelledby=\"ModalLabel\" aria-hidden=\"true\" >');
     $('body').append(div);
   },
+
+  errorModal: function(jqXHR, status){
+    $('#error-window').remove();
+    blrpgWindows.openModal("error-window");
+    blrpgWindows.wrap(status, "error-window",$('<div>', {class: 'container mwin'}));
+    //$("#error-window").append(status);
+    $("#error-window").modal("show");
+  },
   
-  confirmDialog: function(message, yes_callback){
+  confirmDialog: function(message, yes_callback, no_callback){
     blrpgWindows.openModal("confirm");
     $("#confirm").modal('show');
     $("#confirm").append("<div class='container mwin'><h1>Are you sure?</h1><p>"+message+"</p><button id='yes_btn' class='btn btn-default'>Yes</button><button id='cancel_btn' class='btn btn-default'>Cancel</button></div>");
     $("#yes_btn").click(function(){
-      yes_callback();
       blrpgWindows.cleanModals(false);
+      yes_callback();
     });
     $("#cancel_btn").click(function(){
       blrpgWindows.cleanModals(false);
+      if (typeof(no_callback)!=='undefined')
+      {
+        no_callback();
+      }
     });
     return false;
-  }
+  },
+  wrap: function(data, target, wrapper)
+  {
+    var content = null;
+     if (typeof(wrapper)!=='undefined')
+    {
+      wrapper.append(data);
+      $("#" + target).append(wrapper);
+    }
+    else
+    {
+      $("#" + target).append(data);
+    }
+  },
 }

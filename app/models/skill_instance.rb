@@ -15,4 +15,8 @@ class SkillInstance < ActiveRecord::Base
   def current_modifiers
     0
   end
+  
+  def name
+    self.skill_template.name
+  end
 end

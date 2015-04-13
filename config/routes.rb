@@ -63,6 +63,8 @@ Rails.application.routes.draw do
   get 'races/edit'
 
   get 'races/index'
+  get 'races/list'
+  post 'races/list'
 
   get 'races/card'
 
@@ -81,6 +83,8 @@ Rails.application.routes.draw do
   get 'skills/create'
 
   get 'skills/edit'
+  get 'skills/edit_list'
+  post 'skills/edit_list'
 
   get 'skills/index'
 
@@ -140,19 +144,13 @@ Rails.application.routes.draw do
   get 'hunters/:id/skills' => 'hunters#skills'
   post 'hunters/:id/skills' => 'hunters#skills'
   
-  targets = ["skills", "proficiencies", "attributes"]
+  targets = ["skill", "proficiency", "item"]
   targets.each do |target|
-    get "hunters/:id/#{target}/drop" => "hunters\#drop_#{target}"
-    post "hunters/:id/#{target}/drop" => "hunters\#drop_#{target}"
+    get "hunters/:id/drop/#{target}" => "hunters\#drop#{target}"
+    post "hunters/:id/drop/#{target}" => "hunters\#drop#{target}"
     
-    get "hunters/:id/#{target}/add" => "hunters\#add_#{target}"
-    post "hunters/:id/#{target}/add" => "hunters\#add_#{target}"
-    
-    get "hunters/:id/#{target}/buy" => "hunters\#buy_#{target}"
-    post "hunters/:id/#{target}/buy" => "hunters\#buy_#{target}"
-    
-    get "hunters/:id/#{target}/sell" => "hunters\#sell_#{target}"
-    post "hunters/:id/#{target}/sell" => "hunters\#sell_#{target}"
+    get "hunters/:id/add/#{target}" => "hunters\#add#{target}"
+    post "hunters/:id/add/#{target}" => "hunters\#add#{target}"
   end
 
   get 'hunters/:id/potentialskills' => 'hunters#potentialskills'

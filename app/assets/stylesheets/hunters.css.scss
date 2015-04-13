@@ -166,12 +166,15 @@
   overflow-x:hidden;
 }
 
-.vh_actions{
+.vh_skill_list{
   height:auto;
   min-height:10em;
+  max-height:25em;
   border-bottom:solid;
   border-width: 2px;
   background-color:#F6F6F6;
+  overflow:auto;
+  overflow-x:hidden;
 }
 
 .vh_smalltext
@@ -188,7 +191,7 @@
   overflow-x:hidden;
 }
 
-.vh_action
+.vh_skill
 {
  padding-left:0.5em;
  padding-right:0.5em;

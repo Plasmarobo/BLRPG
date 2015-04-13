@@ -1,9 +1,4 @@
 var blrpgNetwork = {
-  errorModal: function(jqXHR, status){
-    blrpgWindows.openModal("error-window");
-    $("#error-window").append(status);
-    $("#error-window").modal("show");
-  },
   //Send a POST request to URL, expect data as JSON
   getJson: function(url, payload, success_callback){
     $.ajax(url, {
@@ -46,23 +41,9 @@ var blrpgNetwork = {
     });
   },
   
-  wrap: function(data, target, wrapper)
-  {
-    var content = null;
-    if (wrapper != null)
-    {
-      wrapper.append(data);
-      $("#" + target).append(wrapper);
-    }
-    else
-    {
-      $("#" + target).append(data);
-    }
-  },
-  
   // Use a POST request to pull data into a target div
   // Optional wrapper element may be specified
-  requestBody: function(url, params, target, wrapper = null){
+  requestBody: function(url, params, target, onload, wrapper){
     $.ajax(url,{
       type: 'POST',
       beforeSend: function(xhr){
@@ -70,14 +51,20 @@ var blrpgNetwork = {
       },
       data: params,
       dataType: 'html',
-      success: function(data){blrpgWindows.wrap(data, target, wrapper)},
+      success: function(data){
+        blrpgWindows.wrap(data, target, wrapper);
+        if (typeof(onload)!== "undefined")
+        {
+          onload();
+        }
+      },
       error: blrpgWindows.errorModal,
     });
   },
   
   //Use a GET request to pull data into a target div
   //params encoded in URL
-  getBody: function(url, target, wrapper = null){
+  getBody: function(url, target, onload, wrapper){
     $.ajax(url,{
       type: 'GET',
       beforeSend: function(xhr)
@@ -85,7 +72,13 @@ var blrpgNetwork = {
         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
       },
       dataType: 'html',
-      success: function(data){blrpgWindows.wrap(data, target, wrapper)},
+      success: function(data){
+        blrpgWindows.wrap(data, target, wrapper);
+        if (typeof(onload)!== "undefined")
+        {
+          onload();
+        }
+      },
       error: blrpgWindows.errorModal,
     });
   }

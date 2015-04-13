@@ -1,8 +1,0 @@
-MinionTemplate.create(name: "CL4P-TP", hp: 3, armor: 0, shield: 0, speed: 3, actions: "Open door (1), Taunt (1)", size: "Small", description: "Your robot pal who can open doors and distract enemies!")
-MinionTemplate.create(name: "Hawk", hp: 3, armor: 0, shield: 0, speed: 5, actions: "Mark Target (1), Fly By (1)", size: "Small", description: "A fierce, feathered friend who spots targets.")
-MinionTemplate.create(name: "D374-TP", hp: 16, armor: 2, shield: 0, speed: 4, actions: "Slash (2), Laser (3)", size: "Medium", description: "A large robotic companion with a powerful claw weapon")
-MinionTemplate.create(name: "Skag", hp: 22, armor: 0, shield: 0, speed: 4, actions: "Bite(1), Spit (2)", size: "Medium", description: "An odd alien pet. Usually more of a pest.")
-MinionTemplate.create(name: "EXP-Loader", hp: 6, armor: 0, shield: 0, speed: 3, actions: "Explode (1)", size: "Medium", description: "A robot who gets a little too excited, with explosive consequences.")
-MinionTemplate.create(name: "B3NKR", hp: 60, armor: 5, shield: 2, speed: "3 (fly)", actions: "Turrets (3), Barriage (5)", size: "Large", description: "A beweaponed flying fortress.")
-MinionTemplate.create(name: "WarLoader", hp: 45, armor: 3, shield: 3, speed: 2, actions: "Cannons (2), Rockets (3)", size: "Large", description: "An armored robot with dual heavy cannons.")
-MinionTemplate.create(name: "Omega Skag", hp: 50, armor: 2, shield: 0, speed: 5, actions: "Bite(1), Charge (3)", size: "Large", description: "A large scag.")

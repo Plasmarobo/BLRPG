@@ -2,30 +2,30 @@ var blrpgStorage = {
   saveEnabled:false,
   changes:{},
   
-  store:function(key, value) {
+  store:function(k, v) {
     if (blrpgStorage.saveEnabled)
     {
-      localStorage.setItem(key, value);
+      localStorage.setItem(k, v);
     }
-    blrpgStorage.changes[key] = value;
+    blrpgStorage.changes[k] = v;
   },
   
-  load:function(key){
+  load:function(k){
     var value = null;
     if(blrpgStorage.saveEnabled)
     {
-      value = localStorage.getItem(key);
+      value = localStorage.getItem(k);
     }
-    blrpgStorage.changes[key] = value;
+    blrpgStorage.changes[k] = value;
     return value;
   },
   
-  remove:function(key){
+  remove:function(k){
     if(blrpgStorage.saveEnabled)
     {
-      localStorage.removeItem(key);
+      localStorage.removeItem(k);
     }
-    blrpgStorage.changes[key] = null;
+    blrpgStorage.changes[k] = null;
   },
   
   saveAllowed:function(){
