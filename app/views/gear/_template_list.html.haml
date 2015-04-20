@@ -6,5 +6,5 @@
   .col-sm-6
     Description
 - gears.each_with_index do |gear, index|
-  .row{class: listRowClass(index)}
+  .row{class: "gear_template_row " + listRowClass(index), id: "gear_template_#{gear.id}", name: gear.name, template_id: gear.id}
     = render 'gear/template_row', locals: {gear: gear}

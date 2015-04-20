@@ -16,5 +16,5 @@
   .col-sm-2.vh_hint
     Description
 - weapons.each_with_index do |weapon, index|
-  .row{class: "#{listRowClass(index)}"}
-    = render 'weapons/weapon_template_row', locals: {weapon: weapon}
+  .row{class: "weapon_template_row " + listRowClass(index), id: "weapon_template_#{weapon.id}", name: weapon.name, template_id: weapon.id}
+    = render partial: 'weapons/template_row', locals: {weapon: weapon}

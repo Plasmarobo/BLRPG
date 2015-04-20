@@ -22,6 +22,7 @@ class VaultHunter < ActiveRecord::Base
     has_many :skill_templates, through: :skill_instances
     
     has_many :armor_instances, dependent: :destroy
+    has_many :armor_tempaltes, through: :armor_instances
     
     has_many :consumable_instances, dependent: :destroy
     has_many :consumable_templates, through: :consumable_instances

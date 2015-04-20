@@ -1,6 +1,12 @@
 class HuntersController < ApplicationController
-  before_filter :set_vault_hunter, only: [:build, :show, :share, :edit, :update, :delete, :skills, :addskill,  :potentialskills, :potentialproficiencies, :verify]
-
+  before_filter :set_vault_hunter, except: [:new, 
+                                            :create, 
+                                            :list, 
+                                            :set_vault_hunter,
+                                            :vault_hunter_params,
+                                            :proficiency_params,
+                                            :skill_params,] 
+  
   def new
     @vault_hunter = VaultHunter.new  
     @vault_hunter.user = current_user
@@ -130,19 +136,23 @@ class HuntersController < ApplicationController
   end
   
   def addskill
-    skill = SkillTemplate.find(params[:skill_template_id])
-    if (skill != nil)
-      if @vault_hunter.meets_prereq?(skill)
-        if skill.instance(@vault_hunter)
-          render html: "Success", status: 201
+    if @vault_hunter.current_skill_points > 0
+      skill = SkillTemplate.find(skill_params)
+      if (skill != nil)
+        if @vault_hunter.meets_prereq?(skill)
+          if skill.instance(@vault_hunter)
+            render html: "Success", status: 201
+          else
+            render html: "Failure", status: 500
+          end
         else
-          render html: "Failure", status: 500
+          render html: "Prerequisite not met", status: 406
         end
       else
-        render html: "Prerequisite not met", status: 406
+        render html: "Unknown Skill", status: 400
       end
     else
-      render html: "Unknown Skill", status: 400
+      render html: "No skill points available.", status: 200
     end
   end
   
@@ -150,15 +160,73 @@ class HuntersController < ApplicationController
   end
   
   def addproficiency
+    if @vault_hunter.current_proficiency_points > 0
+      proficiency = ProficiencyTemplate.find(proficiency_params)
+      if (proficiency != nil)
+        if proficiency.instance(@vault_hunter)
+          render html: "Success", status: 201
+        else
+          render html: "Failure", status: 500
+        end
+      else
+        render html: "Unknown Skill", status: 400
+      end
+    else
+      render html: "No proficiency points available.", status: 200
+    end
   end
   
   def dropproficiency
   end
   
-  def buyproficiency
+  def addweapon
+    weapon = WeaponTemplate.find(params.require(:weapon_template_id))
+    tryAddItem(weapon)
   end
   
-  def sellproficiency
+  def dropweapon
+    weapon = WeaponInstance.find(params.require(:weapon_instance_id))
+    tryDelete(params, weapon)
+  end
+  
+  def addarmor
+    armor = ArmorTemplate.find(params.require(:armor_template_id))
+    tryAddItem(armor)
+  end
+  
+  def droparmor
+    armor = ArmorInstance.find(params.require(:armor_instance_id))
+    tryDelete(params, armor)
+  end
+  
+  def addconsumable
+    consumable = ConsumableTemplate.find(params.require(:consumable_template_id))
+    tryAddItem(consumable)
+  end
+  
+  def dropconsumable
+    consumable = ConsumableInstance.find(params.require(:consumable_instance_id))
+    tryDelete(params, consumable)
+  end
+  
+  def addshield
+    shield = ShieldTemplate.find(params.require(:shield_template_id))
+    tryAddItem(shield)
+  end
+  
+  def dropshield
+    shield = ShieldInstance.find(params.require(:shield_instance_id))
+    tryDelete(params, shield)
+  end
+  
+  def addgear
+    gear = GearTemplate.find(params.require(:gear_templated_id))
+    tryAddItem(gear)
+  end
+  
+  def dropgear
+    gear = GearInstance.find(params.require(:gear_instance_id))
+    tryDelete(params, gear)
   end
 
   def list
@@ -166,9 +234,36 @@ class HuntersController < ApplicationController
     render :list
   end
 
-  def skills
-    @skills = @vault_hunter.skills 
-    render partial: :skill_list, locals: {skills: @skills, function: "add_skill"}
+  def listskills
+    render partial: 'skills/edit_list', locals: {skills: @vault_hunter.skill_instances}
+  end
+  
+  def listproficiencies
+    render partial: 'proficiencies/edit_list', locals: {proficiencies: @vault_hunter.proficiency_instances}
+  end
+  
+  def listweapons
+    render partial: 'weapons/instance_list', locals: {weapons: @vault_hunter.weapon_instances}
+  end
+  
+  def listarmors
+    render partial: 'armor/instance_list', locals: {armors: @vault_hunter.armor_instances}
+  end
+  
+  def listconsumables
+    render partial: 'consumables/instance_list', locals: {consumables: @vault_hunter.consumable_instances}
+  end
+  
+  def listshields
+    render partial: 'shields/instance_list', locals: {shields: @vault_hunter.shield_instances}
+  end
+  
+  def listgears
+    render partial: 'gear/instance_list', locals: {gears: @vault_hunter.gear_instances}
+  end
+  
+  def inventory
+    render partial: 'items/instance_list', locals: {weapons: @vault_hunter.weapon_instances, armor: @vault_hunter.armor_instances, consumables: @vault_hunter.consumable_instances, gear: @vault_hunter.gear_instances, shields: @vault_hunter.shield_instances}
   end
 
   #All skills who's prerequsties are met
@@ -185,7 +280,7 @@ class HuntersController < ApplicationController
     @proficiencies.select! do |prof|
       (!@vault_hunter.has_proficiency?(prof.name))
     end
-    render partial: 'proficiencies/template_add', layout: false, locals: {proficiencies: @proficiencies}
+    render partial: 'proficiencies/template_list', layout: false, locals: {proficiencies: @proficiencies}
   end
 
   private
@@ -214,7 +309,44 @@ class HuntersController < ApplicationController
       params.require(:skill_template_id)
     end
     
+    def proficiency_params
+      params.require(:proficiency_template_id)
+    end
+    
     def set_vault_hunter
       @vault_hunter = VaultHunter.find(params[:id])
+      if not current_user || (current_user.id != @vault_hunter.user_id)
+        render html: "Current User not Owner", status: 403
+      end
+    end
+    
+    def tryAddItem(item)
+      if item != nil
+        if @vault_hunter.money >= item.cost
+          if item.instance(@vault_hunter)
+            #@vault_hunter.money = @vault_hunter.money - item.cost
+            render html: "Success", status: 201
+          else
+            render html: "Failure", status: 500
+          end
+        else
+          render html: "Insufficient funds", status: 200
+        end
+      else
+        render html: "Unknown item", status: 400
+      end
+    end
+    
+    def tryDelete(params, item)
+      if params[:confirm] == "yes"
+        if current_user == @vault_hunter.user_id
+          item.destroy
+          render html: "Destroyed", status: 201
+        else
+          render html: "Current User not Onwer", status: 403
+        end
+      else
+        render html: "Cancled", status: 200
+      end
     end
 end

@@ -1,0 +1,26 @@
+.row.vh_inventory
+  .col-sm.12.vh_region_title
+    Weapons
+  .col-sm-12{id: 'weapons'}
+    = render partial: 'weapons/template_list', locals: {weapons: weapons}
+    .vh_spacer
+  .col-sm-12.vh_region_title
+    Shields
+  .col-sm-12{id: 'shields'}
+    = render partial: 'shields/template_list', locals: {shields: shields}
+    .vh_spacer
+  .col-sm-12.vh_region_title
+    Armor
+  .col-sm-12{id: 'armor'}
+    = render partial: 'armor/template_list', locals: {armors: armor}
+    .vh_spacer
+  .col-sm-12.vh_region_title
+    Consumables
+  .col-sm-12{id: 'consumables'}
+    = render partial: 'consumables/template_list', locals: {consumables: consumables}
+    .vh_spacer
+  .col-sm-12.vh_region_title
+    Gear
+  .col-sm-12{id: 'gear'}
+    = render partial: 'gear/template_list', locals: {gears: gear}
+    .vh_spacer

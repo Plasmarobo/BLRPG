@@ -36,8 +36,10 @@ var blrpgWindows = {
   errorModal: function(jqXHR, status){
     $('#error-window').remove();
     blrpgWindows.openModal("error-window");
-    blrpgWindows.wrap(status, "error-window",$('<div>', {class: 'container mwin'}));
-    //$("#error-window").append(status);
+    var content = $("<div>");
+    content.append($("<div class='vh_region_title'>").html(status));
+    content.append($("<div>").html(jqXHR.responseText));
+    blrpgWindows.wrap(content, "error-window",$('<div>', {class: 'container mwin'}));
     $("#error-window").modal("show");
   },
   

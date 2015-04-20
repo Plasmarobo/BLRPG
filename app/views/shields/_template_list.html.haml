@@ -12,5 +12,5 @@
   .col-sm-2.vh_hint
     Description
 - shields.each_with_index do |shield, index|
-  .row{class: listRowClass(index)}
-    = render 'shield/template_row', locals: {shield: shield}
+  .row{class: "shield_template_row " + listRowClass(index), id: "shield_template_#{shield.id}", name: shield.name, template_id: shield.id}
+    = render partial: 'shields/template_row', locals: {shield: shield}

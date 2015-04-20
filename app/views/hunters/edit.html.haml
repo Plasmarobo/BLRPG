@@ -43,21 +43,10 @@
     .vh_spacer
     .row
       .col-sm-6
-        .vh_region_title 
-          Proficiencies
-        .col-sm-1
-        .col-sm-4.vh_hint
-          Name
-        .col-sm-2.vh_hint
-          Points
-        .col-sm-2.vh_hint
-          Tier
-        .col-sm-3
-        .vh_proficiencies{id: :proficiencies}
-          -@vault_hunter.proficiency_instances.each_with_index do |proficiency,index|
-            = render parital: 'proficiencies/edit', locals: {proficiency: proficiency, index: index}
-        .col-sm-6
-          %a{href: "#prof-window", 'data-toggle' => "modal", 'data-target' => '#prof-window', onclick: 'blrpgWindows.openModal("prof-window");blrpgWindows.populateModal("prof-window", "/hunters/' + @vault_hunter.id.to_s + '/potentialproficiencies", function(){blrpgListUtils.hookListRows("prof_template_row", blrpgHunters.confirmAddProf}););'}
+        .vh_proficiencies{id: "proficiencies"}
+          = render partial: 'proficiencies/edit_list', locals: {proficiencies: @vault_hunter.proficiency_instances}
+        .col-sm-12
+          %a{href: "#proficiency-window", onclick: 'blrpgHunters.addProficiency();'}
             %img{src: "/images/plus.png"}
             Add Proficiency
         .vh_spacer
@@ -65,15 +54,20 @@
         .vh_skills{id: "skills"}
           = render partial: 'skills/edit_list', locals: {skills: @vault_hunter.skill_instances}
         .col-sm-12
-          %a{href: "#action-window", 'data-toggle' => "modal", 'data-target' => '#action-window', onclick: 'blrpgHunters.addSkill();'}
+          %a{href: "#skill-window", onclick: 'blrpgHunters.addSkill();'}
             %img{src: "/images/plus.png"}
             Add Skill
         .vh_spacer
     .row.vh_inventory
-      .vh_region_title
+      .col-sm-12.vh_region_title
         Inventory
+      .col-sm-12.vh_inventory
+        = render partial: 'items/instance_list', locals: {weapons: @vault_hunter.weapon_instances, armor: @vault_hunter.armor_instances, consumables: @vault_hunter.consumable_instances, gear: @vault_hunter.gear_instances, shields: @vault_hunter.shield_instances}
       .col-sm-12
-        = render partial: 'inventory_block', locals: {inventory: @vault_hunter.inventory}
+        %a{href: "#item-window", onclick: 'blrpgHunters.addItem();'}
+          %img{src: "/images/plus.png"}
+          Purchase Item
+    .vh_spacer
     .row.vh_rp
       .col-sm-6
         .vh_region_title Description
@@ -98,7 +92,7 @@
       - @vault_hunter.minion_instances.each_with_index do |minion,index|
         = render partial: 'minions/edit', locals: {minion: minion, index: index}
     .col-sm-12
-      %a{href: '#minion-window', 'data-toggle' => 'modal', 'data-target' => '#minion-window', onclick: 'blrpgHunters.addMinion()'}
+      %a{href: '#minion-window', onclick: 'blrpgHunters.addMinion()'}
         %img{src: "/images/plus.png"}
         New Minion
     .vh_spacer

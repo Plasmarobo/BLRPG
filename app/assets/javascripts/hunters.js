@@ -2,6 +2,22 @@ var blrpgHunters = {
 
 // Invalid Id on init
   vh_id:-1,
+  
+  commitAndUpdate: function(event, target, prompt){
+    var id = $(event.currentTarget).attr("id");
+    var template_id = $(event.currentTarget).attr("template_id");
+    var name = $(event.currentTarget).attr("name");
+    blrpgWindows.confirmDialog(prompt + " " + name + "?", function(){
+      var parameters = {};
+      parameters[target.singluar + "_template_id"] = template_id;
+      blrpgNetwork.sendPOST("/hunters/" + blrpgHunters.vh_id + "/add/" + target.singluar,parameters, function(result){
+        blrpgWindows.openModal(target.singluar + "-results");
+        blrpgWindows.setModal(target.singluar + "-results", result);
+        $("#" + target.plural).html("");
+        blrpgNetwork.requestBody('/hunters/' + blrpgHunters.vh_id + '/' + target.plural, {}, target.plural);
+      });
+    });
+  },
 
   // Select race
   selectRace: function(){
@@ -25,13 +41,14 @@ var blrpgHunters = {
   //Request a proficiency, place in proficiency list
   addProficiency: function(template_id){
     blrpgWindows.openModal("proficiency-window");
-    blrpgWindows.populateModal("proficiency-window", "/proficiencies/template_list", function(){
-      blrpgListUtils.hookListRows("proficiency_template_row", blrpgHunters.confirmAddProficiency);
+    blrpgWindows.populateModal("proficiency-window", "/hunters/" + blrpgHunters.vh_id + "/potentialproficiencies", function(){
+      blrpgListUtils.hookListRows("prof_template_row", blrpgHunters.confirmAddProficiency);
     });
+    //$("proficiency-window").modal("show");
   },
   
   confirmAddProficiency: function(event){
-    
+    blrpgHunters.commitAndUpdate(event, {singular: "proficiency", plural: "proficiencies"}, "Learn");
   },
   
   deleteProficiency: function(proficiency_id){
@@ -53,17 +70,7 @@ var blrpgHunters = {
   },
   
   confirmAddSkill: function(event){
-    var id = $(event.currentTarget).attr("id");
-    var template_id = $(event.currentTarget).attr("template_id");
-    var name = $(event.currentTarget).attr("name");
-    blrpgWindows.confirmDialog("Learn " + name + "?", function(){
-      blrpgNetwork.sendPOST("/hunters/" + blrpgHunters.vh_id + "/add/skill",{skill_template_id:  template_id}, function(result){
-        blrpgWindows.openModal("skill-results");
-        blrpgWindows.setModal("skill-results", result);
-        $("#skills").html("");
-        blrpgNetwork.requestBody('/skills/edit_list', {vault_hunter_id: blrpgHunters.vh_id}, "skills");
-      });
-    });
+    blrpgHunters.commitAndUpdate(event, {singular: "skill", plural: "skills"}, "Learn");
   },
     
   deleteSkill: function(action_id){
@@ -74,6 +81,33 @@ var blrpgHunters = {
     };
     blrpgWindows.confirmDialog("You are about to delete this action forever, continue?", del_callback);
     return false;
+  },
+  
+  addItem: function(){
+    blrpgWindows.openModal("item-window");
+    blrpgWindows.populateModal("item-window","/items/list", function(){
+      blrpgListUtils.hookListRows("armor_template_row", blrpgHunters.confirmAddArmor);
+      blrpgListUtils.hookListRows("weapon_template_row", blrpgHunters.confirmAddWeapon);
+      blrpgListUtils.hookListRows("consumable_template_row", blrpgHunters.confirmAddConsumable);
+      blrpgListUtils.hookListRows("shield_template_row", blrpgHunters.confirmAddShield);
+      blrpgListUtils.hookListRows("gear_template_row", blrpgHunters.confirmAddGear);
+    });
+  },
+  
+  confirmAddArmor: function(event){
+    blrpgHunters.commitAndUpdate(event, {singluar: "armor", plural: "armors"}, "Purchase");
+  },
+  confirmAddWeapon: function(event){
+    blrpgHunters.commitAndUpdate(event, {singluar: "weapon", plural: "weapons"}, "Purchase");
+  },
+  confirmAddConsumable: function(event){
+    blrpgHunters.commitAndUpdate(event, {singluar: "consumable", plural: "consumables"}, "Purchase");
+  },
+  confirmAddShield: function(event){
+    blrpgHunters.commitAndUpdate(event, {singluar: "shield", plural: "shields"}, "Purchase");
+  },
+  confirmAddGear: function(event){
+    blrpgHunters.commitAndUpdate(event, {singluar: "gear", plural: "gears"}, "Purchase");
   },
     
   addMinion: function(){
@@ -92,9 +126,33 @@ var blrpgHunters = {
     return false;
   },
   
+  parseRowType: function(selector, update_url, callback)
+  {
+    var payload = {};
+    $("." + selector).each(function(index, elem){
+      var key = elem.attr("instance_id");
+      payload[key] = {};
+      elem.children().filter(":input").each(function(i, field){
+        var property = field.attr("name");
+        payload[key][property] = field.val();
+      });
+    });
+    blrpgWindows.openModal("save_dialog");
+    $("#save_dialog").modal('show');
+    $("#save_dialog").append("<div class='container mwin'><h1>Saving, please wait</h1><br /><img src='/images/ajax-loader.gif'></img></div>");
+    blrpgNetwork.sendPOST(update_url, payload, function(){
+      $("#save_dialog").modal("hide");
+      if (callback != null)
+      {
+        callback();
+      }
+    });
+  },
+
   saveVaultHunter: function(id){
     var updates = {}; 
     var regex = RegExp("^vh_(.*)");
+    //Update vault hunter
     Object.keys(blrpgStorage.changes).forEach(function(k){
       var matches = regex.exec(k);
       var index = null;
@@ -109,18 +167,31 @@ var blrpgHunters = {
         {
           index = k;
         }
-        updates[index] = value;
+      updates[index] = value;
       }
     });
-        
-    
-    
     blrpgWindows.openModal("save_dialog");
     $("#save_dialog").modal('show');
     $("#save_dialog").append("<div class='container mwin'><h1>Saving, please wait</h1><br /><img src='/images/ajax-loader.gif'></img></div>");
     blrpgNetwork.sendPOST('/hunters/' + id + '/update',
       {vault_hunter: updates},
-      function(){$("#save_dialog").modal('hide');});
+      function(){$("#save_dialog").modal('hide');
+      blrpgHunters.parseRowType("skill_row", "skills/update", function(){
+        blrpgHunters.parseRowType("proficiency_row", "proficiency/update", function(){
+          blrpgHunters.parseRowType("armor_row", "armor/update", function(){
+            blrpgHunters.parseRowType("weapon_row", "weapons/update", function(){
+              blrpgHunters.parseRowType("consumable_row", "consumables/update", function(){
+                blrpgHunters.parseRowType("gear_row", "gear/update", function(){
+                  blrpgHunters.parseRowType("shield_row", "shield/update", function(){
+                    
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
   },
   
   loadPage: function(){

@@ -1,6 +1,6 @@
 .col-sm-2
   %a{href: '#', onclick: "cardModal('weapons/card?id=#{weapon.weapon_template_id},template=true')"}
-    Weapon
+    = weapon.weapon_template.name
 .col-sm-2
   = weapon.ammunition
 .col-sm-2

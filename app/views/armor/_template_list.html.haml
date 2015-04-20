@@ -10,5 +10,5 @@
   .col-sm-3
     Description
 - armors.each_with_index do |armor, index|
-  .row{class: listRowClass(index)}
-    = render 'template_row', locals: {armor: armor}
+  .row{class: "armor_template_row " + listRowClass(index), id: "armor_template_#{armor.id}", name: armor.name, template_id: armor.id}
+    = render partial: 'armor/template_row', locals: {armor: armor}

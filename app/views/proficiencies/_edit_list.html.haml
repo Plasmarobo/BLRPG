@@ -1,0 +1,13 @@
+.vh_region_title 
+  Proficiencies
+.col-sm-3.vh_hint
+  Name
+.col-sm-3.vh_hint
+  Tier
+.col-sm-3.vh_hint
+  Value
+.col-sm-3.vh_hint
+  Category
+.vh_proficiency_list.col-sm-12{id: :proficiencies}
+  -proficiencies.each_with_index do |proficiency,index|
+    = render partial: 'proficiencies/edit', locals: {proficiency: proficiency, index: index}

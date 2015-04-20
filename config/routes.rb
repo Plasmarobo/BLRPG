@@ -1,130 +1,38 @@
 Rails.application.routes.draw do
   
-  get 'gear/new'
+  #Standard routes
+  ['items', 'armor', 'gear','races', 'consumables', 'minions', 'modifiers', 'proficiencies', 'skills', 'shields', 'stacks', 'weapons'].each do |target|
+    get "/#{target}/new"
+    get "/#{target}/create"
+    get "/#{target}/edit"
+    get "/#{target}/index"
+    get "/#{target}/delete"
+    
+    post "/#{target}/new"
+    post "/#{target}/create"
+    post "/#{target}/edit"
+    post "/#{target}/index"
+    post "/#{target}/delete"
+  end
+  
+  #Cards
+  ['armor', 'gear','races', 'consumables', 'minions', 'proficiencies', 'skills', 'shields', 'stacks', 'weapons'].each do |target|
+    get "/#{target}/card"
+    post "/#{target}/card"
+  end
+  #Lists
 
-  get 'gear/create'
-
-  get 'gear/edit'
-
-  get 'gear/index'
-
-  get 'gear/_card'
-
-  get 'gear/_instance_list'
-
-  get 'gear/_instance_row'
-
-  get 'gear/_template_list'
-
-  get 'gear/_template_row'
-
-  get 'consumables/new'
-
-  get 'consumables/create'
-
-  get 'consumables/edit'
-
-  get 'consumables/index'
-
-  get 'consumables/card'
-
-  get 'minions/new'
-
-  get 'minions/create'
-
-  get 'minions/edit'
-
-  get 'minions/index'
-
-  get 'minions/card'
-
-  get 'modifiers/new'
-
-  get 'modifiers/create'
-
-  get 'modifiers/edt'
-
-  get 'modifiers/index'
-
-  get 'proficiencies/new'
-
-  get 'proficiencies/create'
-
-  get 'proficiencies/edit'
-
-  get 'proficiencies/index'
-
-  get 'proficiencies/card'
-
-  get 'races/new'
-
-  get 'races/create'
-
-  get 'races/edit'
-
-  get 'races/index'
   get 'races/list'
   post 'races/list'
 
-  get 'races/card'
-
-  get 'weapons/new'
-
-  get 'weapons/create'
-
-  get 'weapons/index'
-
-  get 'weapons/edit'
-
-  get 'weapons/card'
-
-  get 'skills/new'
-
-  get 'skills/create'
-
-  get 'skills/edit'
   get 'skills/edit_list'
   post 'skills/edit_list'
-
-  get 'skills/index'
-
-  get 'skills/card'
-
-  get 'stacks/new'
-
-  get 'stacks/create'
-
-  get 'stacks/edit'
-
-  get 'stacks/index'
-
-  get 'stacks/card'
-
-  get 'armor/new'
-
-  get 'armor/create'
-
-  get 'armor/edit'
-
-  get 'armor/index'
-
-  get 'armor/card'
-
-  get 'shields/new'
-
-  get 'shields/create'
-
-  get 'shields/edit'
-
-  get 'shields/index'
-
-  get 'shields/card'
-
-  get 'proficiency_templates/list'
-  post 'proficiency_templates/list'
   
-  get 'skill_templates/list'
-  post 'skill_templates/list'
+  get 'proficiencies/edit_list'
+  post 'proficiencies/edit_list'
+  
+  get 'items/list' => 'items#list'
+  post 'items/list' => 'items#list'
 
   get 'hunters/new'
   post 'hunters/new'
@@ -140,18 +48,21 @@ Rails.application.routes.draw do
 
   post 'hunters/:id/update' => 'hunters#update'
   get 'hunters/:id/update' => 'hunters#update'
-
-  get 'hunters/:id/skills' => 'hunters#skills'
-  post 'hunters/:id/skills' => 'hunters#skills'
   
-  targets = ["skill", "proficiency", "item"]
+  targets = ["skill", "proficiency", "weapon", "armor", "consumable", "shield", "gear" ]
   targets.each do |target|
-    get "hunters/:id/drop/#{target}" => "hunters\#drop#{target}"
-    post "hunters/:id/drop/#{target}" => "hunters\#drop#{target}"
+    get "hunters/:id/drop/#{target}" => "hunters#drop#{target}"
+    post "hunters/:id/drop/#{target}" => "hunters#drop#{target}"
     
-    get "hunters/:id/add/#{target}" => "hunters\#add#{target}"
-    post "hunters/:id/add/#{target}" => "hunters\#add#{target}"
+    get "hunters/:id/add/#{target}" => "hunters#add#{target}"
+    post "hunters/:id/add/#{target}" => "hunters#add#{target}"
+    
+    get "hunters/:id/#{target.pluralize}" => "hunters#list#{target.pluralize}"
+    post "hunters/:id/#{target.pluralize}" => "hunters#list#{target.pluralize}"
   end
+
+  get 'hunters/:id/inventory' => "hunters#inventory"
+  post 'hunters/:id/inventory' => "hunters#inventory"
 
   get 'hunters/:id/potentialskills' => 'hunters#potentialskills'
   post 'hunters/:id/potentialskills' => 'hunters#potentialskills'

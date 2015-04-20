@@ -10,5 +10,5 @@
   .col-sm-3.vh_hint
     Description
 - consumables.each_with_index do |consumable, index|
-  .row{class: listRowClass(index)}
-    = render 'consumables/template_row', locals: {consumable: consumable}
+  .row{class: "consumable_template_row " + listRowClass(index), id: "consumable_template_#{consumable.id}", name: consumable.name, template_id: consumable.id}
+    = render partial: 'consumables/template_row', locals: {consumable: consumable}

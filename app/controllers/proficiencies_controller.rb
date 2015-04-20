@@ -16,4 +16,18 @@ class ProficienciesController < ApplicationController
   
   def instance
   end
+  
+  def edit_list
+    hunter = VaultHunter.find(hunter_params[:vault_hunter_id])
+    if not hunter.nil?
+      render partial: 'edit_list', locals: {proficiencies: hunter.proficiency_instances}
+    end
+  end
+  
+  private
+  
+  def hunter_params
+    params.permit(:vault_hunter_id)
+  end
+
 end

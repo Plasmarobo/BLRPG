@@ -9,5 +9,5 @@
     Description
 .row
   -proficiencies.each_with_index do |proficiency,index|
-    .row{class: listRowClass(index)}
+    .row{class: "proficiency_row #{listRowClass(index)}", instance_id: "#{proficiency.id}"}
       = render '_instance_row', locals: {proficiency: proficiency}
