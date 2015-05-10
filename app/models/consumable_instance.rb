@@ -1,5 +1,5 @@
-class ConsumableInstance < ActiveRecord::Base
+class ConsumableInstance < OwnedInstance
+  self.table_name = :consumable_instances
   belongs_to :consumable_template
-  belongs_to :vault_hunter
   has_many :modifiers
 end

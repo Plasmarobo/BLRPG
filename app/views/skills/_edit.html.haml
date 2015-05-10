@@ -2,8 +2,8 @@
   .col-sm-3
     = skill.skill_template.name
   .col-sm-3.vh_field
-    %input{id: "sk_#{skill.id}_duration", class: "vh_txt", value: skill.current_duration}
+    %input{id: "sk_#{skill.id}_duration", name: "duration", class: "vh_txt", value: skill.current_duration}
   .col-sm-3.vh_field
-    %input{id: "sk_#{skill.id}_cooldown", class: "vh_txt", value: skill.current_cooldown}
+    %input{id: "sk_#{skill.id}_cooldown", name: "cooldown", class: "vh_txt", value: skill.current_cooldown}
   .col-sm-3.vh_field
-    %input{id: "sk_#{skill.id}_modifiers", class: "vh_txt", value: skill.current_modifiers}
+    %input{id: "sk_#{skill.id}_modifiers", name: "modifiers", class: "vh_txt", value: skill.current_modifiers}

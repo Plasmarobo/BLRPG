@@ -1,6 +1,6 @@
-class ProficiencyInstance < ActiveRecord::Base
+class ProficiencyInstance < OwnedInstance
+  self.table_name = :proficiency_instances
   belongs_to :proficiency_template
-  belongs_to :vault_hunter
   
   def name
     self.proficiency_template.name

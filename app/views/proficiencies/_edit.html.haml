@@ -4,6 +4,6 @@
   .col-sm-3.vh_field
     %input{id: "pr_#{proficiency.id}_tier", readonly: "true", class: "vh_txt", value: proficiency.tier}
   .col-sm-3.vh_field
-    %input{id: "pr_#{proficiency.id}_value", class: "vh_txt", value: proficiency.value}
+    %input{id: "pr_#{proficiency.id}_value", name: "value", class: "vh_txt", value: proficiency.value}
   .col-sm-3.vh_field
-    %input{id: "pr_#{proficiency.id}_category", class: "vh_txt", value: proficiency.category}
+    %input{id: "pr_#{proficiency.id}_category", name: "category", readonly: "true", class: "vh_txt", value: proficiency.category}

@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     post "/#{target}/create"
     post "/#{target}/edit"
     post "/#{target}/index"
+    post "/#{target}/update" => "#{target}#update"
     post "/#{target}/delete"
   end
   

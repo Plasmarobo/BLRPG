@@ -11,18 +11,11 @@ class GearController < ApplicationController
   def index
   end
 
-  def _card
+  def card
+  end
+  
+  def udpate
   end
 
-  def _instance_list
-  end
-
-  def _instance_row
-  end
-
-  def _template_list
-  end
-
-  def _template_row
-  end
+  
 end

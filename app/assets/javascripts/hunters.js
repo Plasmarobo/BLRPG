@@ -130,17 +130,25 @@ var blrpgHunters = {
   {
     var payload = {};
     $("." + selector).each(function(index, elem){
+      elem = $(elem);
       var key = elem.attr("instance_id");
       payload[key] = {};
-      elem.children().filter(":input").each(function(i, field){
+      var childs = elem.find("*");
+      var inputs = childs.filter(":input");
+      inputs.each(function(i, field){
+        field = $(field);
         var property = field.attr("name");
-        payload[key][property] = field.val();
+        var val = field.val();
+        if (typeof(val) != "undefined")
+        {
+          payload[key][property] = val;
+        }
       });
     });
     blrpgWindows.openModal("save_dialog");
     $("#save_dialog").modal('show');
     $("#save_dialog").append("<div class='container mwin'><h1>Saving, please wait</h1><br /><img src='/images/ajax-loader.gif'></img></div>");
-    blrpgNetwork.sendPOST(update_url, payload, function(){
+    blrpgNetwork.sendPOST(update_url,{batch: payload}, function(){
       $("#save_dialog").modal("hide");
       if (callback != null)
       {
@@ -176,13 +184,13 @@ var blrpgHunters = {
     blrpgNetwork.sendPOST('/hunters/' + id + '/update',
       {vault_hunter: updates},
       function(){$("#save_dialog").modal('hide');
-      blrpgHunters.parseRowType("skill_row", "skills/update", function(){
-        blrpgHunters.parseRowType("proficiency_row", "proficiency/update", function(){
-          blrpgHunters.parseRowType("armor_row", "armor/update", function(){
-            blrpgHunters.parseRowType("weapon_row", "weapons/update", function(){
-              blrpgHunters.parseRowType("consumable_row", "consumables/update", function(){
-                blrpgHunters.parseRowType("gear_row", "gear/update", function(){
-                  blrpgHunters.parseRowType("shield_row", "shield/update", function(){
+      blrpgHunters.parseRowType("skill_row", "/skills/update", function(){
+        blrpgHunters.parseRowType("proficiency_row", "/proficiency/update", function(){
+          blrpgHunters.parseRowType("armor_row", "/armor/update", function(){
+            blrpgHunters.parseRowType("weapon_row", "/weapons/update", function(){
+              blrpgHunters.parseRowType("consumable_row", "/consumables/update", function(){
+                blrpgHunters.parseRowType("gear_row", "/gear/update", function(){
+                  blrpgHunters.parseRowType("shield_row", "/shield/update", function(){
                     
                   });
                 });

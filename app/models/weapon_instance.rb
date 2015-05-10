@@ -1,4 +1,4 @@
-class WeaponInstance < ActiveRecord::Base
-  belongs_to :vault_hunter
+class WeaponInstance < OwnedInstance
+  self.table_name = :weapon_instances
   belongs_to :weapon_template
 end

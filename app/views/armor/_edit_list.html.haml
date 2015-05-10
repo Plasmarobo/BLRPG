@@ -5,4 +5,4 @@
     Current Deflect
 - armors.each_with_index do |armor, index|
   .row{class: "armor_row #{listRowClass(index)}", instance_id: "#{armor.id}"}
-    = render partial: 'armor/instance_row', locals: {armor: armor}
+    = render partial: 'armor/edit', locals: {armor: armor}
