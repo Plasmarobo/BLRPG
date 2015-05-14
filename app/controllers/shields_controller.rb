@@ -14,6 +14,17 @@ class ShieldsController < ApplicationController
   def card
   end
   
+  def delete
+    params.require(:id)
+    shield = ShieldInstance.find(params[:id])
+    if (shield == nil)
+      render html: "Unkown item", status: 400
+    else
+      shield.destroy()
+      render html: "Deleted", status: 200
+    end
+  end
+  
   def update
     params.require(:batch).each do |key, updates|
       shield = ShieldInstance.find(key)

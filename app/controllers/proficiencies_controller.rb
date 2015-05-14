@@ -17,6 +17,17 @@ class ProficienciesController < ApplicationController
   def instance
   end
   
+  def delete
+    params.require(:id)
+    prof = ProficiencyInstance.find(params[:id])
+    if (prof == nil)
+      render html: "Unkown item", status: 400
+    else
+      prof.destroy()
+      render html: "Deleted", status: 200
+    end
+  end
+  
   def edit_list
     hunter = VaultHunter.find(hunter_params[:vault_hunter_id])
     if not hunter.nil?

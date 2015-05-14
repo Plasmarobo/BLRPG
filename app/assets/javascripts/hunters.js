@@ -51,10 +51,19 @@ var blrpgHunters = {
     blrpgHunters.commitAndUpdate(event, {singular: "proficiency", plural: "proficiencies"}, "Learn");
   },
   
+  deleteProficiencies: function(event){
+    blrpgListUtils.hookListRowsForDelete("proficiency_row",function(event)
+    {
+      var prof_id = $(event.currentTarget).attr("instance_id");
+      var name = $(event.currentTarget).attr("name");
+      blrpgHunters.deleteProficiency(prof_id);
+    });
+  },
+  
   deleteProficiency: function(proficiency_id){
     del_callback = function()
     {
-      blrpgNetwork.sendPOST('/proficiencies/destroy', 
+      blrpgNetwork.sendPOST('/proficiencies/delete', 
         {confirm: "yes", id: proficiency_id},
         function(){$("#proficiency_" + proficiency_id).remove();});
     }
@@ -72,10 +81,19 @@ var blrpgHunters = {
   confirmAddSkill: function(event){
     blrpgHunters.commitAndUpdate(event, {singular: "skill", plural: "skills"}, "Learn");
   },
+  
+  deleteSkills: function(event){
+    blrpgListUtils.hookListRowsForDelete("skill_row",function(event)
+    {
+      var skill_id = $(event.currentTarget).attr("instance_id");
+      var name = $(event.currentTarget).attr("name");
+      blrpgHunters.deleteSkill(skill_id);
+    });
+  },
     
   deleteSkill: function(action_id){
     var del_callback = function(){
-      blrpgNetwork.sendPOST('/skills/destroy', 
+      blrpgNetwork.sendPOST('/skills/delete', 
         {confirm: "yes", id: action_id},
         function(){$("#skill_" + action_id).remove();});
     };
@@ -108,6 +126,22 @@ var blrpgHunters = {
   },
   confirmAddGear: function(event){
     blrpgHunters.commitAndUpdate(event, {singular: "gear", plural: "gears"}, "Purchase");
+  },
+  
+  deleteItems: function(){
+    $.each(["armor", "weapon", "consumable", "shield", "gear"], function(index, name){
+      blrpgListUtils.hookListRowsForDelete(name + "_row",function(event)
+      {
+        var entry_id = $(event.currentTarget).attr("instance_id");
+        var del_callback = function(){
+          blrpgNetwork.sendPOST('/' + name + '/delete', 
+          {confirm: "yes", id: entry_id},
+          function(){$("#" + name + "_" + entry_id).remove();});
+        };
+        blrpgWindows.confirmDialog("You are about to delete this " + name +" forever, continue?", del_callback);
+        return false;
+      });  
+    });
   },
     
   addMinion: function(){

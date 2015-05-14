@@ -10,6 +10,17 @@ class WeaponsController < ApplicationController
 
   def edit
   end
+  
+  def delete
+    params.require(:id)
+    weapon = WeaponInstance.find(params[:id])
+    if (weapon == nil)
+      render html: "Unkown item", status: 400
+    else
+      weapon.destroy()
+      render html: "Deleted", status: 200
+    end
+  end
 
   def card
   end

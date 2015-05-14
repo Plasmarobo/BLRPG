@@ -17,6 +17,17 @@ class ConsumablesController < ApplicationController
   def instance
   end
   
+  def delete
+    params.require(:id)
+    consumable = ConsumableInstance.find(params[:id])
+    if (weapon == nil)
+      render html: "Unkown item", status: 400
+    else
+      consumable.destroy()
+      render html: "Deleted", status: 200
+    end
+  end
+  
   def update
     params.require(:batch).each do |key, updates|
       consumable = ConsumableInstance.find(key)

@@ -20,6 +20,17 @@ class SkillsController < ApplicationController
   def prerequsites
   end
   
+  def delete
+    params.require(:id)
+    skill = SkillInstance.find(params[:id])
+    if (skill == nil)
+      render html: "Unkown item", status: 400
+    else
+      skill.destroy()
+      render html: "Deleted", status: 200
+    end
+  end
+  
   def upgrades
   end
   

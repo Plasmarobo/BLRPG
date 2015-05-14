@@ -4,5 +4,5 @@
   .col-sm-6.vh_hint
     Description
 - gears.each_with_index do |gear, index|
-  .row{class: "gear_row #{listRowClass(index)}", instance_id: "#{gear.id}"}
+  .row{class: "gear_row #{listRowClass(index)}", instance_id: "#{gear.id}", id: "gear_#{gear.id}"}
     = render partial: 'gear/edit', locals: {gear: gear}

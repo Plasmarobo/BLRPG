@@ -8,5 +8,5 @@
   .col-sm-5.vh_hint
     Notes
 - weapons.each_with_index do |weapon, index|
-  .row{class: "weapon_row #{listRowClass(index)}", instance_id: "#{weapon.id}"}
+  .row{class: "weapon_row #{listRowClass(index)}", instance_id: "#{weapon.id}", id: "weapon_#{weapon.id}"}
     = render partial: 'weapons/edit', locals: {weapon: weapon}

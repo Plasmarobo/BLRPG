@@ -59,8 +59,10 @@
             Add Proficiency
         .vh_spacer
     .row
-      .col-sm-12.vh_region_title
+      .col-sm-11.vh_region_title
         %b Inventory
+      .col-sm-1
+        .glyphicon.glyphicon-trash.vh_delete_icon{id: "item_delete_icon", onclick: 'blrpgHunters.deleteItems();'}
       .col-sm-12
         .col-sm-12.vh_inventory{id: "inventory"}
           = render partial: 'items/edit_list', locals: {weapons: @vault_hunter.weapon_instances, armor: @vault_hunter.armor_instances, consumables: @vault_hunter.consumable_instances, gear: @vault_hunter.gear_instances, shields: @vault_hunter.shield_instances}

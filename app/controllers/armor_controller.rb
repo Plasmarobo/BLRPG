@@ -18,6 +18,17 @@ class ArmorController < ApplicationController
   def instance
   end
   
+  def delete
+    params.require(:id)
+    armor = ArmorInstance.find(params[:id])
+    if (armor == nil)
+      render html: "Unkown item", status: 400
+    else
+      armor.destroy()
+      render html: "Deleted", status: 200
+    end
+  end
+  
   def update
     params.require(:batch).each do |key, updates|
       armor = ArmorInstance.find(key)

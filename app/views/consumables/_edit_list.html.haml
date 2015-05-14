@@ -7,6 +7,6 @@
   .col-md-5.vh_hint
     Description
 - consumables.each_with_index do |consumable, index|
-  .row{class: "consumable_row #{listRowClass(index)}", instance_id: "#{consumable.id}"}
+  .row{class: "consumable_row #{listRowClass(index)}", instance_id: "#{consumable.id}", id: "consumable_#{consumable.id}"}
     = render partial: 'consumables/edit', locals: {consumable: consumable}
     

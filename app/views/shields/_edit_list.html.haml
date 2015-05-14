@@ -8,5 +8,5 @@
   .col-sm-5.vh_hint
     Description
 - shields.each_with_index do |shield, index|
-  .row{class: "shield_row #{listRowClass(index)}", instance_id: "#{shield.id}"}
+  .row{class: "shield_row #{listRowClass(index)}", instance_id: "#{shield.id}", id: "shield_#{shield.id}"}
     = render partial: 'shields/edit', locals: {shield: shield}
