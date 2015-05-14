@@ -29,8 +29,11 @@ class ProficienciesController < ApplicationController
       prof = ProficiencyInstance.find(key)
       if prof != nil
         if prof.checkOwner(current_user)
-          updates = updates.permit(:tier, :value, :category)
+          updates = ActionController::Parameters.new(updates).permit(:tier, :value, :category)
           prof.update(updates)
+        else
+          render html: "Current User not Owner", status: 403
+          return
         end
       else
         render html: "Unknown proficiency #{key}", status: 400

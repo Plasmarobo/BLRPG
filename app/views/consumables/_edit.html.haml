@@ -2,6 +2,7 @@
   = consumable.consumable_template.name
 .col-md-2
   %input{name: "current_uses", class: "vh_num", value: consumable.current_uses}
-.col-md-7
+.col-sm-2
+.col-md-5
   %a{href: '#', onclick: "cardModal('consumables/card?id=#{consumable.id}')"}
     Card

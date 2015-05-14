@@ -22,8 +22,11 @@ class ConsumablesController < ApplicationController
       consumable = ConsumableInstance.find(key)
       if consumable != nil
         if consumable.checkOwner(current_user)
-          updates = updates.permit(:current_uses)
+          updates = ActionController::Parameters.new(updates).permit(:current_uses)
           consumable.update(updates)
+        else
+          render html: "Current User not Owner", status: 403
+          return
         end
       else
         render html: "Unknown item #{key}", status: 400

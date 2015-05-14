@@ -16,12 +16,15 @@ class ShieldsController < ApplicationController
   
   def update
     params.require(:batch).each do |key, updates|
-      shield = Shield.find(key)
+      shield = ShieldInstance.find(key)
       if shield != nil 
         if shield.checkOwner(current_user)
-          updates = updates.permit(:current_capacity,
+          updates = ActionController::Parameters.new(updates).permit(:current_capacity,
                                     :in_use)
           shield.update(updates)
+        else
+          render html: "Current User not Owner", status: 403
+          return
         end
       else
         render html: "Unknown shield #{key}", status: 400

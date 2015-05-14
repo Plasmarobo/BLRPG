@@ -28,8 +28,11 @@ class SkillsController < ApplicationController
       skill = SkillInstance.find(key)
       if skill != nil
         if skill.checkOwner(current_user)
-          updates = updates.permit(:duration, :cooldown)
-          skill.update_status(updates.duration, updates.cooldown);
+          updates = ActionController::Parameters.new(updates).permit(:duration, :cooldown)
+          skill.update_status(updates[:duration], updates[:cooldown]);
+        else
+          render html: "Current User not Owner", status: 403
+          return
         end
       else
         render html: "Unknown skill #{key}", status: 400

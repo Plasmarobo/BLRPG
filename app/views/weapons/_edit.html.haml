@@ -1,9 +1,9 @@
-.col-sm-2
+.col-sm-3
   %a{href: '#', onclick: "cardModal('weapons/card?id=#{weapon.weapon_template_id},template=true')"}
     = weapon.weapon_template.name
 .col-sm-2
   %input{name: "ammunition", class: "vh_num", value: weapon.ammunition}
 .col-sm-2
   %input{name: "current_recoil", class: "vh_num", value: weapon.current_recoil}
-.col-sm-6
+.col-sm-5
   %input{name: "notes", class: "vh_txt", value: weapon.notes}

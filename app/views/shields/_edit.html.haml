@@ -1,9 +1,9 @@
 .col-sm-3
   = shield.shield_template.name
-.col-sm-3
+.col-sm-2
   %input{name: "current_capacity", class: "vh_num", value: shield.current_capacity}
-.col-sm-3
+.col-sm-2.vh_center
   %input{name: "in_use", type: "checkbox", value: shield.in_use ? "true" : ""}
-.col-sm-3
+.col-sm-5
   %a{href: '#', onclick: "cardModal('shields/card?id=#{shield.shield_template_id}')"}
     Card

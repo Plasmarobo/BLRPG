@@ -5,11 +5,6 @@ class OwnedInstance < ActiveRecord::Base
   # Abstract
   def checkOwner(user)
     vh = VaultHunter.find(self.vault_hunter_id)
-    if vh.user_id == user.id
-      return true
-    else
-      render html: "Current User not Onwer", status: 403
-      return false
-    end
+    return vh.user == user
   end
 end

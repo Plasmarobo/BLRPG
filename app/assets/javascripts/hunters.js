@@ -9,10 +9,10 @@ var blrpgHunters = {
     var name = $(event.currentTarget).attr("name");
     blrpgWindows.confirmDialog(prompt + " " + name + "?", function(){
       var parameters = {};
-      parameters[target.singluar + "_template_id"] = template_id;
-      blrpgNetwork.sendPOST("/hunters/" + blrpgHunters.vh_id + "/add/" + target.singluar,parameters, function(result){
-        blrpgWindows.openModal(target.singluar + "-results");
-        blrpgWindows.setModal(target.singluar + "-results", result);
+      parameters[target.singular + "_template_id"] = template_id;
+      blrpgNetwork.sendPOST("/hunters/" + blrpgHunters.vh_id + "/add/" + target.singular,parameters, function(result){
+        blrpgWindows.openModal(target.singular + "-results");
+        blrpgWindows.setModal(target.singular + "-results", result);
         $("#" + target.plural).html("");
         blrpgNetwork.requestBody('/hunters/' + blrpgHunters.vh_id + '/' + target.plural, {}, target.plural);
       });
@@ -95,19 +95,19 @@ var blrpgHunters = {
   },
   
   confirmAddArmor: function(event){
-    blrpgHunters.commitAndUpdate(event, {singluar: "armor", plural: "armors"}, "Purchase");
+    blrpgHunters.commitAndUpdate(event, {singular: "armor", plural: "armors"}, "Purchase");
   },
   confirmAddWeapon: function(event){
-    blrpgHunters.commitAndUpdate(event, {singluar: "weapon", plural: "weapons"}, "Purchase");
+    blrpgHunters.commitAndUpdate(event, {singular: "weapon", plural: "weapons"}, "Purchase");
   },
   confirmAddConsumable: function(event){
-    blrpgHunters.commitAndUpdate(event, {singluar: "consumable", plural: "consumables"}, "Purchase");
+    blrpgHunters.commitAndUpdate(event, {singular: "consumable", plural: "consumables"}, "Purchase");
   },
   confirmAddShield: function(event){
-    blrpgHunters.commitAndUpdate(event, {singluar: "shield", plural: "shields"}, "Purchase");
+    blrpgHunters.commitAndUpdate(event, {singular: "shield", plural: "shields"}, "Purchase");
   },
   confirmAddGear: function(event){
-    blrpgHunters.commitAndUpdate(event, {singluar: "gear", plural: "gears"}, "Purchase");
+    blrpgHunters.commitAndUpdate(event, {singular: "gear", plural: "gears"}, "Purchase");
   },
     
   addMinion: function(){
@@ -145,16 +145,24 @@ var blrpgHunters = {
         }
       });
     });
-    blrpgWindows.openModal("save_dialog");
-    $("#save_dialog").modal('show');
-    $("#save_dialog").append("<div class='container mwin'><h1>Saving, please wait</h1><br /><img src='/images/ajax-loader.gif'></img></div>");
-    blrpgNetwork.sendPOST(update_url,{batch: payload}, function(){
-      $("#save_dialog").modal("hide");
-      if (callback != null)
-      {
-        callback();
-      }
-    });
+    if (!$.isEmptyObject(payload ))
+    {
+      blrpgWindows.openModal("save_dialog");
+      $("#save_dialog").modal('show');
+      $("#save_dialog").append("<div class='container mwin'><h1>Saving, please wait</h1><br /><img src='/images/ajax-loader.gif'></img></div>");
+      blrpgNetwork.sendPOST(update_url,{batch: payload}, function(){
+        $("#save_dialog").modal("hide");
+        if (callback != null)
+        {
+          callback();
+        }
+      });
+    }
+    else if (callback != null)
+    {
+      callback();
+    }
+    
   },
 
   saveVaultHunter: function(id){
@@ -185,12 +193,12 @@ var blrpgHunters = {
       {vault_hunter: updates},
       function(){$("#save_dialog").modal('hide');
       blrpgHunters.parseRowType("skill_row", "/skills/update", function(){
-        blrpgHunters.parseRowType("proficiency_row", "/proficiency/update", function(){
+        blrpgHunters.parseRowType("proficiency_row", "/proficiencies/update", function(){
           blrpgHunters.parseRowType("armor_row", "/armor/update", function(){
             blrpgHunters.parseRowType("weapon_row", "/weapons/update", function(){
               blrpgHunters.parseRowType("consumable_row", "/consumables/update", function(){
                 blrpgHunters.parseRowType("gear_row", "/gear/update", function(){
-                  blrpgHunters.parseRowType("shield_row", "/shield/update", function(){
+                  blrpgHunters.parseRowType("shield_row", "/shields/update", function(){
                     
                   });
                 });

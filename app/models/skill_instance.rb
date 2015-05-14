@@ -1,15 +1,17 @@
 class SkillInstance < OwnedInstance
-  self.table_name =  :skill_instances
+  self.table_name = :skill_instances
   belongs_to :skill_template
   has_many :modifiers
   has_many :durations
   
   def current_cooldown
-    self.durations.where("is_cooldown = true").first
+    c = self.durations.where("is_cooldown = true").first
+    c != nil ? c : Duration.new()
   end
   
   def current_duration
-    self.durations.where("is_cooldown = false").first
+    d = self.durations.where("is_cooldown = false").first
+    d != nil ? d : Duration.new()
   end
   
   def update_status(new_duration, new_cooldown)

@@ -141,9 +141,7 @@
 
 .vh_attacks
 {
-  height:auto;
-  min-height:10em;
-  max-height:20em;
+  height:20em;
   overflow:auto;
   overflow-x:hidden;
   background-color:#F6F6F6;
@@ -154,28 +152,16 @@
 
 .vh_proficiency_list
 {
-  height:auto;
-  min-height:10em;
-  max-height:25em;
-  min-height:10em;
+  height:20em;
   border-bottom:solid;
   border-width: 2px;
   background-color:#F6F6F6;
-}
-
-.vh_profs
-{
-  height:auto;
-  min-height:10em;
-  max-height:25em;
   overflow:auto;
   overflow-x:hidden;
 }
 
 .vh_skill_list{
-  height:auto;
-  min-height:10em;
-  max-height:25em;
+  height:20em;
   border-bottom:solid;
   border-width: 2px;
   background-color:#F6F6F6;
@@ -186,15 +172,6 @@
 .vh_smalltext
 {
   font-size:8pt;
-}
-
-.vh_skills
-{
-  height:auto;
-  min-height:5em;
-  max-height:20emem;
-  overflow:auto;
-  overflow-x:hidden;
 }
 
 .vh_skill
@@ -242,9 +219,15 @@
 
 .vh_inventory
 {
-  height:auto;
-  min-height:5em;
-  max-height:35em;
+  height:30em;
+  border-bottom:solid;
+  border-width: 2px;
+  background-color:#F6F6F6;
   overflow:auto;
   overflow-x:hidden;
+}
+
+.vh_center
+{
+  text-align:center;
 }

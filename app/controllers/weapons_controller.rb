@@ -19,7 +19,10 @@ class WeaponsController < ApplicationController
       weapon = WeaponInstance.find(key)
       if weapon != nil 
         if weapon.checkOwner(current_user)
-          weapon.update(weapon_params(updates))
+          weapon.update(weapon_params(ActionController::Parameters.new(updates)))
+        else
+          render html: "Current User not Owner", status: 403
+          return
         end
       else
         render html: "Unknown item", status: 400

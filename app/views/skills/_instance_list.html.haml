@@ -11,4 +11,4 @@
     Description
 -skills.each_with_index do |skill, index|
   .row{class: "skill_row #{listRowClass(index)}", instance_id: "#{skill.id}"}
-    = render 'skills/instance_row', locals: {skill: skill}
+    = render partial: 'skills/instance_row', locals: {skill: skill}

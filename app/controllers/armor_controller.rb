@@ -20,11 +20,14 @@ class ArmorController < ApplicationController
   
   def update
     params.require(:batch).each do |key, updates|
-      armor = ArmorInstances.find(key)
+      armor = ArmorInstance.find(key)
       if armor != nil 
         if armor.checkOwner(current_user)
-          updates = updates.permit(:current_deflect, :in_use)
+          updates = ActionController::Parameters.new(updates).permit(:current_deflect, :in_use)
           armor.update(updates)
+        else
+          render html: "Current User not Owner", status: 403
+          return
         end
       else
         render html: "Unknown armor #{key}", status: 400

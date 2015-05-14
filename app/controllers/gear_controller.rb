@@ -14,7 +14,8 @@ class GearController < ApplicationController
   def card
   end
   
-  def udpate
+  def update
+    render html: "Success", status: 200
   end
 
   

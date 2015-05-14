@@ -9,13 +9,13 @@ class HuntersController < ApplicationController
   
   def new
     @vault_hunter = VaultHunter.new  
-    @vault_hunter.user = current_user
+    @vault_hunter.user_id = current_user.id
   end
   
   def create
     @vault_hunter = VaultHunter.new(vault_hunter_params)
     @vault_hunter.set_default_values()
-    @vault_hunter.user = current_user
+    @vault_hunter.user_id = current_user.id
     if @vault_hunter.save
       #default attributes
       flash[:notice] = "New hunter #{@vault_hunter.name} created"

@@ -43,14 +43,6 @@
     .vh_spacer
     .row
       .col-sm-6
-        .vh_proficiencies{id: "proficiencies"}
-          = render partial: 'proficiencies/edit_list', locals: {proficiencies: @vault_hunter.proficiency_instances}
-        .col-sm-12
-          %a{href: "#proficiency-window", onclick: 'blrpgHunters.addProficiency();'}
-            %img{src: "/images/plus.png"}
-            Add Proficiency
-        .vh_spacer
-      .col-sm-6
         .vh_skills{id: "skills"}
           = render partial: 'skills/edit_list', locals: {skills: @vault_hunter.skill_instances}
         .col-sm-12
@@ -58,11 +50,20 @@
             %img{src: "/images/plus.png"}
             Add Skill
         .vh_spacer
+      .col-sm-6
+        .vh_proficiencies{id: "proficiencies"}
+          = render partial: 'proficiencies/edit_list', locals: {proficiencies: @vault_hunter.proficiency_instances}
+        .col-sm-12
+          %a{href: "#proficiency-window", onclick: 'blrpgHunters.addProficiency();'}
+            %img{src: "/images/plus.png"}
+            Add Proficiency
+        .vh_spacer
     .row
       .col-sm-12.vh_region_title
         %b Inventory
       .col-sm-12
-        = render partial: 'items/edit_list', locals: {weapons: @vault_hunter.weapon_instances, armor: @vault_hunter.armor_instances, consumables: @vault_hunter.consumable_instances, gear: @vault_hunter.gear_instances, shields: @vault_hunter.shield_instances}
+        .col-sm-12.vh_inventory{id: "inventory"}
+          = render partial: 'items/edit_list', locals: {weapons: @vault_hunter.weapon_instances, armor: @vault_hunter.armor_instances, consumables: @vault_hunter.consumable_instances, gear: @vault_hunter.gear_instances, shields: @vault_hunter.shield_instances}
       .col-sm-12
         %a{href: "#item-window", onclick: 'blrpgHunters.addItem();'}
           %img{src: "/images/plus.png"}
