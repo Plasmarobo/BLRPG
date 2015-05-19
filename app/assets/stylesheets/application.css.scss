@@ -47,7 +47,8 @@
   min-height:20em;
   margins:auto;
   @include border-radius( 1em);
-  background-color:#FFFFFF;
+  background-color:#8E98AD;
+  color:#E6E6E6;
 }
 
 .short
@@ -61,4 +62,9 @@
     -webkit-border-radius: 8px;
        -moz-border-radius: 8px;
             border-radius: 8px;
+}
+
+body {
+  background-color:#515663;
+  color:#E6E6E6;
 }

@@ -52,6 +52,10 @@ var blrpgHunters = {
   },
   
   deleteProficiencies: function(event){
+    blrpgListUtils.finishedButton("proficiency_delete_icon", function(){
+      blrpgListUtils.deleteButton("proficiency_delete_icon", blrpgHunters.deleteProficiencies);
+      blrpgListUtils.unhookListRowsForDelete("proficiency_row");
+    });
     blrpgListUtils.hookListRowsForDelete("proficiency_row",function(event)
     {
       var prof_id = $(event.currentTarget).attr("instance_id");
@@ -83,6 +87,10 @@ var blrpgHunters = {
   },
   
   deleteSkills: function(event){
+    blrpgListUtils.finishedButton("skill_delete_icon", function(){
+      blrpgListUtils.deleteButton("skill_delete_icon", blrpgHunters.deleteSkills);
+      blrpgListUtils.unhookListRowsForDelete("skill_row");
+    });
     blrpgListUtils.hookListRowsForDelete("skill_row",function(event)
     {
       var skill_id = $(event.currentTarget).attr("instance_id");
@@ -129,12 +137,19 @@ var blrpgHunters = {
   },
   
   deleteItems: function(){
+    blrpgListUtils.finishedButton("item_delete_icon", function(){
+      blrpgListUtils.deleteButton("item_delete_icon", blrpgHunters.deleteItems);
+      $.each(["armor", "weapon", "consumable", "shield", "gear"], function(index, name){
+        blrpgListUtils.unhookListRowsForDelete(name+ "_row");
+      });
+    });
     $.each(["armor", "weapon", "consumable", "shield", "gear"], function(index, name){
+      
       blrpgListUtils.hookListRowsForDelete(name + "_row",function(event)
       {
         var entry_id = $(event.currentTarget).attr("instance_id");
         var del_callback = function(){
-          blrpgNetwork.sendPOST('/' + name + '/delete', 
+          blrpgNetwork.sendPOST('/' + blrpgNetwork.getPlural(name) + '/delete', 
           {confirm: "yes", id: entry_id},
           function(){$("#" + name + "_" + entry_id).remove();});
         };
@@ -299,5 +314,8 @@ var blrpgHunters = {
       }
     };
     recoverField(fields);
+    $("#item_delete_icon").click(blrpgHunters.deleteItems);
+    $("#proficiency_delete_icon").click(blrpgHunters.deleteProficiencies);
+    $("#skill_delete_icon").click(blrpgHunters.deleteSkills);
   },
 }

@@ -81,6 +81,22 @@ var blrpgNetwork = {
       },
       error: blrpgWindows.errorModal,
     });
+  },
+  // Not a general pluralizer, super narrow case
+  getPlural: function(word)
+  {
+    switch(word.slice(-1))
+    {
+      case "y":
+        word = word.slice(0, word.length-1) + "ies";
+        break;
+      case "r":
+        break;
+      default:
+        word = word + "s";
+        break;
+    }
+    return word;
   }
 };
 
