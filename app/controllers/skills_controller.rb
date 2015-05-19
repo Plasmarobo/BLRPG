@@ -60,6 +60,16 @@ class SkillsController < ApplicationController
     end
   end
   
+  def card
+    params.require(:id)
+    @skill = SkillTemplate.find(params[:id])
+    @meta = {}
+    @meta[:color] = "#56A1E3"
+    @meta[:title] = @skill.name
+    @meta[:subtitle] = @skill.skill_type.capitalize + " skill"
+    render partial: 'skills/card', locals: {skill: @skill}, layout: 'layouts/card'
+  end
+  
   private
   
   def hunter_params

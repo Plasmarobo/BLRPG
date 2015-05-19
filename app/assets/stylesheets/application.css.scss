@@ -3,6 +3,7 @@
 @import "bootstrap";
 @import "hunters";
 @import "home";
+@import "cards";
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
@@ -47,8 +48,8 @@
   min-height:20em;
   margins:auto;
   @include border-radius( 1em);
-  background-color:#8E98AD;
-  color:#E6E6E6;
+  background-color:#e3e3e3;
+  color:#222222;
 }
 
 .short
@@ -67,4 +68,35 @@
 body {
   background-color:#515663;
   color:#E6E6E6;
+}
+
+a {
+  color: #0052CC;
+}
+
+a:hover
+{
+  
+}
+
+table
+{
+  border:solid;
+  border-width:2px;
+  border-color:#EFEFEF;
+}
+
+thead
+{
+  border-bottom: solid;
+  border-width:2px;
+  border-color:#EFEFEF;
+}
+
+td, th
+{
+  padding-left:1em;
+  padding-right:1em;
+  max-width:20em;
+  width:auto;
 }

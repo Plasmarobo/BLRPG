@@ -1,2 +1,29 @@
-%h1 Weapons#card
-%p Find me in app/views/weapons/card.html.haml
+%p
+  = @weapon.description
+%p
+  %table
+    %thead
+      %tr
+        %th.card_alt Accuracy
+        %th Damage
+        %th.card_alt Recoil
+        %th Range
+        %th.card_alt Fire Mode
+        %th Secondary Damage
+    %tbody
+      %tr
+        %td.card_alt
+          = @weapon.accuracy
+        %td
+          = @weapon.damage
+        %td.card_alt
+          = @weapon.recoil
+        %td
+          = @weapon.range
+        %td.card_alt
+          = @weapon.fire_mode
+        %td
+          = @weapon.secondary_damage
+%p
+  %b Cost: 
+  = @weapon.cost

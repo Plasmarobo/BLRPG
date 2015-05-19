@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get "/#{target}/edit"
     get "/#{target}/index"
     get "/#{target}/delete"
+    get "/#{target}/:id/card" => "#{target}#card"
     
     post "/#{target}/new"
     post "/#{target}/create"
@@ -14,6 +15,7 @@ Rails.application.routes.draw do
     post "/#{target}/index"
     post "/#{target}/update" => "#{target}#update"
     post "/#{target}/delete"
+    post "/#{target}/:id/card" => "#{target}#card"
   end
   
   #Cards

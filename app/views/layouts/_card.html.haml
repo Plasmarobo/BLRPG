@@ -1,7 +1,11 @@
-.row
-  .col-sm-12.cardheader
-    = meta.title
-  .col-sm-1
-  .col-sm-10.cardbody
-    = yield
-  .col-sm-1
+.card
+  .row
+    .col-sm-12.cardheader{style: "background-color:#{@meta[:color]}"}
+      = @meta[:title]
+  .row.cardbody
+    .col-sm-12.cardsubheader
+      = @meta[:subtitle]
+    .col-sm-1
+    .col-sm-10
+      = yield
+    .col-sm-1

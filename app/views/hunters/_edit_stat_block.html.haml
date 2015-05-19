@@ -1,22 +1,23 @@
 .row
-  .col-sm-4
-    .row
+  .vh_padded_alt
+    .col-sm-4.vh_center
+      .row
+        .col-sm-12
+          Wounds
+        .col-sm-12
+          %input{id: "vh_wounds", class: "vh_bignum vh_auto", value: vault_hunter.wounds}
+      .row
+        .col-sm-12
+          Toughness
+        .col-sm-12
+          %input{id: "vh_toughness", class: "vh_bignum vh_auto", value: vault_hunter.toughness}
+    .col-sm-4.vh_center
       .col-sm-12
-        Wounds
+        %input{id: "dontparse_shield", readonly: true, class: "vh_txt", value: (vault_hunter.current_shield.shield_template != nil) ? vault_hunter.current_shield.shield_template.name : "None"}
       .col-sm-12
-        %input{id: "vh_wounds", class: "vh_bignum vh_auto", value: vault_hunter.wounds}
-    .row
+        %a{href: "#", onclick: 'select_shield(#{vault_hunter.id})'} Equip Shield
+    .col-sm-4.vh_center
       .col-sm-12
-        Toughness
+        %input{id: "dontparse_armor", readonly: true, class: "vh_txt", value: (vault_hunter.current_armor.armor_template != nil) ? vault_hunter.current_armor.armor_template.name : "None"}
       .col-sm-12
-        %input{id: "vh_toughness", class: "vh_bignum vh_auto", value: vault_hunter.toughness}
-  .col-sm-4
-    .col-sm-12
-      %input{id: "dontparse_shield", readonly: true, class: "vh_txt", value: (vault_hunter.current_shield.shield_template != nil) ? vault_hunter.current_shield.shield_template.name : "None"}
-    .col-sm-12
-      %a{href: "#", onclick: 'select_shield(#{vault_hunter.id})'} Equip Shield
-  .col-sm-4
-    .col-sm-12
-      %input{id: "dontparse_armor", readonly: true, class: "vh_txt", value: (vault_hunter.current_armor.armor_template != nil) ? vault_hunter.current_armor.armor_template.name : "None"}
-    .col-sm-12
-      %a{href: "#", onclick: 'select_armor(#{vault_hunter.id})'} Equip Armor
+        %a{href: "#", onclick: 'select_armor(#{vault_hunter.id})'} Equip Armor

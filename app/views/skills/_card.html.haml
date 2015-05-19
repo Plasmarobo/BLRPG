@@ -1,2 +1,29 @@
-%h1 Skills#card
-%p Find me in app/views/skills/card.html.haml
+- info = @skill.prerequsites_info
+
+%p
+  = skill.description
+%p
+  %table
+    %thead
+      %tr
+        %th.card_alt Cooldown
+        %th Duration
+    %tbody
+      %tr
+        %td.card_alt
+          = @skill.cooldown.nil? ? "-" : @skill.cooldown
+        %td
+          = @skill.duration.nil? ? "-" : @skill.duration
+%p
+  %i Requirements
+  %br
+  %b Level:
+  .card_indented
+    = info[:level]
+  %b Race:
+  .card_indented
+    = info[:race]
+  %b Skills:
+  .card_indented
+    = info[:skills]
+

@@ -1,4 +1,6 @@
 class WeaponsController < ApplicationController
+  before_action :set_weapon, only: ["delete"]
+  
   def new
   end
 
@@ -12,17 +14,31 @@ class WeaponsController < ApplicationController
   end
   
   def delete
-    params.require(:id)
-    weapon = WeaponInstance.find(params[:id])
-    if (weapon == nil)
+    if (@weapon == nil)
       render html: "Unkown item", status: 400
     else
-      weapon.destroy()
+      @weapon.destroy()
       render html: "Deleted", status: 200
     end
   end
 
   def card
+    params.require(:id)
+    prefix = ""
+    postfix = ""
+    if params[:template] == true
+      @weapon = WeaponTemplate.find(params[:id])
+    else
+      inst = WeaponInstance.find(params[:id])
+      @weapon = inst.weapon_template
+      prefix = inst.prefix
+      postfix = inst.postfix
+    end
+    @meta = {}
+    @meta[:color] = "#D65454"
+    @meta[:title] = prefix + @weapon.name + postfix
+    @meta[:subtitle] = "Shreds flesh and bone"
+    render partial: 'weapons/card', locals: {weapon: @weapon}, layout: 'layouts/card'
   end
   
   def update
@@ -53,5 +69,10 @@ class WeaponsController < ApplicationController
                     :prefix,
                     :postfix,
                     :current_recoil)
+    end
+    
+    def set_weapon
+      params.require(:id)
+      @weapon = WeaponInstance.find(params[:id])
     end
 end

@@ -1,9 +1,10 @@
 .row
-  .col-sm-4
-    - stats = {current: {title: "Wounds", value: vault_hunter.wounds}, max: {title: "Toughness", value: vault_hunter.toughness}}
-    = render partial: 'shared/cell', locals: stats
-  .col-sm-4
-    = render partial: 'shared/cell', locals: vault_hunter.current_shield.cell_data
-  .col-sm-4
-    = render partial: 'shared/cell', locals: vault_hunter.current_armor.cell_data
+  .vh_padded_alt
+    .col-sm-4.vh_center
+      - stats = {current: {title: "Wounds", value: vault_hunter.wounds}, max: {title: "Toughness", value: vault_hunter.toughness}}
+      = render partial: 'shared/cell', locals: stats
+    .col-sm-4.vh_center
+      = render partial: 'shared/cell', locals: vault_hunter.current_shield.cell_data
+    .col-sm-4.vh_center
+      = render partial: 'shared/cell', locals: vault_hunter.current_armor.cell_data
   

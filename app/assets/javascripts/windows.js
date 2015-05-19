@@ -32,11 +32,18 @@ var blrpgWindows = {
     var div = $('<div class=\"modal fade\" id=\"' + id + '\" role=\"dialog\" aria-labelledby=\"ModalLabel\" aria-hidden=\"true\" >');
     $('body').append(div);
   },
+  
+  cardModal: function(url){
+    blrpgWindows.openModal("cardModal");
+    $("#cardModal").html("<h1>Loading</h1>");
+    blrpgWindows.populateModal("cardModal", url, null);
+  },
 
   errorModal: function(jqXHR, status){
     $('#error-window').remove();
     blrpgWindows.openModal("error-window");
     var content = $("<div>");
+    content.append("<h1>Error</h1>")
     content.append($("<div class='vh_region_title'>").html(status));
     content.append($("<div>").html(jqXHR.responseText));
     blrpgWindows.wrap(content, "error-window",$('<div>', {class: 'container mwin'}));

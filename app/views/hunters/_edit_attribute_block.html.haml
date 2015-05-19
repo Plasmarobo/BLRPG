@@ -18,7 +18,7 @@
   .vh_field.col-sm-3
     .vh_hint Race
     -if not @vault_hunter.race.nil?
-      %input{id: "vh_race_name", class: "vh_txt", value: @vault_hunter.race.name.capitalize, readonly: "true", onclick: 'blrpgList.selectRace();'}
+      %input{id: "vh_race_name", class: "vh_txt", value: @vault_hunter.race.name.capitalize, readonly: "true", onclick: 'blrpgHunters.selectRace();'}
     -else
       %input{id: "vh_race_name", class: "vh_txt", placeholder: "Select Race", readonly: "true", onclick: 'blrpgHunters.selectRace();'}
   .vh_field.col-sm-2

@@ -38,7 +38,6 @@ class VaultHunter < ActiveRecord::Base
     
   def meets_prereq?(skill_template)
     Prerequisite.where(skill_template_id: skill_template.id).each do |prereq|
-      pp prereq.prereq_type
       case(prereq.prereq_type)
       when 'level'
         if not self.has_level?(prereq.value)
@@ -57,7 +56,6 @@ class VaultHunter < ActiveRecord::Base
         return false
       end
     end
-    pp "True"
     return true
   end
   

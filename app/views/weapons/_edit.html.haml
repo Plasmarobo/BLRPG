@@ -1,5 +1,5 @@
 .col-sm-3
-  %a{href: '#', onclick: "cardModal('weapons/card?id=#{weapon.weapon_template_id},template=true')"}
+  %a{href: '#', onclick: "blrpgWindows.cardModal('/weapons/card?id=#{weapon.weapon_template_id},template=true')"}
     = weapon.weapon_template.name
 .col-sm-2
   %input{name: "ammunition", class: "vh_num", value: weapon.ammunition}

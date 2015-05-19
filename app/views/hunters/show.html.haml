@@ -32,7 +32,7 @@
   .row
     .col-sm-12.vh_region_title
       %b Inventory
-    .col-sm-12
+    .col-sm-12.vh_inventory
       = render partial: 'items/instance_list', locals: {weapons: @vault_hunter.weapon_instances, armor: @vault_hunter.armor_instances, consumables: @vault_hunter.consumable_instances, gear: @vault_hunter.gear_instances, shields: @vault_hunter.shield_instances}
   .row.vh_rp
     .col-sm-6
