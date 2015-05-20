@@ -4,5 +4,5 @@
 .col-sm-2
   %input{name: "current_deflect", class: "vh_num ", value: armor.current_deflect}
 .col-sm-4
-  = armor.in_use ? "Yes" : "Unequipped"
+  = check_box_tag("in_use", true, armor.in_use, onchange: "blrpgHunters.updateArmorEquipped('#{armor.armor_template.name}', this);")
 .col-sm-5

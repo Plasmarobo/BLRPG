@@ -2,5 +2,5 @@
 .col-sm-4
   = proficiency.name
 .col-sm-7
-  %a{href: '#', onclick: "cardModal('proficiencies/card?id=#{proficiency.id}');"}
+  %a{href: '#', onmouseenter: "blrpgWindows.openHoverWindow(event,'/proficiencies/card?id=#{proficiency.id}', 'proficiency-window');", onmouseleave: "blrpgWindows.closeHoverWindow();"}
     View Card

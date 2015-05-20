@@ -7,5 +7,5 @@
 .col-sm-2
   = skill.cooldown
 .col-sm-3
-  %a{href: '#', onclick: "cardModal('skills/card?id=#{skill.id},template=true')"}
+  %a{href: '#', onmouseenter: "blrpgWindows.openHoverWindow(event,'/skills/card?id=#{skill.id}', 'skill-window');", onmouseleave: "blrpgWindows.closeHoverWindow();"}
     Card

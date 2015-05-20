@@ -221,11 +221,13 @@ we_magnahammer = WeaponTemplate.create(name: "MagnaHammer", accuracy: 1, recoil:
 we_electromace = WeaponTemplate.create(name: "Electromace", accuracy: 3, recoil: 3, range: 0, fire_mode: 0, damage: 5, secondary_damage: nil, cost: 100, description: "A mace with charged points. Deals 1 damage as shock")
 we_impactspear = WeaponTemplate.create(name: "ImpactSpear", accuracy: 4, recoil: 10, range: 0, fire_mode: 0, damage: 7, secondary_damage: nil, cost: 250, description: "The tip of the spear uses an explosive charge to telescope on impact.")
 
-sh_lightshield = ShieldTemplate.create(name: "Light Shield", capacity: 2, recharge: 1, deflect: 0, cost: 20, description: "A light shield, deflects bullets");
-sh_mediumshield = ShieldTemplate.create(name: "Medium Shield", capacity: 3, recharge: 1, deflect: 0, cost: 40, description: "A slight more capacity shield")
-sh_heavyshield = ShieldTemplate.create(name: "Heavy Shield", capacity: 5, recharge: 1, deflect: 0, cost: 75, description: "A high capacity shield")
-sh_elasticshield = ShieldTemplate.create(name: "Elastic Shield", capacity: 3, recharge: 2, deflect: 1, cost: 100, description: "A shield that deflects bullets")
-sh_tankshield = ShieldTemplate.create(name: "Tank Shield", capacity: 7, recharge: 1, deflect: 2, cost: 450, description: "A shield that belongs on a tank")
+ef_deplete = Effect.create(name: "Shield Recharge Delay", description: "Delays the recharge of shield for a number of turns.", duration: 1);
+
+sh_lightshield = ShieldTemplate.create(name: "Light Shield", capacity: 2, recharge: 1, deflect: 0, cost: 20, description: "A light shield, deflects bullets", deplete_effect_id: ef_deplete);
+sh_mediumshield = ShieldTemplate.create(name: "Medium Shield", capacity: 3, recharge: 1, deflect: 0, cost: 40, description: "A slight more capacity shield", deplete_effect_id: ef_deplete)
+sh_heavyshield = ShieldTemplate.create(name: "Heavy Shield", capacity: 5, recharge: 1, deflect: 0, cost: 75, description: "A high capacity shield", deplete_effect_id: ef_deplete)
+sh_elasticshield = ShieldTemplate.create(name: "Elastic Shield", capacity: 3, recharge: 2, deflect: 1, cost: 100, description: "A shield that deflects bullets", deplete_effect_id: ef_deplete)
+sh_tankshield = ShieldTemplate.create(name: "Tank Shield", capacity: 7, recharge: 1, deflect: 2, cost: 450, description: "A shield that belongs on a tank", deplete_effect_id: ef_deplete)
 
 ar_lightcloth = ArmorTemplate.create(name: "Light Cloth", weight: 0, deflect: 0, cost: "Free", description: "Standard Clothes")
 ar_ceramicplates = ArmorTemplate.create(name: "Ceramic plates", weight: 2, deflect: 1, cost: 150, description: "Under-garment plating")

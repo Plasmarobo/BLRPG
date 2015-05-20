@@ -1,2 +1,24 @@
-%h1 Shields#card
-%p Find me in app/views/shields/card.html.haml
+%p
+  = @shield.description
+%p
+  %table
+    %thead
+      %tr
+        %th.card_alt Capacity
+        %th Recharge
+        %th.card_alt Deflect
+    %tbody
+      %tr
+        %td.card_alt
+          = @shield.capacity
+        %td
+          = @shield.recharge
+        %td.card_alt
+          = @shield.deflect
+%p
+  %b Deplete Effect:
+  %br
+  = @shield.deplete_effect.description
+%p
+  %b Cost: 
+  = @shield.cost

@@ -42,6 +42,7 @@ class ArmorController < ApplicationController
       if armor != nil 
         if armor.checkOwner(current_user)
           updates = ActionController::Parameters.new(updates).permit(:current_deflect, :in_use)
+          updates[:in_use] = updates[:in_use] == "true" ? true : false
           armor.update(updates)
         else
           render html: "Current User not Owner", status: 403

@@ -4,5 +4,5 @@
 .col-sm-2
   %input{name: "current_capacity", class: "vh_num", value: shield.current_capacity}
 .col-sm-2.vh_center
-  = shield.in_use ? "Yes" : "Unequipped"
+  = check_box_tag("in_use", true, shield.in_use, onchange: "blrpgHunters.updateShieldEquipped('#{shield.shield_template.name}', this);")
 .col-sm-5

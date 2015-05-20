@@ -32,6 +32,7 @@ class ShieldsController < ApplicationController
         if shield.checkOwner(current_user)
           updates = ActionController::Parameters.new(updates).permit(:current_capacity,
                                     :in_use)
+          updates[:in_use] = updates[:in_use] == "true" ? true : false
           shield.update(updates)
         else
           render html: "Current User not Owner", status: 403

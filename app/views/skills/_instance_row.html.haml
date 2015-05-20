@@ -7,5 +7,5 @@
 .col-sm-3
   = skill.current_modifiers
 .col-sm-2
-  %a{href: '#', onclick: "cardModal('skills/card?id=#{skill.skill_template_id}')"}
+  %a{href: '#', onmouseenter: "blrpgWindows.openHoverWindow('skills/card?id=#{skill.skill_template_id}');", onmouseleave: "blrpgWindows.closeHoverWindow();"}
     Card

@@ -53,9 +53,31 @@ var blrpgNetwork = {
       dataType: 'html',
       success: function(data){
         blrpgWindows.wrap(data, target, wrapper);
-        if (typeof(onload)!== "undefined")
+        if ((typeof(onload)!== "undefined") && (onload !== null))
         {
           onload();
+        }
+      },
+      error: blrpgWindows.errorModal,
+    });
+  },
+
+  replaceBody: function(url, params, target, onload, wrapper){
+    $.ajax(url,{
+      type: 'POST',
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+      },
+      data: params,
+      dataType: 'html',
+      success: function(data){
+        blrpgWindows.replace(data, target, wrapper);
+        if (typeof(onload) !== "undefined")
+        {
+          if (onload !== null)
+          {
+            onload();
+          }
         }
       },
       error: blrpgWindows.errorModal,

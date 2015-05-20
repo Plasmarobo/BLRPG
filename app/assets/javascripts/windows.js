@@ -80,4 +80,68 @@ var blrpgWindows = {
       $("#" + target).append(data);
     }
   },
+  replace: function(data, target, wrapper)
+  {
+    var content = null;
+     if (typeof(wrapper)!=='undefined')
+    {
+      wrapper.append(data);
+      $("#" + target).html(wrapper);
+    }
+    else
+    {
+      $("#" + target).html(data);
+    }
+  },
+  hoverHideInterval : null,
+  openHoverWindow: function(event, url, attachment_point)
+  {
+    // TODO introduce a small delay to not load more than necessary
+    if (blrpgWindows.hoverHideInterval != null)
+    {
+      clearTimeout(blrpgWindows.hoverHideInterval);
+      blrpgWindows.hoverHideInterval = null;
+      var div = $("#hover-window");
+      div.html("");
+    }
+    else
+    {
+      var div = $("<div id='hover-window' class='vh_hover_window'>");
+      $('#' + attachment_point).append(div);
+    }
+    
+    var x = event.clientX+128;
+    var y = event.clientY-20;
+    
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+    
+    var aproximateHeight = 600;
+    var aproximateWidth = 400;
+    
+    if (y > (h-aproximateHeight))
+    {
+      y = h-aproximateHeight;
+    }
+    if (x > (w-aproximateWidth))
+    {
+      x = w-aproximateWidth;
+    }
+    
+    div.css({'top':y,'left':x, 'display':'none'}).fadeIn('fast');
+    blrpgNetwork.replaceBody(url,{}, "hover-window");
+  },
+  closeHoverWindow: function()
+  {
+    if (blrpgWindows.hoverHideInterval == null)
+    {
+      blrpgWindows.hoverHideInterval = setTimeout(function(){
+        blrpgWindows.hoverHideInterval = null;
+        $("#hover-window").fadeOut("slow", 
+        function() {
+          $("#hover-windw").remove();
+        });
+      },2000);
+    }  
+  }
 }

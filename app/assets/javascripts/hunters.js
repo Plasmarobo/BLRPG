@@ -232,6 +232,10 @@ var blrpgHunters = {
         field = $(field);
         var property = field.attr("name");
         var val = field.val();
+        if (field.attr("type") == "checkbox")
+        {
+          val = field.is(":checked");
+        }
         if (typeof(val) != "undefined")
         {
           payload[key][property] = val;
@@ -365,5 +369,29 @@ var blrpgHunters = {
     $("#item_delete_icon").click(blrpgHunters.deleteItems);
     $("#proficiency_delete_icon").click(blrpgHunters.deleteProficiencies);
     $("#skill_delete_icon").click(blrpgHunters.deleteSkills);
+  },
+  updateArmorEquipped: function(value, checkbox)
+  {
+    if ($(checkbox).is(":checked"))
+    {
+      $("#dontparse_armor").val(value);
+    }
+    else
+    {
+      // Needs to be fixed: what about multi equip?
+      $("#dontparse_armor").val("None");
+    }
+  },
+  updateShieldEquipped: function(value, checkbox)
+  {
+    if ($(checkbox).is(":checked"))
+    {
+      $("#dontparse_shield").val(value);
+    }
+    else
+    {
+      // TODO: Some skills allow multiequip
+      $("#dontparse_shield").val("None");
+    }
   },
 }

@@ -12,6 +12,7 @@
   font-weight:bold;
   font-style:italics;
   font-size:10pt;
+  height: 3em;
 }
 
 .cardbody
@@ -35,4 +36,9 @@
   width:80%;
   margin:10%;
   padding:2em;
+}
+
+.cardspacer
+{
+  height:2em;
 }
