@@ -54,6 +54,16 @@ class ProficienciesController < ApplicationController
     render html: "Batch Accepted", status: 200
   end
   
+  def card
+    params.require(:id)
+    @proficiency = ProficiencyTemplate.find(params[:id])
+    @meta = {}
+    @meta[:color] = "#F0B756"
+    @meta[:title] = @proficiency.name
+    @meta[:subtitle] = "Noncombat abilities"
+    render partial: 'proficiencies/card', locals: {proficiency: @proficiency}, layout: 'layouts/card'
+  end
+  
   private
   
   def hunter_params

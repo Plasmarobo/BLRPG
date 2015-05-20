@@ -1,2 +1,18 @@
-%h1 Armor#card
-%p Find me in app/views/armor/card.html.haml
+%p
+  = @armor.description
+  
+%p
+  %table
+    %thead
+      %tr
+        %th.card_alt Deflect
+        %th Weight
+    %tbody
+      %tr
+        %td.card_alt
+          = @armor.deflect
+        %td
+          = @armor.weight
+%p
+  %b Cost: 
+  = @armor.cost

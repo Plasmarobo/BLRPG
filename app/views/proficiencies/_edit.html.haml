@@ -1,6 +1,7 @@
 .row{class: "proficiency_row #{listRowClass(index)}", instance_id: "#{proficiency.id}", id: "proficiency_#{proficiency.id}"}
   .col-sm-3
-    = proficiency.proficiency_template.name
+    %a{href: '#', onclick: "blrpgWindows.cardModal('/proficiencies/card?id=#{proficiency.proficiency_template_id},template=true')"}
+      = proficiency.proficiency_template.name
   .col-sm-2.vh_field
     %input{id: "pr_#{proficiency.id}_tier", readonly: "true", class: "vh_txt", value: proficiency.tier}
   .col-sm-2.vh_field

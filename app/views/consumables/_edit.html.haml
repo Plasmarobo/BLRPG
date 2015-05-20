@@ -1,5 +1,6 @@
 .col-md-3
-  = consumable.consumable_template.name
+  %a{href: '#', onclick: "blrpgWindows.cardModal('/consumables/card?id=#{consumable.consumable_template_id},template=true')"}
+    = consumable.consumable_template.name
 .col-md-2
   %input{name: "current_uses", class: "vh_num", value: consumable.current_uses}
 .col-sm-2

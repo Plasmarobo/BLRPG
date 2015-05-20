@@ -1,7 +1,8 @@
 .row{class: listRowClass(index), onclick: 'edit_minion(#{minion.id})'
   .col-sm-1
   .col-sm-4
-    = minion.minion_template.name
+    %a{href: '#', onclick: "blrpgWindows.cardModal('/minions/card?id=#{minion.minion_template_id},template=true')"}
+      = minion.minion_template.name
   .col-sm-2
     = minion.hp
   .col-sm-2

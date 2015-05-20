@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150510163917) do
+ActiveRecord::Schema.define(version: 20150520032428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20150510163917) do
     t.integer  "armor_template_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "in_use"
+    t.boolean  "in_use",            default: false
     t.integer  "current_deflect"
   end
 
@@ -212,7 +212,7 @@ ActiveRecord::Schema.define(version: 20150510163917) do
     t.integer  "vault_hunter_id"
     t.integer  "current_capacity"
     t.integer  "shield_template_id"
-    t.boolean  "in_use"
+    t.boolean  "in_use",             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

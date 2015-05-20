@@ -12,6 +12,13 @@ class ConsumablesController < ApplicationController
   end
 
   def card
+    params.require(:id)
+    @consumable = ConsumableTemplate.find(params[:id])
+    @meta = {}
+    @meta[:color] = "#ADF0BE"
+    @meta[:title] = @consumable.name
+    @meta[:subtitle] = "A limited-use item"
+    render partial: 'consumables/card', locals: {consumable: @consumable}, layout: 'layouts/card'
   end
   
   def instance

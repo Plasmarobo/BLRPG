@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get "/#{target}/index"
     get "/#{target}/delete"
     get "/#{target}/:id/card" => "#{target}#card"
+    get "/#{target}/card"
     
     post "/#{target}/new"
     post "/#{target}/create"
@@ -16,13 +17,9 @@ Rails.application.routes.draw do
     post "/#{target}/update" => "#{target}#update"
     post "/#{target}/delete"
     post "/#{target}/:id/card" => "#{target}#card"
-  end
-  
-  #Cards
-  ['armor', 'gear','races', 'consumables', 'minions', 'proficiencies', 'skills', 'shields', 'stacks', 'weapons'].each do |target|
-    get "/#{target}/card"
     post "/#{target}/card"
   end
+  
   #Lists
 
   get 'races/list'
@@ -52,7 +49,7 @@ Rails.application.routes.draw do
   post 'hunters/:id/update' => 'hunters#update'
   get 'hunters/:id/update' => 'hunters#update'
   
-  targets = ["skill", "proficiency", "weapon", "armor", "consumable", "shield", "gear" ]
+  targets = ["skill", "proficiency", "weapon", "consumable", "shield", "minion", "stack" ]
   targets.each do |target|
     get "hunters/:id/drop/#{target}" => "hunters#drop#{target}"
     post "hunters/:id/drop/#{target}" => "hunters#drop#{target}"
@@ -60,8 +57,26 @@ Rails.application.routes.draw do
     get "hunters/:id/add/#{target}" => "hunters#add#{target}"
     post "hunters/:id/add/#{target}" => "hunters#add#{target}"
     
-    get "hunters/:id/#{target.pluralize}" => "hunters#list#{target.pluralize}"
-    post "hunters/:id/#{target.pluralize}" => "hunters#list#{target.pluralize}"
+    get "hunters/:id/#{target.pluralize}" => "hunters##{target.pluralize}"
+    post "hunters/:id/#{target.pluralize}" => "hunters##{target.pluralize}"
+    
+    get "hunters/:id/list#{target.pluralize}" => "hunters#list#{target.pluralize}"
+    post "hunters/:id/list#{target.pluralize}" => "hunters#list#{target.pluralize}"
+  end
+  
+  targets = ["armor", "gear" ]
+  targets.each do |target|
+    get "hunters/:id/drop/#{target}" => "hunters#drop#{target}"
+    post "hunters/:id/drop/#{target}" => "hunters#drop#{target}"
+    
+    get "hunters/:id/add/#{target}" => "hunters#add#{target}"
+    post "hunters/:id/add/#{target}" => "hunters#add#{target}"
+    
+    get "hunters/:id/#{target}" => "hunters##{target}"
+    post "hunters/:id/#{target}" => "hunters##{target}"
+    
+    get "hunters/:id/list#{target}" => "hunters#list#{target}"
+    post "hunters/:id/list#{target}" => "hunters#list#{target}"
   end
 
   get 'hunters/:id/inventory' => "hunters#inventory"
@@ -72,6 +87,12 @@ Rails.application.routes.draw do
   
   get 'hunters/:id/potentialproficiencies' => 'hunters#potentialproficiencies'
   post 'hunters/:id/potentialproficiencies' => 'hunters#potentialproficiencies'
+  
+  get 'hunters/:id/shields' => 'hunters#shields'
+  post 'hunters/:id/shields' => 'hunters#shields'
+
+  get 'hunters/:id/armor' => 'hunters#armor'
+  post 'hunters/:id/armor' => 'hunters#armor'
 
   get 'hunters/:id/build' => 'hunters#build'
   get 'hunters/:id/share' => 'hunters#show'

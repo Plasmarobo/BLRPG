@@ -15,9 +15,9 @@
       .col-sm-12
         %input{id: "dontparse_shield", readonly: true, class: "vh_txt", value: (vault_hunter.current_shield.shield_template != nil) ? vault_hunter.current_shield.shield_template.name : "None"}
       .col-sm-12
-        %a{href: "#", onclick: 'select_shield(#{vault_hunter.id})'} Equip Shield
+        %a{href: "#", onclick: "blrpgHunters.selectShield();"} Equip Shield
     .col-sm-4.vh_center
       .col-sm-12
         %input{id: "dontparse_armor", readonly: true, class: "vh_txt", value: (vault_hunter.current_armor.armor_template != nil) ? vault_hunter.current_armor.armor_template.name : "None"}
       .col-sm-12
-        %a{href: "#", onclick: 'select_armor(#{vault_hunter.id})'} Equip Armor
+        %a{href: "#", onclick: "blrpgHunters.selectArmor();"} Equip Armor

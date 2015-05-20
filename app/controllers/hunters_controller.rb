@@ -234,19 +234,55 @@ class HuntersController < ApplicationController
     render :list
   end
 
-  def listskills
+  #Editable
+
+  def skills
     render partial: 'skills/edit_list', locals: {skills: @vault_hunter.skill_instances}
   end
   
-  def listproficiencies
+  def proficiencies
     render partial: 'proficiencies/edit_list', locals: {proficiencies: @vault_hunter.proficiency_instances}
+  end
+  
+  def weapons
+    render partial: 'weapons/edit_list', locals: {weapons: @vault_hunter.weapon_instances}
+  end
+  
+  def armor
+    render partial: 'armor/edit_list', locals: {armors: @vault_hunter.armor_instances}
+  end
+  
+  def consumables
+    render partial: 'consumables/edit_list', locals: {consumables: @vault_hunter.consumable_instances}
+  end
+  
+  def shields
+    render partial: 'shields/edit_list', locals: {shields: @vault_hunter.shield_instances}
+  end
+  
+  def gear
+    render partial: 'gear/edit_list', locals: {gears: @vault_hunter.gear_instances}
+  end
+  
+  def inventory
+    render partial: 'items/edit_list', locals: {weapons: @vault_hunter.weapon_instances, armor: @vault_hunter.armor_instances, consumables: @vault_hunter.consumable_instances, gear: @vault_hunter.gear_instances, shields: @vault_hunter.shield_instances}
+  end
+  
+  #Readonly
+  
+  def listskills
+    render partial: 'skills/instance_list', locals: {skills: @vault_hunter.skill_instances}
+  end
+  
+  def listproficiencies
+    render partial: 'proficiencies/instance_list', locals: {proficiencies: @vault_hunter.proficiency_instances}
   end
   
   def listweapons
     render partial: 'weapons/instance_list', locals: {weapons: @vault_hunter.weapon_instances}
   end
   
-  def listarmors
+  def listarmor
     render partial: 'armor/instance_list', locals: {armors: @vault_hunter.armor_instances}
   end
   
@@ -258,11 +294,11 @@ class HuntersController < ApplicationController
     render partial: 'shields/instance_list', locals: {shields: @vault_hunter.shield_instances}
   end
   
-  def listgears
+  def listgear
     render partial: 'gear/instance_list', locals: {gears: @vault_hunter.gear_instances}
   end
   
-  def inventory
+  def listinventory
     render partial: 'items/instance_list', locals: {weapons: @vault_hunter.weapon_instances, armor: @vault_hunter.armor_instances, consumables: @vault_hunter.consumable_instances, gear: @vault_hunter.gear_instances, shields: @vault_hunter.shield_instances}
   end
 
@@ -281,6 +317,14 @@ class HuntersController < ApplicationController
       (!@vault_hunter.has_proficiency?(prof.name))
     end
     render partial: 'proficiencies/template_list', layout: false, locals: {proficiencies: @proficiencies}
+  end
+  
+  def card
+    @meta = {}
+    @meta[:color] = "#009E32"
+    @meta[:title] = @vault_hunter.name
+    @meta[:subtitle] = "Sort of a badass"
+    render partial: 'hunters/card', locals: {vault_hunter: @vault_hunter}, layout: 'layouts/card'
   end
 
   private

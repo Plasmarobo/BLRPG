@@ -3,7 +3,7 @@ var blrpgHunters = {
 // Invalid Id on init
   vh_id:-1,
   
-  commitAndUpdate: function(event, target, prompt){
+  commitAndPull: function(event, target, prompt){
     var id = $(event.currentTarget).attr("id");
     var template_id = $(event.currentTarget).attr("template_id");
     var name = $(event.currentTarget).attr("name");
@@ -23,7 +23,7 @@ var blrpgHunters = {
   selectRace: function(){
     blrpgWindows.openModal("race-window");
     blrpgWindows.populateModal("race-window", "/races/list", function(){
-      blrpgListUtils.hookListRows("race-row", blrpgHunters.confirmCommitRace);
+      blrpgListUtils.hookListRows("vh_sel_race", blrpgHunters.confirmCommitRace);
     });
     $("#race-window").modal("show");
   },
@@ -38,6 +38,50 @@ var blrpgHunters = {
     });
   },
   
+  selectShield: function(){
+    blrpgWindows.openModal("shield-window");
+    blrpgWindows.populateModal("shield-window", "/hunters/" + blrpgHunters.vh_id + "/listshields", function(){
+      blrpgListUtils.hookListRows("shield_row", blrpgHunters.confirmCommitShield);
+    });
+    $("#shield-window").modal("show");
+  },
+  
+  confirmCommitShield: function(event){
+    var id = $(event.currentTarget).attr("instance_id");
+    var name = $(event.currentTarget).attr("name");
+    var payload = {};
+    payload[id] = {'in_use' : true}
+    blrpgNetwork.sendPOST("/shields/update", {'batch' : payload}, function(result){
+      $("#dontparse_shield").val(name);
+      blrpgWindows.openModal("shield-results");
+      blrpgWindows.setModal("shield-results", result);
+      $("#shields").html("");
+      blrpgNetwork.requestBody('/hunters/' + blrpgHunters.vh_id + '/shields', {}, "shields");
+    });
+  },
+  
+  selectArmor: function(){
+    blrpgWindows.openModal("armor-window");
+    blrpgWindows.populateModal("armor-window", "/hunters/" + blrpgHunters.vh_id + "/listarmor", function(){
+      blrpgListUtils.hookListRows("armor_row", blrpgHunters.confirmCommitArmor);
+    });
+    $("#armor-window").modal("show");
+  },
+  
+  confirmCommitArmor: function(event){
+    var id = $(event.currentTarget).attr("instance_id");
+    var name = $(event.currentTarget).attr("name");
+    var payload = {};
+    payload[id] = {'in_use' : true}
+    blrpgNetwork.sendPOST("/armor/update", {'batch' : payload}, function(result){
+      $("#dontparse_armor").val(name);
+      blrpgWindows.openModal("armor-results");
+      blrpgWindows.setModal("armor-results", result);
+      $("#armor").html("");
+      blrpgNetwork.requestBody('/hunters/' + blrpgHunters.vh_id + '/armor', {}, "armor");
+    });
+  },
+  
   //Request a proficiency, place in proficiency list
   addProficiency: function(template_id){
     blrpgWindows.openModal("proficiency-window");
@@ -48,7 +92,7 @@ var blrpgHunters = {
   },
   
   confirmAddProficiency: function(event){
-    blrpgHunters.commitAndUpdate(event, {singular: "proficiency", plural: "proficiencies"}, "Learn");
+    blrpgHunters.commitAndPull(event, {singular: "proficiency", plural: "proficiencies"}, "Learn");
   },
   
   deleteProficiencies: function(event){
@@ -83,7 +127,7 @@ var blrpgHunters = {
   },
   
   confirmAddSkill: function(event){
-    blrpgHunters.commitAndUpdate(event, {singular: "skill", plural: "skills"}, "Learn");
+    blrpgHunters.commitAndPull(event, {singular: "skill", plural: "skills"}, "Learn");
   },
   
   deleteSkills: function(event){
@@ -121,19 +165,19 @@ var blrpgHunters = {
   },
   
   confirmAddArmor: function(event){
-    blrpgHunters.commitAndUpdate(event, {singular: "armor", plural: "armors"}, "Purchase");
+    blrpgHunters.commitAndPull(event, {singular: "armor", plural: "armor"}, "Purchase");
   },
   confirmAddWeapon: function(event){
-    blrpgHunters.commitAndUpdate(event, {singular: "weapon", plural: "weapons"}, "Purchase");
+    blrpgHunters.commitAndPull(event, {singular: "weapon", plural: "weapons"}, "Purchase");
   },
   confirmAddConsumable: function(event){
-    blrpgHunters.commitAndUpdate(event, {singular: "consumable", plural: "consumables"}, "Purchase");
+    blrpgHunters.commitAndPull(event, {singular: "consumable", plural: "consumables"}, "Purchase");
   },
   confirmAddShield: function(event){
-    blrpgHunters.commitAndUpdate(event, {singular: "shield", plural: "shields"}, "Purchase");
+    blrpgHunters.commitAndPull(event, {singular: "shield", plural: "shields"}, "Purchase");
   },
   confirmAddGear: function(event){
-    blrpgHunters.commitAndUpdate(event, {singular: "gear", plural: "gears"}, "Purchase");
+    blrpgHunters.commitAndPull(event, {singular: "gear", plural: "gear"}, "Purchase");
   },
   
   deleteItems: function(){
@@ -193,6 +237,10 @@ var blrpgHunters = {
           payload[key][property] = val;
         }
       });
+      if($.isEmptyObject(payload[key]))
+      {
+        delete payload[key];
+      }
     });
     if (!$.isEmptyObject(payload ))
     {

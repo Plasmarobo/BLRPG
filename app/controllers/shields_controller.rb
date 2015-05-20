@@ -45,6 +45,16 @@ class ShieldsController < ApplicationController
     render html: "Batch Accepted", status: 200
   end
   
+  def card
+    params.require(:id)
+    @shield = ShieldTemplate.find(params[:id])
+    @meta = {}
+    @meta[:color] = "#CA9BCC"
+    @meta[:title] = @shield.name
+    @meta[:subtitle] = "It's like bugspray for bullets"
+    render partial: 'shields/card', locals: {shield: @shield}, layout: 'layouts/card'
+  end
+  
   def instance
   end
 end

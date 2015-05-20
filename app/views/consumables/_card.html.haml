@@ -1,2 +1,18 @@
-%h1 Consumables#card
-%p Find me in app/views/consumables/card.html.haml
+%p
+  = @consumable.description
+  
+%p
+  %table
+    %thead
+      %tr
+        %th.card_alt Max Uses
+        %th Effect Duration
+    %tbody
+      %tr
+        %td.card_alt
+          = @consumable.max_uses
+        %td
+          = @consumable.duration
+%p
+  %b Cost: 
+  = @consumable.cost

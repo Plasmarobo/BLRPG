@@ -12,6 +12,13 @@ class GearController < ApplicationController
   end
 
   def card
+    params.require(:id)
+    @gear = GearTemplate.find(params[:id])
+    @meta = {}
+    @meta[:color] = "#858585"
+    @meta[:title] = @gear.name
+    @meta[:subtitle] = "An integral gadget or upgrade"
+    render partial: 'gear/card', locals: {gear: @gear}, layout: 'layouts/card'
   end
   
   def delete

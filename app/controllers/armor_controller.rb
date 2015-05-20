@@ -13,6 +13,13 @@ class ArmorController < ApplicationController
   end
 
   def card
+    params.require(:id)
+    @armor = ArmorTemplate.find(params[:id])
+    @meta = {}
+    @meta[:color] = "#F7860C"
+    @meta[:title] = @armor.name
+    @meta[:subtitle] = "Might stop bullets"
+    render partial: 'armor/card', locals: {armor: @armor}, layout: 'layouts/card'
   end
   
   def instance

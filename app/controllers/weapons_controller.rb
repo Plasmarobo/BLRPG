@@ -23,7 +23,7 @@ class WeaponsController < ApplicationController
   end
 
   def card
-    params.require(:id)
+    params.permit(:template, :id)
     prefix = ""
     postfix = ""
     if params[:template] == true
