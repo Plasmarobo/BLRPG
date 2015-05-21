@@ -1,12 +1,13 @@
-.row
-  .col-sm-2.vh_hint
-    Base Weapon
-  .col-sm-2.vh_hint
-    Ammunition
-  .col-sm-2.vh_hint
-    Incurred Recoil
-  .col-sm-6.vh_hint
-    Notes
-- weapons.each_with_index do |weapon, index|
-  .row{class: "weapon_row #{listRowClass(index)}", instance_id: "#{weapon.id}"}
-    = render partial: 'weapons/instance_row', locals: {weapon: weapon}
+.list
+  .row
+    .col-sm-2.vh_hint
+      Base Weapon
+    .col-sm-2.vh_hint
+      Ammunition
+    .col-sm-2.vh_hint
+      Incurred Recoil
+    .col-sm-6.vh_hint
+      Notes
+  - weapons.each_with_index do |weapon, index|
+    .row{class: "weapon_row #{listRowClass(index)}", instance_id: "#{weapon.id}"}
+      = render partial: 'weapons/instance_row', locals: {weapon: weapon}

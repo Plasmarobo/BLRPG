@@ -1,13 +1,14 @@
-.row
-  .col-sm-5.vh_prof_name.vh_hint
-    Name
-  .col-sm-2.vh_prof_name.vh_hint
-    Rating
-  .col-sm-2.vh_prof_name.vh_hint
-    Tier
-  .col-sm-1.vh_prof_name.vh_hint
-    Description
-.row
-  -proficiencies.each_with_index do |proficiency,index|
-    .row{class: "proficiency_row #{listRowClass(index)}", instance_id: "#{proficiency.id}"}
-      = render partial: 'proficiencies/instance_row', locals: {proficiency: proficiency}
+.list
+  .row
+    .col-sm-5.vh_prof_name.vh_hint
+      Name
+    .col-sm-2.vh_prof_name.vh_hint
+      Rating
+    .col-sm-2.vh_prof_name.vh_hint
+      Tier
+    .col-sm-1.vh_prof_name.vh_hint
+      Description
+  .row
+    -proficiencies.each_with_index do |proficiency,index|
+      .row{class: "proficiency_row #{listRowClass(index)}", instance_id: "#{proficiency.id}"}
+        = render partial: 'proficiencies/instance_row', locals: {proficiency: proficiency}

@@ -1,16 +1,18 @@
-.col-sm-11
-  .vh_region_title 
-    Proficiencies
-.col-sm-1
-  .glyphicon.glyphicon-trash.vh_delete_icon{id: "proficiency_delete_icon"}
-.col-sm-3.vh_hint
-  Name
-.col-sm-2.vh_hint
-  Tier
-.col-sm-2.vh_hint
-  Value
-.col-sm-3.vh_hint
-  Category
-.vh_proficiency_list.col-sm-12{id: :proficiencies}
-  -proficiencies.each_with_index do |proficiency,index|
-    = render partial: 'proficiencies/edit', locals: {proficiency: proficiency, index: index}
+.row
+  .col-sm-11
+    .vh_region_title 
+      Proficiencies
+  .col-sm-1
+    .glyphicon.glyphicon-trash.vh_delete_icon{id: "proficiency_delete_icon"}
+.row.list
+  .col-sm-3.vh_hint
+    Name
+  .col-sm-2.vh_hint
+    Tier
+  .col-sm-2.vh_hint
+    Value
+  .col-sm-3.vh_hint
+    Category
+  .vh_proficiency_list.col-sm-12{id: :proficiencies}
+    -proficiencies.each_with_index do |proficiency,index|
+      = render partial: 'proficiencies/edit', locals: {proficiency: proficiency, index: index}

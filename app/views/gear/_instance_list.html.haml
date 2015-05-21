@@ -1,8 +1,9 @@
-.row
-  .col-sm-6.vh_hint
-    Name
-  .col-sm-6.vh_hint
-    Description
-- gears.each_with_index do |gear, index|
-  .row{class: "gear_row #{listRowClass(index)}", instance_id: "#{gear.id}"}
-    = render partial: 'gear/instance_row', locals: {gear: gear}
+.list
+  .row
+    .col-sm-6.vh_hint
+      Name
+    .col-sm-6.vh_hint
+      Description
+  - gears.each_with_index do |gear, index|
+    .row{class: "gear_row #{listRowClass(index)}", instance_id: "#{gear.id}"}
+      = render partial: 'gear/instance_row', locals: {gear: gear}

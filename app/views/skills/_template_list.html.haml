@@ -1,14 +1,15 @@
-.row
-  .col-sm-3.vh_hint
-    Name
-  .col-sm-2.vh_hint
-    Type
-  .col-sm-2.vh_hint
-    Duration
-  .col-sm-2.vh_hint
-    Cooldown
-  .col-sm-3.vh_hint
-    Description
-- skills.each_with_index do |skill, index|
-  .row{class: "skill_template_row " + listRowClass(index), id: "skill_template_#{skill.id}", name: skill.name, template_id: skill.id}
-    = render partial: 'skills/template_row', locals: {skill: skill}
+.list
+  .row
+    .col-sm-3.vh_hint
+      Name
+    .col-sm-2.vh_hint
+      Type
+    .col-sm-2.vh_hint
+      Duration
+    .col-sm-2.vh_hint
+      Cooldown
+    .col-sm-3.vh_hint
+      Description
+  - skills.each_with_index do |skill, index|
+    .row{class: "skill_template_row " + listRowClass(index), id: "skill_template_#{skill.id}", name: skill.name, template_id: skill.id}
+      = render partial: 'skills/template_row', locals: {skill: skill}

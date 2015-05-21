@@ -1,11 +1,12 @@
-.row
-  .col-md-3.vh_hint
-    Name
-  .col-md-2.vh_hint
-    Uses consumed
-  .col-md-7.vh_hint
-    Description
-- consumables.each_with_index do |consumable, index|
-  .row{class: "consumable_row #{listRowClass(index)}", instance_id: "#{consumable.id}"}
-    = render partial: 'consumables/instance_row', locals: {consumable: consumable}
+.list
+  .row
+    .col-md-3.vh_hint
+      Name
+    .col-md-2.vh_hint
+      Uses consumed
+    .col-md-7.vh_hint
+      Description
+  - consumables.each_with_index do |consumable, index|
+    .row{class: "consumable_row #{listRowClass(index)}", instance_id: "#{consumable.id}"}
+      = render partial: 'consumables/instance_row', locals: {consumable: consumable}
     

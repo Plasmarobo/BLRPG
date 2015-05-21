@@ -1,14 +1,15 @@
-.row
-  .col-sm-3.vh_hint
-    Name
-  .col-sm-2.vh_hint
-    Cost
-  .col-sm-2.vh_hint
-    Uses
-  .col-sm-2.vh_hint
-    Duration
-  .col-sm-3.vh_hint
-    Description
-- consumables.each_with_index do |consumable, index|
-  .row{class: "consumable_template_row " + listRowClass(index), id: "consumable_template_#{consumable.id}", name: consumable.name, template_id: consumable.id}
-    = render partial: 'consumables/template_row', locals: {consumable: consumable}
+.list
+  .row
+    .col-sm-3.vh_hint
+      Name
+    .col-sm-2.vh_hint
+      Cost
+    .col-sm-2.vh_hint
+      Uses
+    .col-sm-2.vh_hint
+      Duration
+    .col-sm-3.vh_hint
+      Description
+  - consumables.each_with_index do |consumable, index|
+    .row{class: "consumable_template_row " + listRowClass(index), id: "consumable_template_#{consumable.id}", name: consumable.name, template_id: consumable.id}
+      = render partial: 'consumables/template_row', locals: {consumable: consumable}

@@ -40,15 +40,36 @@
   border-color:#FBC2C4;
 }
 
+.mwin_outer_center {
+    float: right;
+    right: 50%;
+    position: relative;
+    pointer-events: none;
+}
+.mwin_inner_center {
+    float: right;
+    right: -50%;
+    position: relative;
+    pointer-events: none;
+}
+.mwin_clear {
+    clear: both;
+}
+
 .mwin
 {
   margin-top:10em;
+  //margin-left:auto;
+  //margin-right:auto;
   position:relative;
-  min-width:10em;
-  min-height:20em;
-  margins:auto;
-  @include border-radius( 1em);
-  background-color:#e3e3e3;
+  max-width:60em;
+  //min-width:10em;
+  //min-height:20em;
+  padding:1em;
+  //opacity: 0.2;
+  
+  //@include border-radius( 1em);
+  //background-color:#e3e3e3;
   color:#222222;
 }
 
@@ -99,4 +120,12 @@ td, th
   padding-right:1em;
   max-width:20em;
   width:auto;
+}
+
+.list
+{
+  background-color:#e3e3e3;
+  padding:15px;
+  pointer-events:all;
+  min-width:30em;
 }

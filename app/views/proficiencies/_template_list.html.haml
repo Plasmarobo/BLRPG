@@ -1,11 +1,12 @@
-.row
-  .vh_region_title 
-    Proficiencies
-  .col-sm-1
-  .col-sm-4.vh_prof_name.vh_hint
-    Name
-  .col-sm-7.vh_prof_name.vh_hint
-    Description
--proficiencies.each_with_index do |proficiency,index|
-  .row{class: "prof_template_row " + listRowClass(index), id: "prof_template_#{proficiency.id}", name: proficiency.name, template_id: proficiency.id}
-    = render partial: 'proficiencies/template_row', locals: {proficiency: proficiency}
+.list
+  .row
+    .vh_region_title 
+      Proficiencies
+    .col-sm-1
+    .col-sm-4.vh_prof_name.vh_hint
+      Name
+    .col-sm-7.vh_prof_name.vh_hint
+      Description
+  -proficiencies.each_with_index do |proficiency,index|
+    .row{class: "prof_template_row " + listRowClass(index), id: "prof_template_#{proficiency.id}", name: proficiency.name, template_id: proficiency.id}
+      = render partial: 'proficiencies/template_row', locals: {proficiency: proficiency}

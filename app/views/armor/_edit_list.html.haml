@@ -1,11 +1,12 @@
-.row
-  .col-sm-3.vh_hint
-    Name
-  .col-sm-2.vh_hint
-    Current Deflect
-  .col-sm-4.vh_hint
-    In use?
-  .col-sm-5
-- armors.each_with_index do |armor, index|
-  .row{class: "armor_row #{listRowClass(index)}", instance_id: "#{armor.id}", id: "armor_#{armor.id}"}
-    = render partial: 'armor/edit', locals: {armor: armor}
+.list
+  .row
+    .col-sm-3.vh_hint
+      Name
+    .col-sm-2.vh_hint
+      Current Deflect
+    .col-sm-4.vh_hint
+      In use?
+    .col-sm-5
+  - armors.each_with_index do |armor, index|
+    .row{class: "armor_row #{listRowClass(index)}", instance_id: "#{armor.id}", id: "armor_#{armor.id}"}
+      = render partial: 'armor/edit', locals: {armor: armor}

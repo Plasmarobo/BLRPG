@@ -1,20 +1,21 @@
-.row
-  .col-sm-3.vh_hint
-    Name
-  .col-sm-1.vh_hint
-    Accuracy
-  .col-sm-1.vh_hint
-    Recoil
-  .col-sm-1.vh_hint
-    Range
-  .col-sm-2.vh_hint
-    Fire Mode
-  .col-sm-1.vh_hint
-    Damage
-  .col-sm-1.vh_hint
-    Cost
-  .col-sm-2.vh_hint
-    Description
-- weapons.each_with_index do |weapon, index|
-  .row{class: "weapon_template_row " + listRowClass(index), id: "weapon_template_#{weapon.id}", name: weapon.name, template_id: weapon.id}
-    = render partial: 'weapons/template_row', locals: {weapon: weapon}
+.list
+  .row
+    .col-sm-3.vh_hint
+      Name
+    .col-sm-1.vh_hint
+      Accuracy
+    .col-sm-1.vh_hint
+      Recoil
+    .col-sm-1.vh_hint
+      Range
+    .col-sm-2.vh_hint
+      Fire Mode
+    .col-sm-1.vh_hint
+      Damage
+    .col-sm-1.vh_hint
+      Cost
+    .col-sm-2.vh_hint
+      Description
+  - weapons.each_with_index do |weapon, index|
+    .row{class: "weapon_template_row " + listRowClass(index), id: "weapon_template_#{weapon.id}", name: weapon.name, template_id: weapon.id}
+      = render partial: 'weapons/template_row', locals: {weapon: weapon}

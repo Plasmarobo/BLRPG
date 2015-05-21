@@ -1,14 +1,15 @@
-.row
-  .col-sm-3.vh_hint
-    Name
-  .col-sm-2.vh_hint
-    Weight
-  .col-sm-2.vh_hint
-    Deflect
-  .col-sm-2.vh_hint
-    Cost
-  .col-sm-3
-    Description
-- armors.each_with_index do |armor, index|
-  .row{class: "armor_template_row " + listRowClass(index), id: "armor_template_#{armor.id}", name: armor.name, template_id: armor.id}
-    = render partial: 'armor/template_row', locals: {armor: armor}
+.list
+  .row
+    .col-sm-3.vh_hint
+      Name
+    .col-sm-2.vh_hint
+      Weight
+    .col-sm-2.vh_hint
+      Deflect
+    .col-sm-2.vh_hint
+      Cost
+    .col-sm-3
+      Description
+  - armors.each_with_index do |armor, index|
+    .row{class: "armor_template_row " + listRowClass(index), id: "armor_template_#{armor.id}", name: armor.name, template_id: armor.id}
+      = render partial: 'armor/template_row', locals: {armor: armor}

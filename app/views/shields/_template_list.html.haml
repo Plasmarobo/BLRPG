@@ -1,16 +1,17 @@
-.row
-  .col-sm-2.vh_hint
-    Name
-  .col-sm-2.vh_hint
-    Capacity
-  .col-sm-2.vh_hint
-    Recharge
-  .col-sm-2.vh_hint
-    Deflect
-  .col-sm-2.vh_hint
-    Cost
-  .col-sm-2.vh_hint
-    Description
-- shields.each_with_index do |shield, index|
-  .row{class: "shield_template_row " + listRowClass(index), id: "shield_template_#{shield.id}", name: shield.name, template_id: shield.id}
-    = render partial: 'shields/template_row', locals: {shield: shield}
+.list
+  .row
+    .col-sm-2.vh_hint
+      Name
+    .col-sm-2.vh_hint
+      Capacity
+    .col-sm-2.vh_hint
+      Recharge
+    .col-sm-2.vh_hint
+      Deflect
+    .col-sm-2.vh_hint
+      Cost
+    .col-sm-2.vh_hint
+      Description
+  - shields.each_with_index do |shield, index|
+    .row{class: "shield_template_row " + listRowClass(index), id: "shield_template_#{shield.id}", name: shield.name, template_id: shield.id}
+      = render partial: 'shields/template_row', locals: {shield: shield}

@@ -310,7 +310,30 @@ var blrpgHunters = {
       });
     });
   },
-  
+  updateArmorEquipped: function(value, checkbox)
+  {
+    if ($(checkbox).is(":checked"))
+    {
+      $("#dontparse_armor").val(value);
+    }
+    else
+    {
+      // Needs to be fixed: what about multi equip?
+      $("#dontparse_armor").val("None");
+    }
+  },
+  updateShieldEquipped: function(value, checkbox)
+  {
+    if ($(checkbox).is(":checked"))
+    {
+      $("#dontparse_shield").val(value);
+    }
+    else
+    {
+      // TODO: Some skills allow multiequip
+      $("#dontparse_shield").val("None");
+    }
+  },
   loadPage: function(){
     //Load the on-page vh_id into JS
     blrpgHunters.vh_id = parseInt($('#vh_id').val());
@@ -369,29 +392,5 @@ var blrpgHunters = {
     $("#item_delete_icon").click(blrpgHunters.deleteItems);
     $("#proficiency_delete_icon").click(blrpgHunters.deleteProficiencies);
     $("#skill_delete_icon").click(blrpgHunters.deleteSkills);
-  },
-  updateArmorEquipped: function(value, checkbox)
-  {
-    if ($(checkbox).is(":checked"))
-    {
-      $("#dontparse_armor").val(value);
-    }
-    else
-    {
-      // Needs to be fixed: what about multi equip?
-      $("#dontparse_armor").val("None");
-    }
-  },
-  updateShieldEquipped: function(value, checkbox)
-  {
-    if ($(checkbox).is(":checked"))
-    {
-      $("#dontparse_shield").val(value);
-    }
-    else
-    {
-      // TODO: Some skills allow multiequip
-      $("#dontparse_shield").val("None");
-    }
   },
 }

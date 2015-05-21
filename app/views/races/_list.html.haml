@@ -1,8 +1,9 @@
-.row
-.col-sm-12
-  .vh_region_title
-    Races
-.col-sm-12
-  - races.each_with_index do |race, index|
-    .row{class: "race-row #{listRowClass(index)}", id: "race_#{race.id}", name: race.name, race_id: race.id}
-      = render partial: 'races/row', locals: {race: race}
+.list
+  .row
+  .col-sm-12
+    .vh_region_title
+      Races
+  .col-sm-12
+    - races.each_with_index do |race, index|
+      .row{class: "race-row #{listRowClass(index)}", id: "race_#{race.id}", name: race.name, race_id: race.id}
+        = render partial: 'races/row', locals: {race: race}

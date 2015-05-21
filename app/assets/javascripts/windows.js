@@ -1,17 +1,20 @@
 var blrpgWindows = {
-  
+  buildModal: function(){
+    var div = $('<div>');
+    return div;
+  },
   populateModal: function(id, url, callback){
-    var div = $('<div>', {class: 'container mwin'});
+    //var div = blrpgWindows.buildModal();
     $("#" + id).html("");
-    blrpgNetwork.requestBody(url,{}, id, callback, div);
-    $("#" + id).modal("show");
+    blrpgNetwork.requestBody(url,{}, id, callback);
+    $("#" + id + "modal").modal("show");
   },
   
   setModal: function(id, data){
-    $("#" + id).html("");
-    var div = $('<div>', {class: 'container mwin'});
-    blrpgWindows.wrap(data, id, div);
-    $("#" + id).modal("show");
+    //var div = blrpgWindows.buildModal();
+    $("#" + id).html(data);
+    //blrpgWindows.wrap(data, id);
+    $("#" + id + "modal").modal("show");
   },
   
   cleanModals: function(include_error){
@@ -29,7 +32,11 @@ var blrpgWindows = {
   
   openModal: function(id){
     blrpgWindows.cleanModals();
-    var div = $('<div class=\"modal fade\" id=\"' + id + '\" role=\"dialog\" aria-labelledby=\"ModalLabel\" aria-hidden=\"true\" >');
+    var div = $('<div id=\"' + id + 'modal\" class=\"modal fade\" role=\"dialog\" aria-labelledby=\"ModalLabel\" aria-hidden=\"true\" >');
+    var outer_center = $("<div class='mwin_outer_center'>");
+    var inner_center = $("<div class='mwin_inner_center mwin' id='" + id + "'>");
+    outer_center.append(inner_center);
+    div.append(outer_center);
     $('body').append(div);
   },
   
