@@ -11,18 +11,22 @@ end
 #prefix = "SkillTemplate.create("
 #postfix = ")\n"
 #Proficiencies
-prefix = "MinionTemplate.create("
+varname_prefix = "mi_"
+prefix = " = MinionTemplate.create("
 postfix = ")\n"
 
 output = File.open("result.rb", "w")
 CSV.foreach("data.csv", headers: true) do |row|
-
-  output << prefix
+  
+  
   first = true
   row.each do |header, column|
     if not first
       output << ", "
     else
+      output << varname_prefix
+      output << column.downcase
+      output << prefix
       first = false
     end
     if column != nil

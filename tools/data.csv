@@ -1,9 +1,10 @@
-Name,HP,Armor,Shield,Speed,Actions,Size,Description
-CL4P-TP,3,0,0,3,"Open door (1), Taunt (1)",Small,Your robot pal who can open doors and distract enemies!
-Hawk,3,0,0,5,"Mark Target (1), Fly By (1)",Small,"A fierce, feathered friend who spots targets."
-D374-TP,16,2,0,4,"Slash (2), Laser (3)",Medium,A large robotic companion with a powerful claw weapon
-Skag,22,0,0,4,"Bite(1), Spit (2)",Medium,An odd alien pet. Usually more of a pest.
-EXP-Loader,6,0,0,3,Explode (1),Medium,"A robot who gets a little too excited, with explosive consequences."
-B3NKR,60,5,2,3 (fly),"Turrets (3), Barriage (5)",Large,A beweaponed flying fortress.
-WarLoader,45,3,3,2,"Cannons (2), Rockets (3)",Large,An armored robot with dual heavy cannons.
-Omega Skag,50,2,0,5,"Bite(1), Charge (3)",Large,A large scag.
+Name,max_hp,max_armor,max_shield,Speed,Actions,Size,Description
+CL4P-TP,3,0,0,3,"Open Door, Taunt",Small,Your robot pal who can open doors and distract enemies! Missing stair-climbing chip.
+Hawk,3,0,0,5,"Mark Target, Fly By",Small,"A fierce, feathered friend who spots targets."
+D374-TP,16,2,0,4,"Slash, Laser",Medium,A large robotic companion with a powerful claw weapon
+Skag,22,0,0,4,"Bite, Spit",Medium,An odd alien pet. Usually more of a pest.
+EXP-Loader,6,0,0,3,Explode,Medium,"A robot who gets a little too excited, with explosive consequences."
+B3NKR,60,5,2,3,"Turrets, Barriage
+",Large,A beweaponed flying fortress. It's movement is considered flying.
+WarLoader,45,3,3,2,"Cannons, Rockets",Large,An armored robot with dual heavy cannons.
+Omega Skag,50,2,0,5,"Bite, Charge",Large,A large scag.
