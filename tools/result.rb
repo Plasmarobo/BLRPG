@@ -1,0 +1,8 @@
+mi_cl4ptp = MinionTemplate.create(name: "CL4P-TP", max_hp: 3, max_armor: 0, max_shield: 0, speed: 3, actions: "Open Door, Taunt", size: 2, description: "Your robot pal who can open doors and distract enemies! Missing stair-climbing chip.")
+mi_hawk = MinionTemplate.create(name: "Hawk", max_hp: 3, max_armor: 0, max_shield: 0, speed: 5, actions: "Mark Target, Fly By", size: 2, description: "A fierce, feathered friend who spots targets.")
+mi_d374tp = MinionTemplate.create(name: "D374-TP", max_hp: 16, max_armor: 2, max_shield: 0, speed: 4, actions: "Slash, Laser", size: 3, description: "A large robotic companion with a powerful claw weapon")
+mi_skag = MinionTemplate.create(name: "Skag", max_hp: 22, max_armor: 0, max_shield: 0, speed: 4, actions: "Bite, Spit", size: 3, description: "An odd alien pet. Usually more of a pest.")
+mi_exploader = MinionTemplate.create(name: "EXP-Loader", max_hp: 6, max_armor: 0, max_shield: 0, speed: 3, actions: "Explode", size: 3, description: "A robot who gets a little too excited, with explosive consequences.")
+mi_b3nkr = MinionTemplate.create(name: "B3NKR", max_hp: 60, max_armor: 5, max_shield: 2, speed: 3, actions: "Turrets, Barriage", size: 5, description: "A beweaponed flying fortress. It's movement is considered flying.")
+mi_warloader = MinionTemplate.create(name: "WarLoader", max_hp: 45, max_armor: 3, max_shield: 3, speed: 2, actions: "Cannons, Rockets", size: 4, description: "An armored robot with dual heavy cannons.")
+mi_omegaskag = MinionTemplate.create(name: "Omega Skag", max_hp: 50, max_armor: 2, max_shield: 0, speed: 5, actions: "Bite, Charge", size: 4, description: "A large scag.")
